@@ -1,0 +1,1 @@
+package com.cy.mapper;public class MapperTest {}
