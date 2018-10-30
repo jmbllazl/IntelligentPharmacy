@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -18,9 +19,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 
-
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/adminPage")
 public class AdminController {
 
     HttpSession session;
@@ -67,6 +67,13 @@ public class AdminController {
             e.printStackTrace();
         }
 
+    }
+
+    //后台用户列表显示
+    @RequestMapping("/adminFind.action")
+    public String  adminFind(){
+        System.out.println("进入");
+        return "adminPage/userManage.jsp";
     }
 
 

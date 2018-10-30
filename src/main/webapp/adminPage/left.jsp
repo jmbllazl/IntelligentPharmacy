@@ -41,7 +41,7 @@
             <dd>
                 <img class="coin11" src="images/coin111.png" />
                 <img class="coin22" src="images/coin222.png" />
-                <a href="adminusere?action=ss" target="main" class="cks">后台用户管理</a>
+                <a href="adminFind.action" target="main" class="cks">后台用户管理</a>
                 <img class="icon5" src="images/coin21.png" />
             </dd>
         </dl>
