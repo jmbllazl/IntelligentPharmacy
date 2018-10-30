@@ -1,0 +1,1 @@
+package com.cy.biz;import com.cy.bean.PhamacyDrug;import com.github.pagehelper.PageInfo;import java.util.Map;public interface PhamacyService {    public PageInfo<PhamacyDrug> selectPhamacyAllDrugsPageInfoPageInfo(Map<String, Object> map, String page, int size);}
