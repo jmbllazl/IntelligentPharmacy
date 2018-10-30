@@ -1,0 +1,1 @@
+package com.cy.mapper;import com.cy.bean.PhamacyDrug;import java.util.List;import java.util.Map;public interface PhamacyDrugManager {    public List<PhamacyDrug> selectAllPhamacyDrug(Map<String, Object> map);    public int delectPhamacyDrug(int pharmacyId);}
