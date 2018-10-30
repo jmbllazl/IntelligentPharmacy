@@ -16,7 +16,7 @@
 		<result property="beginDate" column="beginDate"/>
 		<result property="endDate" column="endDate"/>
 	</resultMap>
-	<insert id="addUser" parameterType="com.cy.bean.UserFo">
+	<insert id="addUser" parameterType="com.cy.mapper.AddUser">
     <selectKey keyProperty="userId" order="BEFORE" resultType="java.lang.Integer">
         select USERFO_SEQUENCE.nextval as userId from dual
     </selectKey>
@@ -25,8 +25,8 @@
 	<select id="checkName" parameterType="string" resultMap="userFos">
 	select * from USERFO where NAME = #{name}
 	</select>
-	<select id="login" parameterType="string" resultMap="userFos">
-    select * from USERFO where NAME = #{name} and PWD = #{pwd}
+	<select id="login" parameterType="com.cy.bean.Admin" resultMap="com.cy.bean.Admin">
+    select * from admin_table where adminName = #{adminName} and password = #{password}
 	</select>
 	<delete id="delectUser" >
 		delete from USERFO where USERID = #{userId}

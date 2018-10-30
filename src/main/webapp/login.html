@@ -10,19 +10,20 @@
 	<link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">	
+	<link href="css/templatemo_style.css" rel="stylesheet" type="text/css">
 	<link href="css/login.css" rel="stylesheet" type="text/css">
 </head>
 <body class="templatemo-bg-gray">
 	<div class="container">
 		<div class="col-md-12">
 			<h1 class="margin-bottom-15">欢迎登录</h1>
-			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form" action="#" method="post">				
+			<form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form"
+				  action="${pageContext.request.contextPath}/admin/adminLogin/" method="post">
 		        <div class="form-group">
 		          <div class="col-md-12">		            
 		            <div class="control-wrapper">
-		            	<label for="username" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
-		            	<input type="text" class="form-control" id="username" placeholder="用户名">
+		            	<label for="adminName" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
+		            	<input type="text" class="form-control" id="adminName" placeholder="用户名">
 		            </div>		            	            
 		          </div>              
 		        </div>
@@ -34,6 +35,21 @@
 		            </div>
 		          </div>
 		        </div>
+				<div class="form-group">
+					<div class="col-md-8">
+						<div class="control-wrapper">
+							<input type="text" class="form-control" id="code" placeholder="验证码">
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="control-wrapper">
+							<img id="imgCode" src="${pageContext.request.contextPath}/admin/userImage.action" onClick="getCode()">
+						</div>
+					</div>
+
+
+				</div>
 		        <div class="form-group">
 		          <div class="col-md-12">
 	             	<div class="checkbox control-wrapper">
@@ -60,4 +76,12 @@
 		</div>
 	</div>
 </body>
+<script>
+    function getCode(){
+        var imgCode = document.getElementById("imgCode");
+        imgCode.src = "${pageContext.request.contextPath}/userImage.action?"+Math.random();
+    }
+
+
+</script>
 </html>

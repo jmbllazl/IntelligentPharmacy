@@ -5,12 +5,12 @@ package com.cy.bean;
  *
  **/
 public class Receive {
-    private int ReceiveId;//请领Id
-    private int AdminId;//管理员Id
-    private int UserId;//用户Id
-    private String ReceiveDrug;//请领、退库、销售
-    private String ReceiveDate;//申请日期
-    private String State;//状态（审核中、审核通过、审核不通过）
+    private int receiveId;//请领Id
+    private int adminId;//管理员Id
+    private int userId;//用户Id
+    private String receiveDrug;//请领、退库、销售
+    private String receiveDate;//申请日期
+    private String state;//状态（审核中、审核通过、审核不通过）
 
 
     public Receive() {
@@ -18,59 +18,59 @@ public class Receive {
     }
 
     public Receive(int receiveId, int adminId, int userId, String receiveDrug, String receiveDate, String state) {
-        ReceiveId = receiveId;
-        AdminId = adminId;
-        UserId = userId;
-        ReceiveDrug = receiveDrug;
-        ReceiveDate = receiveDate;
-        State = state;
+        this.receiveId = receiveId;
+        this.adminId = adminId;
+        this.userId = userId;
+        this.receiveDrug = receiveDrug;
+        this.receiveDate = receiveDate;
+        this.state = state;
     }
 
     public int getReceiveId() {
-        return ReceiveId;
+        return receiveId;
     }
 
     public void setReceiveId(int receiveId) {
-        ReceiveId = receiveId;
+        this.receiveId = receiveId;
     }
 
     public int getAdminId() {
-        return AdminId;
+        return adminId;
     }
 
     public void setAdminId(int adminId) {
-        AdminId = adminId;
+        this.adminId = adminId;
     }
 
     public int getUserId() {
-        return UserId;
+        return userId;
     }
 
     public void setUserId(int userId) {
-        UserId = userId;
+        this.userId = userId;
     }
 
     public String getReceiveDrug() {
-        return ReceiveDrug;
+        return receiveDrug;
     }
 
     public void setReceiveDrug(String receiveDrug) {
-        ReceiveDrug = receiveDrug;
+        this.receiveDrug = receiveDrug;
     }
 
     public String getReceiveDate() {
-        return ReceiveDate;
+        return receiveDate;
     }
 
     public void setReceiveDate(String receiveDate) {
-        ReceiveDate = receiveDate;
+        this.receiveDate = receiveDate;
     }
 
     public String getState() {
-        return State;
+        return state;
     }
 
     public void setState(String state) {
-        State = state;
+        this.state = state;
     }
 }

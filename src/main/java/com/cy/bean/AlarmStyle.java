@@ -6,40 +6,40 @@ package com.cy.bean;
  *
  **/
 public class AlarmStyle {
-    private int AlarmStyle;//报警类型Id
-    private String AlarmStyleName;//报警类型名字
-    private int AlarmStyleState;//类型状态（0使用中 1禁用）
+    private int alarmStyle;//报警类型Id
+    private String alarmStyleName;//报警类型名字
+    private int alarmStyleState;//类型状态（0使用中 1禁用）
 
     public AlarmStyle() {
     }
 
     public AlarmStyle(int alarmStyle, String alarmStyleName, int alarmStyleState) {
-        AlarmStyle = alarmStyle;
-        AlarmStyleName = alarmStyleName;
-        AlarmStyleState = alarmStyleState;
+        this.alarmStyle = alarmStyle;
+        this.alarmStyleName = alarmStyleName;
+        this.alarmStyleState = alarmStyleState;
     }
 
     public int getAlarmStyle() {
-        return AlarmStyle;
+        return alarmStyle;
     }
 
     public void setAlarmStyle(int alarmStyle) {
-        AlarmStyle = alarmStyle;
+        this.alarmStyle = alarmStyle;
     }
 
     public String getAlarmStyleName() {
-        return AlarmStyleName;
+        return alarmStyleName;
     }
 
     public void setAlarmStyleName(String alarmStyleName) {
-        AlarmStyleName = alarmStyleName;
+        this.alarmStyleName = alarmStyleName;
     }
 
     public int getAlarmStyleState() {
-        return AlarmStyleState;
+        return alarmStyleState;
     }
 
     public void setAlarmStyleState(int alarmStyleState) {
-        AlarmStyleState = alarmStyleState;
+        this.alarmStyleState = alarmStyleState;
     }
 }
