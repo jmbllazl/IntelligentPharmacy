@@ -25,7 +25,7 @@
 <body>
 <div class="x-nav"> <span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>药品档案</cite></a> </span> <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a> </div>
 <div class="x-body">
-  <form class="layui-form x-center" action="" style="width:85%">
+  <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
     <div class="layui-form-pane">
       <div class="layui-form-item">
         <label class="layui-form-label">药品编号</label>
@@ -34,17 +34,14 @@
         </div>
         <label class="layui-form-label">药品品名</label>
         <div class="layui-input-inline" style="width:100px">
-          <input type="text" name="name"  placeholder="药品品名" autocomplete="off" class="layui-input">
+          <input type="text" name="drugName"  placeholder="药品品名" autocomplete="off" class="layui-input">
         </div>
         <label class="layui-form-label">有效期</label>
         <div class="layui-input-inline" style="width:150px">
           <input type="text" name="name"  placeholder="有效期" autocomplete="off" class="layui-input">
         </div>
-        <div class="layui-input-inline" style="width:200px">
-          <input type="text" name="link"  placeholder="搜索" autocomplete="off" class="layui-input">
-        </div>
-        <div class="layui-input-inline" style="width:80px">
-          <button class="layui-btn"  lay-submit="" lay-filter="*">搜索</button>
+        <div class="layui-input-inline" style="width:100px;color: #01AAED">
+          <input type="submit" name="link"  placeholder="搜索" autocomplete="off" class="layui-input">
         </div>
       </div>
     </div>
@@ -93,7 +90,7 @@
               <td>${drugTemp.drugPrice}</td>
               <td>${drugTemp.manufacturer}</td>
               <td>
-                <input type="button" value="查看详情" onclick="selectDetails(${userTemp.userId})">
+                <input type="button" value="查看详情" onclick="user_management_show('药品信息','phamacyDrugDetils.action?pharmacyId=${drugTemp.pharmacyId}','600','500')">
             </tr>
         </c:forEach>
       </c:when>

@@ -30,8 +30,11 @@
 	<select id="selectAllPhamacyDrug"  resultMap="phamacyDrug">
       select * from PHARMACY_TABLE where 1=1
 	<if test="drugName!=null">
-    	and  name like '%'||#{drugName}||'%'
+    	and  DRUGNAME like '%'||#{drugName}||'%'
 	</if>
+	</select>
+	<select id="selectPhamacyDrug"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where PHARMACYID =#{pharmacyId}
 	</select>
 </mapper>
 	
