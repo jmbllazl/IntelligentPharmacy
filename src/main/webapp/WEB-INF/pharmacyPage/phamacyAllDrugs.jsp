@@ -30,15 +30,15 @@
       <div class="layui-form-item">
         <label class="layui-form-label">药品编号</label>
         <div class="layui-input-inline" style="width:100px">
-          <input type="text" name="name"  placeholder="编号" autocomplete="off" class="layui-input">
+          <input type="text" name="name"  placeholder="药品编号" autocomplete="off" class="layui-input">
         </div>
         <label class="layui-form-label">药品品名</label>
         <div class="layui-input-inline" style="width:100px">
-          <input type="text" name="name"  placeholder="姓名" autocomplete="off" class="layui-input">
+          <input type="text" name="name"  placeholder="药品品名" autocomplete="off" class="layui-input">
         </div>
         <label class="layui-form-label">有效期</label>
         <div class="layui-input-inline" style="width:150px">
-          <input type="text" name="name"  placeholder="被测时间" autocomplete="off" class="layui-input">
+          <input type="text" name="name"  placeholder="有效期" autocomplete="off" class="layui-input">
         </div>
         <div class="layui-input-inline" style="width:200px">
           <input type="text" name="link"  placeholder="搜索" autocomplete="off" class="layui-input">
