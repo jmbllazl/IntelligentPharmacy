@@ -6,60 +6,61 @@ package com.cy.bean;
  *
  **/
 public class Alarm {
-    private int AlarmId;//报警Id
-    private int AlarmStyleId;//报警类型
-    private int AlarmRole;//报警角色（0药房  1药库）
-    private String AlarmDetails;//报警详情
-    private String AlarmDate;//报警日期
+    private int alarmId;//报警Id
+    private int alarmStyleId;//报警类型
+    private int alarmRole;//报警角色（0药房  1药库）
+    private String alarmDetails;//报警详情
+    private String alarmDate;//报警日期
 
     public Alarm() {
     }
 
+
     public Alarm(int alarmId, int alarmStyleId, int alarmRole, String alarmDetails, String alarmDate) {
-        AlarmId = alarmId;
-        AlarmStyleId = alarmStyleId;
-        AlarmRole = alarmRole;
-        AlarmDetails = alarmDetails;
-        AlarmDate = alarmDate;
+        this.alarmId = alarmId;
+        this.alarmStyleId = alarmStyleId;
+        this.alarmRole = alarmRole;
+        this.alarmDetails = alarmDetails;
+        this.alarmDate = alarmDate;
     }
 
     public int getAlarmId() {
-        return AlarmId;
-    }
-
-    public void setAlarmId(int alarmId) {
-        AlarmId = alarmId;
+        return alarmId;
     }
 
     public int getAlarmStyleId() {
-        return AlarmStyleId;
-    }
-
-    public void setAlarmStyleId(int alarmStyleId) {
-        AlarmStyleId = alarmStyleId;
+        return alarmStyleId;
     }
 
     public int getAlarmRole() {
-        return AlarmRole;
-    }
-
-    public void setAlarmRole(int alarmRole) {
-        AlarmRole = alarmRole;
+        return alarmRole;
     }
 
     public String getAlarmDetails() {
-        return AlarmDetails;
-    }
-
-    public void setAlarmDetails(String alarmDetails) {
-        AlarmDetails = alarmDetails;
+        return alarmDetails;
     }
 
     public String getAlarmDate() {
-        return AlarmDate;
+        return alarmDate;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
+    }
+
+    public void setAlarmStyleId(int alarmStyleId) {
+        this.alarmStyleId = alarmStyleId;
+    }
+
+    public void setAlarmRole(int alarmRole) {
+        this.alarmRole = alarmRole;
+    }
+
+    public void setAlarmDetails(String alarmDetails) {
+        this.alarmDetails = alarmDetails;
     }
 
     public void setAlarmDate(String alarmDate) {
-        AlarmDate = alarmDate;
+        this.alarmDate = alarmDate;
     }
 }
