@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.mapper.AddUser">
+	<resultMap id="userFos" type="com.cy.bean.UserFo">
+		<id property="userId" column="USERID"/>
+		<result property="name" column="NAME"/>
+		<result property="pwd" column="PWD"/>
+		<result property="userSex" column="USERSEX"/>
+		<result property="userAge" column="USERAGE"/>
+		<result property="userPH" column="USERPH"/>
+		<result property="userState" column="USERSTATE"/>
+		<result property="userAdress" column="USERADRESS"/>
+		<result property="socle" column="SOCLE"/>
+		<result property="beginDate" column="beginDate"/>
+		<result property="endDate" column="endDate"/>
+	</resultMap>
+	<insert id="addUser" parameterType="com.cy.bean.UserFo">
+    <selectKey keyProperty="userId" order="BEFORE" resultType="java.lang.Integer">
+        select USERFO_SEQUENCE.nextval as userId from dual
+    </selectKey>
+    insert into USERFO(USERID, NAME,PWD,USERSEX,USERAGE,USERPH,USERSTATE,USERADRESS) values(#{userId},#{name},#{pwd},#{userSex},#{userAge},#{userPH},#{userState},#{userAdress})
+	</insert>
+	<select id="checkName" parameterType="string" resultMap="userFos">
+	select * from USERFO where NAME = #{name}
+	</select>
+	<select id="login" parameterType="string" resultMap="userFos">
+    select * from USERFO where NAME = #{name} and PWD = #{pwd}
+	</select>
+	<delete id="delectUser" >
+		delete from USERFO where USERID = #{userId}
+	</delete>
+	<update id="updateUser" parameterType="java.lang.Integer">
+		update  USERFO set USERSTATE = #{userState} where USERID= #{userId}
+	</update>
+	<select id="selectAllUsers"  resultMap="userFos">
+      select * from USERFO where 1=1
+	<if test="name!=null">
+    	and  name like '%'||#{name}||'%'
+	</if>
+	<if test="beginDate!=null">
+		<![CDATA[ and  REGISDATE >= #{beginDate}]]>
+	</if>
+	<if test="endDate!=null">
+		<![CDATA[ and  REGISDATE <= #{endDate}]]>
+	</if>
+	</select>
+</mapper>
+	
+	

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.mapper.PhamacyDrugManager">
+	<resultMap id="phamacyDrug" type="com.cy.bean.PhamacyDrug">
+		<id property="pharmacyId" column="PHARMACYID"/>
+		<result property="receiveId" column="RECEIVEID"/>
+		<result property="drugStateId" column="DRUGSTATEID"/>
+		<result property="drugClassificationId" column="DRUGCLASSIFICATIONID"/>
+		<result property="drugNumber" column="DRUGNUMBER"/>
+		<result property="drugName" column="DRUGNAME"/>
+		<result property="drugDetails" column="DRUGDETAILS"/>
+		<result property="formulation" column="FORMULATION"/>
+		<result property="norm" column="NORM"/>
+		<result property="unit" column="UNIT"/>
+		<result property="drugPrice" column="DRUGPRICE"/>
+		<result property="drugQuantity" column="DRUGQUANTITY"/>
+		<result property="approvalnumber" column="APPROVALNUMBER"/>
+		<result property="produtionDate" column="PRODUTIONDATE"/>
+		<result property="lotNumber" column="LOTNUMBER"/>
+		<result property="validaityperiod" column="VALIDAITYPERIOD"/>
+		<result property="manufacturer" column="MANUFACTURER"/>
+		<result property="medicalinsurance" column="MEDICALINSURANCE"/>
+		<result property="drugPhoto" column="DRUGPHOTO"/>
+	</resultMap>
+	<delete id="delectPhamacyDrug" >
+		delete from PHARMACY_TABLE where PHARMACYID = #{pharmacyId}
+	</delete>
+	<select id="selectAllPhamacyDrug"  resultMap="phamacyDrug">
+      select * from PHARMACY_TABLE where 1=1
+	<if test="drugName!=null">
+    	and  name like '%'||#{drugName}||'%'
+	</if>
+	</select>
+</mapper>
+	
+	
