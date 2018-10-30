@@ -10,7 +10,7 @@ public class Alarm {
     private int AlarmStyleId;//报警类型
     private int AlarmRole;//报警角色（0药房  1药库）
     private String AlarmDetails;//报警详情
-    private String AlarmDate;//报警日期w
+    private String AlarmDate;//报警日期
 
     public Alarm() {
     }
