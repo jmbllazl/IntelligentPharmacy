@@ -7,10 +7,10 @@
     <title>智慧药房后台管理中心</title>
 </head>
 <frameset rows="100,*" cols="*" scrolling="No" framespacing="0" frameborder="no" border="0">
-    <frame src="adminPage/head.jsp" name="headmenu" id="mainFrame" title="mainFrame"><!-- 引用头部 -->
+    <frame src="head.jsp" name="headmenu" id="mainFrame" title="mainFrame"><!-- 引用头部 -->
     <!-- 引用左边和主体部分 -->
     <frameset rows="100*" cols="220,*" scrolling="No" framespacing="0" frameborder="no" border="0">
-        <frame src="adminPage/left.jsp" name="leftmenu" id="mainFrame" title="mainFrame">
-        <frame src="adminPage/main.jsp" name="main" scrolling="yes" noresize="noresize" id="rightFrame" title="rightFrame"></frameset></frameset>
+        <frame src="left.jsp" name="leftmenu" id="mainFrame" title="mainFrame">
+        <frame src="main.jsp" name="main" scrolling="yes" noresize="noresize" id="rightFrame" title="rightFrame"></frameset></frameset>
 <noframes></noframes>
 </html>
