@@ -4,6 +4,31 @@
 
 <mapper namespace="com.cy.mapper.AdminManage">
 
+    <select id="find" resultType="com.cy.bean.Admin">
+		select * from admin_table
+    </select>
+
+    <update id="stopState" parameterType="java.lang.String">
+		update admin_table set adminState='禁用' where adminName=#{adminName}
+    </update>
+
+    <update id="startState" parameterType="java.lang.String">
+		update admin_table set adminState='启用' where adminName=#{adminName}
+    </update>
+
+    <select id="findadmin" resultType="com.cy.bean.Admin">
+		select * from admin_table where adminName=#{adminName}
+    </select>
+
+    <update id="updateadmin" parameterType="com.cy.bean.Admin" >
+		update admin_table set adminName=#{adminName},adminPhone=#{adminPhone},adminAge=#{adminAge} where adminId=#{adminId}
+    </update>
+
+    <update id="newPassword" parameterType="java.lang.String">
+		update admin_table set password='123456' where adminName=#{adminName}
+    </update>
+
+
 </mapper>
 	
 	
