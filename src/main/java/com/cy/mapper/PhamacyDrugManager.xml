@@ -24,6 +24,13 @@
 		<result property="medicalinsurance" column="MEDICALINSURANCE"/>
 		<result property="drugPhoto" column="DRUGPHOTO"/>
 	</resultMap>
+	
+	<resultMap id="DrugClassification" type="com.cy.bean.DrugClassification">
+		<id property="drugClassificationId" column="DRUGCLASSIFICATIONID"/>
+		<result property="drugClassificationName" column="DRUGCLASSIFICATIONNAME"/>
+		<result property="drugClassificationState" column="DRUGCLASSIFICATIONSTATE"/>
+	</resultMap>
+	
 	<delete id="delectPhamacyDrug" >
 		delete from PHARMACY_TABLE where PHARMACYID = #{pharmacyId}
 	</delete>
@@ -35,6 +42,14 @@
 	</select>
 	<select id="selectPhamacyDrug"  resultMap="phamacyDrug">
 		select * from PHARMACY_TABLE where PHARMACYID =#{pharmacyId}
+	</select>
+
+	<select id="selectAllDrugClassification"  resultMap="DrugClassification">
+	 select * from DRUG_CLASSIFICATION_TABLE 
+	</select>
+
+	<select id="selectDrugClassificationPhamacyDrug"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where DRUGCLASSIFICATIONID =#{drugClassificationId}
 	</select>
 </mapper>
 	
