@@ -1,5 +1,6 @@
 package com.cy.biz.bizImp;
 
+import com.cy.bean.FirstMenu;
 import com.cy.biz.MenuService;
 import com.cy.mapper.MenuManage;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class MenuServiceImp implements MenuService {
 
     //一级菜单查找
     @Override
-    public String findadminFirst(int id) {
+    public ArrayList<?> findadminFirst(int id) {
         return menuManage.findadminFirst(id);
     }
 

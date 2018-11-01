@@ -6,16 +6,14 @@
 
     <!--二级菜单查找-->
     <select id="findadmin" resultType="com.cy.bean.SecondMenu">
-     select phamacy_secondary_menu_table.phamacySecondName,phamacy_secondary_menu_table.phamacySecondUrl from phamacy_secondary_menu_table
+     select phamacy_secondary_menu_table.phamacySecondName,phamacy_secondary_menu_table.phamacyFirstId,phamacy_secondary_menu_table.phamacySecondUrl from phamacy_secondary_menu_table
      inner join phamacyse_role_table on phamacy_secondary_menu_table.phamacySecondId=phamacyse_role_table.phamacySecondId where
       phamacyse_role_table.adminRoleId=#{adminRoleId}
     </select>
 
     <!--一级菜单查找-->
-    <select id="findadminFirst" resultType="java.lang.String">
-     select phamacy_first_menu_table.phamacyFirstName from phamacy_first_menu_table
-     inner join phamacy_secondary_menu_table on phamacy_secondary_menu_table.phamacyFirstId=phamacy_first_menu_table.phamacyFirstId where
-     phamacy_secondary_menu_table.phamacysecondid=#{id}
+    <select id="findadminFirst" resultType="com.cy.bean.FirstMenu">
+    select * from phamacy_first_menu_table  where phamacyFirstId=#{id}
     </select>
 
     <!--二级菜单ID查找-->

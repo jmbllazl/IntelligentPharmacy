@@ -1,5 +1,7 @@
 package com.cy.biz;
 
+import com.cy.bean.FirstMenu;
+
 import java.util.ArrayList;
 
 public interface MenuService {
@@ -8,7 +10,7 @@ public interface MenuService {
     public abstract ArrayList<?> findadmin(int adminRoleId);
 
     //一级菜单查找
-    public String findadminFirst(int id);
+    public ArrayList<?> findadminFirst(int id);
 
     //二级菜单ID查找
     public int secondMenuId(String name);

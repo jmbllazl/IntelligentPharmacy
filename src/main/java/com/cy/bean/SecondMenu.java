@@ -3,18 +3,22 @@ package com.cy.bean;
 public class SecondMenu {
 
     private  int  phamacySecondId;//二级菜单ID
-    private int  phamacyFiestId;//一级菜单ID
+    private int  phamacyFirstId;//一级菜单ID
     private String phamacySecondName;//二级菜单名
     private  String phamacySecondUrl;//二级菜单路径
 
     public SecondMenu() {
     }
 
-    public SecondMenu(int phamacySecondId, int phamacyFiestId, String phamacySecondName, String phamacySecondUrl) {
+    public SecondMenu(int phamacySecondId, int phamacyFirstId, String phamacySecondName, String phamacySecondUrl) {
         this.phamacySecondId = phamacySecondId;
-        this.phamacyFiestId = phamacyFiestId;
+        this.phamacyFirstId = phamacyFirstId;
         this.phamacySecondName = phamacySecondName;
         this.phamacySecondUrl = phamacySecondUrl;
+    }
+
+    public SecondMenu(int phamacySecondId) {
+        this.phamacySecondId = phamacySecondId;
     }
 
     public int getPhamacySecondId() {
@@ -25,12 +29,12 @@ public class SecondMenu {
         this.phamacySecondId = phamacySecondId;
     }
 
-    public int getPhamacyFiestId() {
-        return phamacyFiestId;
+    public int getPhamacyFirstId() {
+        return phamacyFirstId;
     }
 
-    public void setPhamacyFiestId(int phamacyFiestId) {
-        this.phamacyFiestId = phamacyFiestId;
+    public void setPhamacyFirstId(int phamacyFirstId) {
+        this.phamacyFirstId = phamacyFirstId;
     }
 
     public String getPhamacySecondName() {

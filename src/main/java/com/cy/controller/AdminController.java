@@ -20,10 +20,7 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/adminPage")
@@ -35,7 +32,9 @@ public class AdminController {
     private ArrayList<Admin> adminList=null;
     @Resource
     private MenuService menuServiceImp;
+    private ArrayList<FirstMenu> AllfirstMenuList=new ArrayList<FirstMenu>();
     private ArrayList<FirstMenu> firstMenuList=null;
+    private ArrayList<Integer> firstId =new ArrayList<Integer> ();
     private ArrayList<SecondMenu> secondMenuList=null;
     @Resource
     private Admin admin;
@@ -63,18 +62,20 @@ public class AdminController {
                 //二级菜单加载
                 secondMenuList= (ArrayList<SecondMenu>) menuServiceImp.findadmin(adminRoleId);
                 //一级菜单加载
-                FirstMenu first=null;
+                FirstMenu first =new FirstMenu();
                 for (int i=0;i<secondMenuList.size();i++){
                   //查找找二级菜单的名字
-                  System.out.println("名字："+secondMenuList.get(i).getPhamacySecondName());
-                  int secondMenuId=menuServiceImp.secondMenuId(secondMenuList.get(i).getPhamacySecondName());
-                   String firstName=  menuServiceImp.findadminFirst(secondMenuId);
-                    System.out.println("firstName"+firstName);
-                   first=new FirstMenu(firstName);
-                   firstMenuList.add(first);
+                  firstId.add( secondMenuList.get(i).getPhamacyFirstId());
                 }
-                System.out.println("一级菜单长度："+firstMenuList.size());
-                session.setAttribute("firstMenuList",firstMenuList);
+                //去重
+                HashSet set =new HashSet(firstId);
+                firstId.clear();
+                firstId.addAll(set);
+                for(int j=0;j<firstId.size();j++){
+                    firstMenuList= (ArrayList<FirstMenu>) menuServiceImp.findadminFirst(firstId.get(j));
+                    AllfirstMenuList.addAll(firstMenuList);
+                }
+                session.setAttribute("firstMenuList",AllfirstMenuList);
                 session.setAttribute("secondMenuList",secondMenuList);
                 model.addAttribute("admin", adminResult);
                 return "adminPage/index";
@@ -159,7 +160,6 @@ public class AdminController {
     //启用操作
     @RequestMapping("startState.action")
     public String startState(HttpServletRequest request,String name){
-        System.out.println("启用");
         adminServiceImpl.startState(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
         request.setAttribute("adminList",adminList);
@@ -169,7 +169,6 @@ public class AdminController {
     //用户编辑页面显示
     @RequestMapping("userEditView.action")
     public String  userEditView(HttpServletRequest request,String name){
-        System.out.println("名字："+name);
         adminList= (ArrayList<Admin>) adminServiceImpl.findadmin(name);
         request.setAttribute("adminList",adminList);
         return  "/adminPage/user_management_edit";
@@ -192,7 +191,6 @@ public class AdminController {
     //重置密码
     @RequestMapping("newPassword.action")
     public String newPassword(HttpServletRequest request,String name){
-        System.out.println("密码");
         adminServiceImpl.newPassword(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
         request.setAttribute("adminList",adminList);
@@ -202,11 +200,17 @@ public class AdminController {
     //管理员删除
     @RequestMapping("userDetele.action")
     public String userDetele(HttpServletRequest request,String name){
-        System.out.println("删除");
         adminServiceImpl.userDetele(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
         request.setAttribute("adminList",adminList);
         return "/adminPage/userManage";
+    }
+
+    //管理员配置菜单
+    @RequestMapping("menuConfig.action")
+    public String menuConfig(){
+        System.out.println("配置菜单");
+        return null;
     }
 
 
