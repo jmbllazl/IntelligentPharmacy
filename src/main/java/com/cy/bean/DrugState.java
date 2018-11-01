@@ -6,60 +6,60 @@ package com.cy.bean;
  *
  **/
 public class DrugState {
-    private int DrugStateID;//药品状态Id
-    private int AdminId;//管理员Id
-    private String DrugStateName;//状态用词（使用、报损、停用、滞销、原价、调价）
-    private String ReviewDate;//审核日期
-    private String ReviewState;//状态（审核中、审核通过、审核不通过）
+    private int drugStateID;//药品状态Id
+    private int adminId;//管理员Id
+    private String drugStateName;//状态用词（使用、报损、停用、滞销、原价、调价）
+    private String reviewDate;//审核日期
+    private String reviewState;//状态（审核中、审核通过、审核不通过）
 
     public DrugState() {
     }
 
     public DrugState(int drugStateID, int adminId, String drugStateName, String reviewDate, String reviewState) {
-        DrugStateID = drugStateID;
-        AdminId = adminId;
-        DrugStateName = drugStateName;
-        ReviewDate = reviewDate;
-        ReviewState = reviewState;
+        this.drugStateID = drugStateID;
+        this.adminId = adminId;
+        this.drugStateName = drugStateName;
+        this.reviewDate = reviewDate;
+        this.reviewState = reviewState;
     }
 
     public int getDrugStateID() {
-        return DrugStateID;
+        return drugStateID;
     }
 
     public void setDrugStateID(int drugStateID) {
-        DrugStateID = drugStateID;
+        this.drugStateID = drugStateID;
     }
 
     public int getAdminId() {
-        return AdminId;
+        return adminId;
     }
 
     public void setAdminId(int adminId) {
-        AdminId = adminId;
+        this.adminId = adminId;
     }
 
     public String getDrugStateName() {
-        return DrugStateName;
+        return drugStateName;
     }
 
     public void setDrugStateName(String drugStateName) {
-        DrugStateName = drugStateName;
+        this.drugStateName = drugStateName;
     }
 
     public String getReviewDate() {
-        return ReviewDate;
+        return reviewDate;
     }
 
     public void setReviewDate(String reviewDate) {
-        ReviewDate = reviewDate;
+        this.reviewDate = reviewDate;
     }
 
     public String getReviewState() {
-        return ReviewState;
+        return reviewState;
     }
 
     public void setReviewState(String reviewState) {
-        ReviewState = reviewState;
+        this.reviewState = reviewState;
     }
 }

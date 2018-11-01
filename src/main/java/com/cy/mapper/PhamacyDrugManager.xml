@@ -51,6 +51,16 @@
 	<select id="selectDrugClassificationPhamacyDrug"  resultMap="phamacyDrug">
 		select * from PHARMACY_TABLE where DRUGCLASSIFICATIONID =#{drugClassificationId}
 	</select>
+	
+	<insert id="addReceiverDrugs" >
+	   
+	</insert>
+	
+	<!--吴侃-->
+	<!--查询低限药品数量-->
+	<select id="selectAlarmNum"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where <![CDATA[  DRUGQUANTITY <= 99 ]]>
+	</select>
 </mapper>
 	
 	
