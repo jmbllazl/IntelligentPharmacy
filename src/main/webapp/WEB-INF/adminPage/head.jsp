@@ -5,10 +5,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>智慧药房后台管理中心</title>
-    <link rel="stylesheet" type="text/css" href="css/public.css" />
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/public.js"></script>
-    <script type="text/javascript" src="js/external.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/public.css" />
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/public.js"></script>
+    <script type="text/javascript" src="../js/external.js"></script>
 
 </head>
 

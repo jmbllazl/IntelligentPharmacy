@@ -22,23 +22,14 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin checkName(String name) {
-        return null;
+        Admin adminResult =adminMapper.checkName(name);
+        return adminResult;
     }
 
     @Override
     public Admin login(Admin admin) {
         Admin adminResult =adminMapper.login(admin);
         return adminResult;
-    }
-
-    @Override
-    public int delectUser(int userId) {
-        return 0;
-    }
-
-    @Override
-    public int updateUser(Admin backUser) {
-        return 0;
     }
 
     @Override
@@ -70,6 +61,18 @@ public class AdminServiceImpl implements AdminService {
     public void newPassword(String name) {
         adminMapper.newPassword(name);
 
+    }
+
+    @Override
+    public void userDetele(String name) {
+        adminMapper.userDetele(name);
+    }
+
+    @Override
+    public int selectRoleId(String name) {
+        int adminRoleId=0;
+        adminRoleId=adminMapper.selectRoleId(name);
+        return adminRoleId;
     }
 
 

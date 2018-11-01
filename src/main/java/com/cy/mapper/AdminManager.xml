@@ -4,29 +4,55 @@
 
 <mapper namespace="com.cy.mapper.AdminManage">
 
+    <!--登录语句-->
+    <select id="login" parameterType="com.cy.bean.Admin" resultType="com.cy.bean.Admin">
+    select * from admin_table where adminName=#{adminName} and password=#{password}
+</select>
+
+    <!--检查用户名-->
+    <select id="checkName" parameterType="String" resultType="com.cy.bean.Admin">
+    select adminName from admin_table where adminName=#{value}
+</select>
+
+    <!--查询所有用户-->
     <select id="find" resultType="com.cy.bean.Admin">
 		select * from admin_table
     </select>
 
+    <!--禁用状态-->
     <update id="stopState" parameterType="java.lang.String">
 		update admin_table set adminState='禁用' where adminName=#{adminName}
     </update>
 
+    <!--启用状态-->
     <update id="startState" parameterType="java.lang.String">
 		update admin_table set adminState='启用' where adminName=#{adminName}
     </update>
 
+    <!--查询某一用户全部的信息-->
     <select id="findadmin" resultType="com.cy.bean.Admin">
 		select * from admin_table where adminName=#{adminName}
     </select>
 
+    <!--修改用户信息-->
     <update id="updateadmin" parameterType="com.cy.bean.Admin" >
 		update admin_table set adminName=#{adminName},adminPhone=#{adminPhone},adminAge=#{adminAge} where adminId=#{adminId}
     </update>
 
+    <!--重置密码-->
     <update id="newPassword" parameterType="java.lang.String">
 		update admin_table set password='123456' where adminName=#{adminName}
     </update>
+
+    <!--用户删除-->
+    <update id="userDetele" parameterType="java.lang.String">
+		update admin_table set adminDetele='删除' where adminName=#{adminName}
+    </update>
+
+    <!-- 由用户名查找角色ID-->
+    <select id="selectRoleId" resultType="java.lang.Integer">
+		select adminRoleId from admin_table where adminName=#{adminName}
+    </select>
 
 
 </mapper>

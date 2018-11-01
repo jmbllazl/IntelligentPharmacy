@@ -15,7 +15,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="./css/x-admin.css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
 </head>
 
 <body>
@@ -84,9 +84,9 @@
 
     </form>
 </div>
-<script src="./lib/layui/layui.js" charset="utf-8">
+<script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8">
 </script>
-<script src="./js/x-layui.js" charset="utf-8">
+<script src="${pageContext.request.contextPath}/js/x-layui.js" charset="utf-8">
 </script>
 <script type="text/javascript" >
 

@@ -14,8 +14,8 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="./css/x-admin.css" media="all">
-    <link rel="stylesheet" href="css/pag.css" media="all">
+    <link rel="stylesheet" href="../css/x-admin.css" media="all">
+    <link rel="stylesheet" href="../css/pag.css" media="all">
 </head>
 <script type="text/javascript">
 
@@ -47,7 +47,7 @@
 <form class="layui-form x-center" action="search?action=search" method="post" style="width:85%">
     <div class="layui-form-pane">
         <div class="layui-form-item">               <ul class="toolbar">
-            <li onclick="user_management_add('添加用户','huser_management_add.jsp','600','500')"><span><img src="images/t01.png" /></span>添加</li>
+            <li onclick="user_management_add('添加用户','huser_management_add.jsp','600','500')"><span><img src="../images/t01.png" /></span>添加</li>
         </ul>
 
             <label class="layui-form-label">姓名</label>
@@ -97,6 +97,7 @@
             <th>角色</th>
             <th>手机号</th>
             <th>状态</th>
+            <th>存在状态</th>
             <th>操作</th>
         </tr>
         </thead>
@@ -122,6 +123,16 @@
                     <button class="sp3">${admin.adminState}</button>
                 </td>
             </c:if>
+                <c:if test="${admin.adminDetele=='存在'}">
+                    <td class="td-status">
+                        <button class="sp">${admin.adminDetele}</button>
+                    </td>
+                </c:if>
+                <c:if test="${admin.adminDetele=='删除'}">
+                    <td class="td-status">
+                        <button class="sp2">${admin.adminDetele}</button>
+                    </td>
+                </c:if>
                 <!--     隐藏域 -->
                 <input type="hidden" id="uid" name="uid" value="${admin.adminName}">
                 <td class="td-manage">
@@ -143,7 +154,7 @@
                        href="#" title="重置密码">
                         <i class="layui-icon">&#xe631;</i>
                     </a>
-                    <a title="删除" href="javascript:;" onclick="member_del(this,'1')"
+                    <a title="删除" href="#" onclick="member_del(this)"
                        style="text-decoration:none">
                         <i class="layui-icon">&#xe640;</i>
                     </a>
@@ -157,14 +168,13 @@
     <div class="pagelist"> <span class="jump"><a href="lastpage?action=lastpage">上一页</a></span> <span class="jump"><a href="nextpage?action=nextpage">下一页</a></span>
     </div>
 </div>
-</div>
-<br />
-<br />
-<br />
-<script src="./lib/layui/layui.js" charset="utf-8"></script>
-<script src="./js/x-layui.js" charset="utf-8"></script>
-<script src="js/jquery2.js" charset="utf-8"></script>
-<script src="js/js.js" charset="utf-8"></script>
+
+
+
+<script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/x-layui.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/jquery2.js" charset="utf-8"></script>
+<script src="${pageContext.request.contextPath}/js/js.js" charset="utf-8"></script>
 <script>
 
     /*
@@ -232,6 +242,19 @@
         if(t==true){
             location.href="newPassword.action?name="+name;
             layer.msg('重置成功!',{icon: 6,time:1000});
+        }else{
+            location.href="adminFind.action";
+        }
+
+    }
+
+    //用户删除
+    function member_del(){
+        var t=confirm("确定要删除该用户？");
+        var name=document.getElementById("uid").value;
+        if(t==true){
+            location.href="userDetele.action?name="+name;
+            layer.msg('删除成功!',{icon: 6,time:1000});
         }else{
             location.href="adminFind.action";
         }

@@ -18,12 +18,13 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="./css/x-admin.css" media="all">
-    <link rel="stylesheet" href="css/pag.css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pag.css" media="all">
 </head>
 <body>
 <div style="line-height:350px;text-align:center">
-<i class="layui-icon" >修改成功，快去刷新查看信息</i>
+    <span><img src="../images/wc.png" style="height:200px; weight:300px;"/></span>
+<i class="layui-icon" >修改成功，快去刷新页面点击查看</i>
 </div>
 </body>
 <script>

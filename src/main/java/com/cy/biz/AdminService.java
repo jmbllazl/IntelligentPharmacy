@@ -10,8 +10,7 @@ public interface AdminService {
     public int addUser(Admin admin);
     public Admin checkName(String name);
     public Admin login(Admin admin);
-    public int delectUser(int userId);
-    public int updateUser(Admin backUser);
+
 
     //查询所有用户
     public abstract ArrayList<?> find();
@@ -30,5 +29,11 @@ public interface AdminService {
 
     //重置密码
     public void newPassword(String name);
+
+    //管理员删除
+    public void userDetele(String name);
+
+    //由用户名查找角色ID
+    public int selectRoleId(String name);
 
 }

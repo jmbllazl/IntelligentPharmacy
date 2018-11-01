@@ -20,12 +20,6 @@ public interface AdminManage {
     //查询登录用户
     public Admin login(Admin admin);
 
-    //删除用户
-    public int delectUser(int userId);
-
-    //更新用户
-    public int updateUser(Admin backUser);
-
     //查询所有用户
     public abstract ArrayList<?> find();
 
@@ -43,4 +37,10 @@ public interface AdminManage {
 
     //重置密码
     public void newPassword(String name);
+
+    //管理员删除
+    public void userDetele(String name);
+
+    //由用户名查找角色ID
+    public int selectRoleId(String name);
 }
