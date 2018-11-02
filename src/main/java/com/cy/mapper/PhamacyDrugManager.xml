@@ -24,14 +24,76 @@
 		<result property="medicalinsurance" column="MEDICALINSURANCE"/>
 		<result property="drugPhoto" column="DRUGPHOTO"/>
 	</resultMap>
+	
+	<resultMap id="DrugClassification" type="com.cy.bean.DrugClassification">
+		<id property="drugClassificationId" column="DRUGCLASSIFICATIONID"/>
+		<result property="drugClassificationName" column="DRUGCLASSIFICATIONNAME"/>
+		<result property="drugClassificationState" column="DRUGCLASSIFICATIONSTATE"/>
+	</resultMap>
+
+	<resultMap id="PhamacyReceive" type="com.cy.bean.PhamacyReceive">
+		<id property="receiverId" column="RECEIVEID"/>
+		<result property="adminId" column="ADMINID"/>
+		<result property="userId" column="USERID"/>
+		<result property="receiverDrug" column="RECEIVEDRUG"/>
+		<result property="receiveDate" column="RECEIVEDATE"/>
+		<result property="state" column="STATE"/>
+		<result property="phamacyDrugQuantity" column="PHAMACYDRUGQUANTITY"/>
+		<result property="pharmacyId" column="PHARMACYID"/>
+	</resultMap>
+	
 	<delete id="delectPhamacyDrug" >
 		delete from PHARMACY_TABLE where PHARMACYID = #{pharmacyId}
 	</delete>
+
+	<!--查询药房所有药品分页-->
 	<select id="selectAllPhamacyDrug"  resultMap="phamacyDrug">
       select * from PHARMACY_TABLE where 1=1
 	<if test="drugName!=null">
-    	and  name like '%'||#{drugName}||'%'
+    	and  DRUGNAME like '%'||#{drugName}||'%'
 	</if>
+	</select>
+
+	<!--通过药品ID查询药品-->
+	<select id="selectPhamacyDrug"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where PHARMACYID =#{pharmacyId}
+	</select>
+
+	<!--查询药品所有分类-->
+	<select id="selectAllDrugClassification"  resultMap="DrugClassification">
+	 select * from DRUG_CLASSIFICATION_TABLE 
+	</select>
+	
+	<!--通过药品分类查询药品-->
+	<select id="selectDrugClassificationPhamacyDrug"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where DRUGCLASSIFICATIONID =#{drugClassificationId}
+	</select>
+	
+	<!--添加药房药品请领-->
+	
+	<insert id="addReceiverDrugs" >
+		begin
+		<foreach collection="receiveList" item="item" index="index" separator=";">
+			insert into receive_table(receiveid,adminid,userid,receivedrug,receivedate,state,phamacydrugquantity,pharmacyid)
+			values
+			(
+			RECEIVE_TABLE_SEQUENCE.nextval,
+			#{item.adminId},
+			#{item.userId},
+			#{item.receiverDrug},
+			#{item.receiveDate},
+			#{item.state},
+			#{item.phamacyDrugQuantity},
+			#{item.pharmacyId}
+			)
+		</foreach>
+		;end;
+	</insert>
+	
+	<!--吴侃-->
+	<!--查询低限药品数量-->
+	<select id="selectAlarmNum"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where <![CDATA[  DRUGQUANTITY <= 99 ]]>
 	</select>
 </mapper>
 	

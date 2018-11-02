@@ -56,6 +56,24 @@
       <version>${version.cglib}</version>
     </dependency>
 
+    <dependency>
+      <groupId>org.apache.taglibs</groupId>
+      <artifactId>taglibs-standard-impl</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>fastjson</artifactId>
+      <version>1.2.18</version>
+    </dependency>
+    
     <!-- Servlet依赖 -->
     <dependency>
       <groupId>org.apache.tomcat</groupId>
@@ -162,6 +180,12 @@
       <version>${version.pagehelper}</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.oracle</groupId>
+      <artifactId>ojdbc6</artifactId>
+      <version>6</version>
+    </dependency>
+    
     <!-- Aspectj依赖 -->
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -183,11 +207,11 @@
     </dependency>
 
     <!-- OJDBC依赖 -->
-    <dependency>
-      <groupId>com.oracle</groupId>
-      <artifactId>ojdbc6</artifactId>
-      <version>${version.ojdbc}</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>com.oracle</groupId>-->
+      <!--<artifactId>ojdbc6</artifactId>-->
+      <!--<version>${version.ojdbc}</version>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.springframework.data</groupId>
