@@ -32,7 +32,6 @@ public class AdminController {
     private ArrayList<Admin> adminList=null;
     @Resource
     private MenuService menuServiceImp;
-    private ArrayList<FirstMenu> AllfirstMenuList=new ArrayList<FirstMenu>();
     private ArrayList<FirstMenu> firstMenuList=null;
     private ArrayList<FirstMenu> firstMenu=new ArrayList<FirstMenu>();
     private ArrayList<Integer> firstId =new ArrayList<Integer> ();
@@ -60,6 +59,10 @@ public class AdminController {
                 session =request.getSession();
                 //通过用户名查找角色ID
                 int adminRoleId=adminServiceImpl.selectRoleId(admin.getAdminName());
+                //清空菜单栏
+                secondMenuList=null;
+                ArrayList<FirstMenu> AllfirstMenuList=new ArrayList<FirstMenu>();
+
                 //二级菜单加载
                 secondMenuList= (ArrayList<SecondMenu>) menuServiceImp.findadmin(adminRoleId);
                 //一级菜单加载

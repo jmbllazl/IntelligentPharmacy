@@ -30,32 +30,23 @@
 </div>
 
 <div align="center">
-<form class="layui-form x-center" action="search?action=search" method="post" style="width:85%">
-    <div class="layui-form-pane">
-        <div class="layui-form-item">
-
-            <label class="layui-form-label">一级菜单</label>
-            <div class="layui-input-inline" style="width:85px">
-                <select id="first" name="fileone"  onchange="filechange()">
-                    <option value="0" style="display:none;" >-请选择-</option>
-                    <option value="焦虑">焦虑</option>
-                    <option value="亲子关系">亲子关系</option>
-                    <option value="抑郁">抑郁</option>
-                    <option value="婚姻情感">婚姻情感</option>
-                    <option value="失眠">失眠</option>
-                </select>
-            </div>
-            <label class="layui-form-label">二级菜单</label>
-            <div class="layui-input-inline" style="width:100px">
-                <select id="second" name="titleone" onchange="showmessage()">
-                    <option  style="display:none;" >-请选择-</option>
-                </select>
-            </div>
-
-        </div>
-    </div>
-</form>
+    <table width="500"  >
+        <td>：
+            <select id="first" name="fileone"  onchange="filechange()">
+                <option value="0" style="display:none;" >-请选择-</option>
+                <option value="焦虑">焦虑</option>
+                <option value="亲子关系">亲子关系</option>
+                <option value="抑郁">抑郁</option>
+                <option value="婚姻情感">婚姻情感</option>
+                <option value="失眠">失眠</option>
+            </select></td>
+        <td>心理咨询师：
+            <select id="second" name="titleone" onchange="showmessage()">
+                <option  style="display:none;" >-请选择-</option>
+            </select></td>
+    </table>
 </div>
+
 
 
 
