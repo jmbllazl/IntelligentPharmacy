@@ -32,4 +32,19 @@ public class MenuServiceImp implements MenuService {
         secondMenuId=menuManage.secondMenuId(name);
         return secondMenuId;
     }
+
+    @Override
+    public ArrayList<?> findAllFirst() {
+        return menuManage.findAllFirst();
+    }
+
+    @Override
+    public String findSecondMenuName(int id) {
+        return menuManage.findSecondMenuName(id);
+    }
+
+    @Override
+    public String findSecondMenuUrl(int id) {
+        return menuManage.findSecondMenuUrl(id);
+    }
 }

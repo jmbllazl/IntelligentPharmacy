@@ -34,6 +34,7 @@ public class AdminController {
     private MenuService menuServiceImp;
     private ArrayList<FirstMenu> AllfirstMenuList=new ArrayList<FirstMenu>();
     private ArrayList<FirstMenu> firstMenuList=null;
+    private ArrayList<FirstMenu> firstMenu=new ArrayList<FirstMenu>();
     private ArrayList<Integer> firstId =new ArrayList<Integer> ();
     private ArrayList<SecondMenu> secondMenuList=null;
     @Resource
@@ -207,10 +208,18 @@ public class AdminController {
     }
 
     //管理员配置菜单
+    public void fistMenuList(){
+        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
+//        for(int i=0;i<firstMenu.size();i++){
+//            firstMenu.get(i).setPhamacySecondName(menuServiceImp.findSecondMenuName(firstMenu.get(i).getPhamacyFirstId()));
+//            firstMenu.get(i).setPhamacySecondUrl(menuServiceImp.findSecondMenuUrl(firstMenu.get(i).getPhamacyFirstId()));
+//        }
+    }
     @RequestMapping("menuConfig.action")
-    public String menuConfig(){
-        System.out.println("配置菜单");
-        return null;
+    public String menuConfig(HttpServletRequest request){
+        fistMenuList();
+        request.setAttribute("firstMenuList",firstMenu);
+        return "/adminPage/menuManage";
     }
 
 

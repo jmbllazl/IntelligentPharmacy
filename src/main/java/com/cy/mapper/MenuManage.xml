@@ -11,7 +11,7 @@
       phamacyse_role_table.adminRoleId=#{adminRoleId}
     </select>
 
-    <!--一级菜单查找-->
+    <!--一级菜单条件查找-->
     <select id="findadminFirst" resultType="com.cy.bean.FirstMenu">
     select * from phamacy_first_menu_table  where phamacyFirstId=#{id}
     </select>
@@ -19,6 +19,21 @@
     <!--二级菜单ID查找-->
     <select id="secondMenuId" resultType="java.lang.Integer">
      select phamacysecondid from phamacy_secondary_menu_table where phamacysecondname=#{phamacysecondname}
+    </select>
+
+    <!--一级菜单查找-->
+    <select id="findAllFirst" resultType="com.cy.bean.FirstMenu">
+    select * from phamacy_first_menu_table
+    </select>
+
+    <!--通过一级菜单ID查找二级菜单名-->
+    <select id="findSecondMenuName" resultType="java.lang.String">
+    select phamacySecondName from phamacy_secondary_menu_table where phamacyFirstId=#{id}
+    </select>
+
+    <!--通过一级菜单ID查找二级菜单地址-->
+    <select id="findSecondMenuUrl" resultType="java.lang.String">
+    select phamacySecondUrl from phamacy_secondary_menu_table where phamacyFirstId=#{id}
     </select>
 
 </mapper>
