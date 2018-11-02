@@ -25,7 +25,7 @@
     <version.mybatis>3.4.6</version.mybatis>
     <version.mybatis-spring>1.3.2</version.mybatis-spring>
     <version.pagehelper>5.1.6</version.pagehelper>
-    <version.ojdbc>11.2.0.4</version.ojdbc>
+    <version.ojdbc>6.0</version.ojdbc>
     <version.proxool>0.9.1</version.proxool>
     <!--调试工具-->
     <version.aspectj>1.9.1</version.aspectj>
@@ -95,9 +95,21 @@
     </dependency>
 
 
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>1.2</version>
+    </dependency>
 
     <dependency>
-      <groupId>org.springframework</groupId>      <artifactId>spring-web</artifactId>
+      <groupId>org.apache.taglibs</groupId>
+      <artifactId>taglibs-standard-impl</artifactId>
+      <version>1.2.5</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
       <version>${version.spring}</version>
     </dependency>
     <dependency>

@@ -15,6 +15,7 @@ public class Alarm {
     public Alarm() {
     }
 
+
     public Alarm(int alarmId, int alarmStyleId, int alarmRole, String alarmDetails, String alarmDate) {
         this.alarmId = alarmId;
         this.alarmStyleId = alarmStyleId;
@@ -27,36 +28,36 @@ public class Alarm {
         return alarmId;
     }
 
-    public void setAlarmId(int alarmId) {
-        this.alarmId = alarmId;
-    }
-
     public int getAlarmStyleId() {
         return alarmStyleId;
-    }
-
-    public void setAlarmStyleId(int alarmStyleId) {
-        this.alarmStyleId = alarmStyleId;
     }
 
     public int getAlarmRole() {
         return alarmRole;
     }
 
-    public void setAlarmRole(int alarmRole) {
-        this.alarmRole = alarmRole;
-    }
-
     public String getAlarmDetails() {
         return alarmDetails;
     }
 
-    public void setAlarmDetails(String alarmDetails) {
-        this.alarmDetails = alarmDetails;
-    }
-
     public String getAlarmDate() {
         return alarmDate;
+    }
+
+    public void setAlarmId(int alarmId) {
+        this.alarmId = alarmId;
+    }
+
+    public void setAlarmStyleId(int alarmStyleId) {
+        this.alarmStyleId = alarmStyleId;
+    }
+
+    public void setAlarmRole(int alarmRole) {
+        this.alarmRole = alarmRole;
+    }
+
+    public void setAlarmDetails(String alarmDetails) {
+        this.alarmDetails = alarmDetails;
     }
 
     public void setAlarmDate(String alarmDate) {
