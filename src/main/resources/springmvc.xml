@@ -52,6 +52,7 @@
 				<value>WriteDateUseDateFormat</value>
 				<value>WriteEnumUsingToString</value>
 				<value>WriteNullNumberAsZero</value>
+				<value>DisableCircularReferenceDetect</value>
 			</array>
 		</property>
 	</bean>
