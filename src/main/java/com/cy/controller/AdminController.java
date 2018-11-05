@@ -82,6 +82,7 @@ public class AdminController {
                 session.setAttribute("firstMenuList",AllfirstMenuList);
                 session.setAttribute("secondMenuList",secondMenuList);
                 model.addAttribute("admin", adminResult);
+                session.setAttribute("admin", adminResult);
                 return "adminPage/index";
 
             } else {

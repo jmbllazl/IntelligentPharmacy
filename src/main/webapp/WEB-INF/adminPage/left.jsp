@@ -39,7 +39,7 @@
             <dd>
                 <img class="coin11" src="../images/coin111.png" />
                 <img class="coin22" src="../images/coin222.png" />
-                <a href="${secondMenu.phamacySecondUrl}" target="main" class="cks">${secondMenu.phamacySecondName}</a>
+                <a href="${pageContext.request.contextPath}${secondMenu.phamacySecondUrl}" target="main" class="cks">${secondMenu.phamacySecondName}</a>
                 <img class="icon5" src="../images/coin21.png" />
             </dd>
                     </c:if>

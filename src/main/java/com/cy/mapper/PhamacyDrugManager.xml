@@ -40,6 +40,9 @@
 		<result property="state" column="STATE"/>
 		<result property="phamacyDrugQuantity" column="PHAMACYDRUGQUANTITY"/>
 		<result property="pharmacyId" column="PHARMACYID"/>
+		<result property="drugName" column="DRUGNAME"/>
+		<result property="adminName" column="ADMINNAME"/>
+		<result property="auditor" column="AUDITOR"/>
 	</resultMap>
 	
 	<delete id="delectPhamacyDrug" >
@@ -52,11 +55,22 @@
 	<if test="drugName!=null">
     	and  DRUGNAME like '%'||#{drugName}||'%'
 	</if>
+	<if test="drugNumber!=null">
+	  	and  DRUGNUMBER = #{drugNumber}
+	</if>
+	<if test="formulation!=null">
+	  	and  FORMULATION = #{formulation}
+	</if>
 	</select>
 
 	<!--通过药品ID查询药品-->
 	<select id="selectPhamacyDrug"  resultMap="phamacyDrug">
 		select * from PHARMACY_TABLE where PHARMACYID =#{pharmacyId}
+	</select>
+
+	<!--通过药品名查询药品-->
+	<select id="selectPhamacyDrugs"  resultMap="phamacyDrug">
+		select * from PHARMACY_TABLE where DRUGNAME like '%'||#{drugName}||'%'
 	</select>
 
 	<!--查询药品所有分类-->
@@ -89,6 +103,41 @@
 		</foreach>
 		;end;
 	</insert>
+
+	<!--查询药房药品审核单分页-->
+	<select id="selectPhamacyReceiveDrug"  resultMap="PhamacyReceive">
+		select a.*,b.adminName,c.drugName from admin_table b,pharmacy_table c,receive_table a where a.adminid=b.adminid and a.pharmacyid=c.pharmacyid
+		<if test="drugName!=null">
+			and  c.DRUGNAME like '%'||#{drugName}||'%'
+		</if>
+		<if test="state!=null">
+			and  a.RECEIVEDRUG = #{state}
+		</if>
+		<if test="receiveDate!=null">
+			and  a.RECEIVEDATE = #{receiveDate}
+		</if>
+		order by a.RECEIVEID
+	</select>
+
+	<delete id="delectPhamacyReceive" >
+		delete from receive_table where RECEIVEID = #{receiverId}
+	</delete>
+	<update id="updatePhamacyReceive">
+		update  receive_table set state = #{state},auditor = #{auditor} where RECEIVEID= #{receiverId}
+	</update>
+
+	<!--药房药品盘点-->
+	<update id="checkPhamacyDrugs" parameterType="java.util.List">
+		<foreach collection="phamacyList" item="item" index="index" open="begin" close="; end;" separator=";">
+			update PHARMACY_TABLE
+			<set>
+				<if test="item.drugQuantity != null">
+				DRUGQUANTITY = #{item.drugQuantity}
+				</if>
+			</set>
+			where PHARMACYID = #{item.pharmacyId}
+		</foreach>
+	</update>
 	
 	<!--吴侃-->
 	<!--查询低限药品数量-->
