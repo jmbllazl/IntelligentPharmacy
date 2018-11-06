@@ -40,9 +40,16 @@ li {
 .head .headL img.headLogo {
 	padding-top: 28px;
 }
-
+.head .headAlarm {
+	width: 200px;
+	height: 100%;
+	display: inline-block;
+	float: left;
+	margin-left:550px;
+	text-align:right;
+}
 .head .headR {
-	width: 400px;
+	width: 100px;
 	height: 100%;
 	display: inline-block;
 	float: right;
@@ -51,6 +58,13 @@ li {
 }
 
 .head .headR  a {
+	font-size: 14px;
+	padding-top: 12px;
+	display: inline-block;
+	color: white;
+	cursor: pointer;
+}
+.head .headAlarm  a {
 	font-size: 14px;
 	padding-top: 12px;
 	display: inline-block;

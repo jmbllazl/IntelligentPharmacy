@@ -16,16 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class AlamDemo  {
     private String num;
-
+    private String name;
     HttpServletRequest req;
 
     @Autowired AlarmController alarmController;
 
     private int i=0;
-        @Scheduled(cron="0/30 * * * * ? ") //间隔5秒执行
+        @Scheduled(cron="0/40 * * * * ? ") //间隔5秒执行
         public void test(){
             System.out.println("定时任务开始啦，哈哈哈"+i++);
-            alarmController.alarmNumAllDrugsDrugs(req,num);
+            alarmController.alarmNumAllDrugsDrugs(req,num,name);
             System.out.println("<<<---------结束执行HR数据同步任务--------->>>");
         }
 

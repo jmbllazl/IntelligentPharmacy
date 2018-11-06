@@ -44,7 +44,7 @@
 		<result property="adminName" column="ADMINNAME"/>
 		<result property="auditor" column="AUDITOR"/>
 	</resultMap>
-	
+
 	<delete id="delectPhamacyDrug" >
 		delete from PHARMACY_TABLE where PHARMACYID = #{pharmacyId}
 	</delete>
@@ -77,14 +77,14 @@
 	<select id="selectAllDrugClassification"  resultMap="DrugClassification">
 	 select * from DRUG_CLASSIFICATION_TABLE 
 	</select>
-	
+
 	<!--通过药品分类查询药品-->
 	<select id="selectDrugClassificationPhamacyDrug"  resultMap="phamacyDrug">
 		select * from PHARMACY_TABLE where DRUGCLASSIFICATIONID =#{drugClassificationId}
 	</select>
 	
 	<!--添加药房药品请领-->
-	
+
 	<insert id="addReceiverDrugs" >
 		begin
 		<foreach collection="receiveList" item="item" index="index" separator=";">
@@ -139,11 +139,9 @@
 		</foreach>
 	</update>
 	
+
 	<!--吴侃-->
-	<!--查询低限药品数量-->
-	<select id="selectAlarmNum"  resultMap="phamacyDrug">
-		select * from PHARMACY_TABLE where <![CDATA[  DRUGQUANTITY <= 99 ]]>
-	</select>
+
 </mapper>
 	
 	

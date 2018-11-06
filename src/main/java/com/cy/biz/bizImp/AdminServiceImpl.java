@@ -44,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void startState(String name) {
-       adminMapper.startState(name);
+        adminMapper.startState(name);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void updateadmin(Admin admin) {
-       adminMapper.updateadmin(admin);
+        adminMapper.updateadmin(admin);
     }
 
     @Override
