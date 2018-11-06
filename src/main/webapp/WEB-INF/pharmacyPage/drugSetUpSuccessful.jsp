@@ -23,7 +23,7 @@
 </head>
 <body>
 <div style="line-height:350px;text-align:center">
-    <span><img src="../images/wc.png" style="height:200px; weight:300px;"/>提交成功</span>
+    <span><img src="../images/wc.png" style="height:200px; weight:300px;"/>药品信息设置成功</span>
 </div>
 </body>
 <script>

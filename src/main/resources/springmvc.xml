@@ -13,8 +13,9 @@
 		http://www.springframework.org/schema/aop/spring-aop-3.2.xsd 
 		http://www.springframework.org/schema/tx 
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd ">
-		
-		
+
+
+
         <context:component-scan base-package="com.cy"></context:component-scan>
 	<!-- controller返回json str及中国乱码问题 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">

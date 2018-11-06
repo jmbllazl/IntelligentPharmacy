@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -38,6 +37,7 @@ public class AdminController {
     private ArrayList<SecondMenu> secondMenuList=null;
     @Resource
     private Admin admin;
+    public static String adminName=null;
 
 
     //强制转换
@@ -51,11 +51,12 @@ public class AdminController {
     public String Login(Model model, Admin admin, HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException, ServletException {
         String sessionCode = (String)session.getAttribute("code");
         String code=request.getParameter("code");
-        System.out.print(admin.getAdminName());
-        System.out.print(admin.getPassword());
+        System.out.println(admin.getAdminName());
+        System.out.println(admin.getPassword());
         if (code.equalsIgnoreCase(sessionCode)) {
             Admin adminResult = adminServiceImpl.login(admin);
             if (adminResult != null) {
+                adminName=admin.getAdminName();
                 session =request.getSession();
                 //通过用户名查找角色ID
                 int adminRoleId=adminServiceImpl.selectRoleId(admin.getAdminName());
@@ -163,7 +164,7 @@ public class AdminController {
         return "/adminPage/userManage";
     }
     //启用操作
-    @RequestMapping("startState.action")
+    @RequestMapping("/startState.action")
     public String startState(HttpServletRequest request,String name){
         adminServiceImpl.startState(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
@@ -172,7 +173,7 @@ public class AdminController {
     }
 
     //用户编辑页面显示
-    @RequestMapping("userEditView.action")
+    @RequestMapping("/userEditView.action")
     public String  userEditView(HttpServletRequest request,String name){
         adminList= (ArrayList<Admin>) adminServiceImpl.findadmin(name);
         request.setAttribute("adminList",adminList);
@@ -180,21 +181,19 @@ public class AdminController {
     }
 
     //用户编辑提交
-    @RequestMapping("userEdit.action")
+    @RequestMapping("/userEdit.action")
     public String userEdit(HttpServletRequest request){
-        int adminid =toInt(request.getParameter("adminid"));
-        String adminname = request.getParameter("adminname");
-        String  admintel =request.getParameter("admintel");
-        int adminage = toInt(request.getParameter("adminage"));
-        admin=new Admin(adminname,admintel,adminage,adminid);
+        int adminId =toInt(request.getParameter("adminid"));
+        String adminName = request.getParameter("adminname");
+        String  adminTel =request.getParameter("admintel");
+        int adminAge = toInt(request.getParameter("adminage"));
+        admin=new Admin(adminName,adminTel,adminAge,adminId);
         adminServiceImpl.updateadmin(admin);
-        adminList= (ArrayList<Admin>) adminServiceImpl.findadmin(adminname);
-        request.setAttribute("adminList",adminList);
-        return "/adminPage/user_management_editsuccefull";
+        return "/adminFind.action";
     }
 
     //重置密码
-    @RequestMapping("newPassword.action")
+    @RequestMapping("/newPassword.action")
     public String newPassword(HttpServletRequest request,String name){
         adminServiceImpl.newPassword(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
@@ -203,7 +202,7 @@ public class AdminController {
     }
 
     //管理员删除
-    @RequestMapping("userDetele.action")
+    @RequestMapping("/userDetele.action")
     public String userDetele(HttpServletRequest request,String name){
         adminServiceImpl.userDetele(name);
         adminList= (ArrayList<Admin>) adminServiceImpl.find();
@@ -212,19 +211,113 @@ public class AdminController {
     }
 
     //管理员配置菜单
-    public void fistMenuList(){
-        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
-//        for(int i=0;i<firstMenu.size();i++){
-//            firstMenu.get(i).setPhamacySecondName(menuServiceImp.findSecondMenuName(firstMenu.get(i).getPhamacyFirstId()));
-//            firstMenu.get(i).setPhamacySecondUrl(menuServiceImp.findSecondMenuUrl(firstMenu.get(i).getPhamacyFirstId()));
-//        }
-    }
-    @RequestMapping("menuConfig.action")
+    @RequestMapping("/menuConfig.action")
     public String menuConfig(HttpServletRequest request){
-        fistMenuList();
-        request.setAttribute("firstMenuList",firstMenu);
         return "/adminPage/menuManage";
     }
+
+    //查询一级菜单
+    @RequestMapping(value="/searchFirstMenu.action")
+    public @ResponseBody ArrayList<FirstMenu> searchFirstMenu()  {
+        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
+        return firstMenu;
+    }
+
+    //查询二级菜单
+    @RequestMapping(value ="/searchSendMenu.action")
+    public @ResponseBody ArrayList<SecondMenu> searchSendMenu(String firstMenuName){
+        int firstMenuId=menuServiceImp.firstMenuId(firstMenuName);
+        secondMenuList= (ArrayList<SecondMenu>) menuServiceImp.findSecondMenu(firstMenuId);
+        return secondMenuList;
+    }
+
+    //一级菜单添加页面
+    @RequestMapping("addFirstMenuView.action")
+    public String addFirstMenuView(){
+        return "/adminPage/addFirstMenuView";
+    }
+
+    //一级菜单添加提交
+    @RequestMapping("submitFirstMenu.action")
+    public String submitFirstMenu(HttpServletRequest request,String firstName){
+        menuServiceImp.addFirstMenu(firstName);
+        return "/adminPage/menuManage";
+    }
+
+    //一级菜单删除
+    @RequestMapping("firstMenuDelete.action")
+    public String firstMenuDelete(HttpServletRequest request,String firstMenuName,int firstMenuId){
+        menuServiceImp.firstMenuDelete(firstMenuName);
+        //一级菜单下的子菜单一起删除
+        menuServiceImp.secondMenuDelete2(firstMenuId);
+
+        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
+        request.setAttribute("firstMenu",firstMenu);
+        return "adminPage/editFirstMenuView";
+    }
+
+    //一级菜单编辑页面
+    @RequestMapping("editFirstMenuView.action")
+    public String editFirstMenuView(HttpServletRequest request){
+        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
+        request.setAttribute("firstMenu",firstMenu);
+        return "adminPage/editFirstMenuView";
+    }
+
+    private  int ufirstMenuId=0;
+    //一级菜单修改
+    @RequestMapping("editFirstMenu.action")
+    public String editFirstMenu(HttpServletRequest request,String firstMenuName,int firstMenuId){
+        ufirstMenuId=firstMenuId;
+        request.setAttribute("firstMenuName",firstMenuName);
+        return "adminPage/updateFirstMenu";
+    }
+
+    //一级菜单修改提交(有BUG)
+    @RequestMapping("updateFirstMenu.action")
+    public String updateFirstMenu(HttpServletRequest request){
+        System.out.println("id："+ufirstMenuId);
+        String firstMenuName = request.getParameter("firstMenuName");
+        FirstMenu first = new FirstMenu(firstMenuName,ufirstMenuId);
+        menuServiceImp.updateFirstMenu(first);
+        firstMenu= (ArrayList<FirstMenu>) menuServiceImp.findAllFirst();
+        request.setAttribute("firstMenu",firstMenu);
+        return "adminPage/menuManage";
+    }
+
+    //二级菜单添加页面
+    @RequestMapping("addSecondMenuView.action")
+    public String addSecondMenuView(){
+        return "adminPage/addSecondMenuView";
+    }
+
+    //二级菜单添加提交
+    @RequestMapping("submitSecondMenu.action")
+    public String submitSecondMenu(HttpServletRequest request,String secondName,String searchFirstMenu){
+        int firstMenuId =menuServiceImp.firstMenuId(searchFirstMenu);
+        SecondMenu secondMenu = new SecondMenu(secondName,firstMenuId);
+        menuServiceImp.addSecondMenu(secondMenu);
+        return "adminPage/menuManage";
+    }
+
+    //二级菜单删除
+    @RequestMapping("secondMenuDetele.action")
+    public String secondMenuDetele(HttpServletRequest request,String searchSendMenu){
+        menuServiceImp.secondMenuDelete(searchSendMenu);
+        return "adminPage/menuManage";
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public Admin getAdmin() {

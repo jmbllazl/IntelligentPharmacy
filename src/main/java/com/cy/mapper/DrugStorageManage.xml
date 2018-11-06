@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cy.mapper.DrugStorageManage">
+
+    <!--一级菜单添加-->
+    <insert id="DrugPurchase"  parameterType="com.cy.bean.DrugStore">
+		insert into DRUGSTORE_TABLE(drugId,drugName,drugNumber,drugClassificationId,drugDetails
+		,formulation,norm,unit,drugPrice,approvalnumber,produtionDate,lotNumber,validaityperiod,
+		manufacturer,storageTime,drugPhoto,medicalinsurance,dayConsumption) values(DRUGID_SEQUENCE.NEXTVAL,#{drugName},#{drugClassificationId},#{drugNumber},
+		#{drugDetails},#{formulation},#{norm},#{unit},#{drugPrice},#{approvalnumber},#{produtionDate},#{lotNumber},#{validaityperiod}
+		,#{manufacturer},#{storageTime},#{drugPhoto},0,#{dayConsumption})
+	</insert>
+
+    <!--通过药品分类查询药品-->
+    <select id="selectDrugStore"  resultType="com.cy.bean.DrugStore">
+		select * from DRUGSTORE_TABLE where drugClassificationId =#{drugClassificationId}
+	</select>
+
+	<!--添加药房采购-->
+	<insert id="addPurchase" >
+		begin
+		<foreach collection="purchaseList" item="item" index="index" separator=";">
+			insert into purchase_table(purchaseId,receivedDate,state,drugId,drugQuantity,adminName)
+			values
+			(
+			PURCHASEID_SEQUENCE.NEXTVAL,
+			#{item.receivedDate},
+			#{item.state},
+			#{item.drugId},
+			#{item.drugQuantity},
+			#{item.adminName}
+			)
+		</foreach>
+		;end;
+	</insert>
+
+</mapper>

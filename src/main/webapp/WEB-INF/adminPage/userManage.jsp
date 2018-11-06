@@ -14,23 +14,10 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-    <link rel="stylesheet" href="../css/x-admin.css" media="all">
-    <link rel="stylesheet" href="../css/pag.css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pag.css" media="all">
 </head>
-<script type="text/javascript">
 
- /*   function check(){
-        var searchname =document.getElementById("searchname").value;
-        var searchtitle =document.getElementById("searchtitle").value;
-        var state =document.getElementById("state").value;
-        var yourId =document.getElementById("yourId").value;
-        if(searchname==""&&searchtitle==""&&state==""&&yourId==""){
-            alert("查询内容不能为空");
-        }
-
-    }*/
-
-</script>
 <body>
 <div class="x-nav">
             <span class="layui-breadcrumb">
@@ -49,37 +36,6 @@
         <div class="layui-form-item">               <ul class="toolbar">
             <li onclick="user_management_add('添加用户','huser_management_add.jsp','600','500')"><span><img src="../images/t01.png" /></span>添加</li>
         </ul>
-
-            <label class="layui-form-label">姓名</label>
-            <div class="layui-input-inline" style="width:80px">
-                <input type="text" name="searchname" id="searchname"  placeholder="姓名" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">状态</label>
-            <div class="layui-input-inline" style="width:85px">
-                <select name="searchstate" id="state">
-                    <option value=""></option>
-                    <option value="2">启用</option>
-                    <option value="3">锁定</option>
-                </select>
-            </div>
-            <label class="layui-form-label">职称</label>
-            <div class="layui-input-inline" style="width:100px">
-                <input type="text" name="searchtitle" id="searchtitle"  placeholder="职称" autocomplete="off" class="layui-input">
-            </div>
-            <label class="layui-form-label">擅长领域</label>
-            <div class="layui-input-inline" style="width:100px">
-                <select name="searchfile" id="yourId">
-                    <option value=""> </option>
-                    <option value="1">焦虑</option>
-                    <option value="2">亲子关系</option>
-                    <option value="3">抑郁</option>
-                    <option value="4">婚姻情感</option>
-                    <option value="5">失眠</option>
-                </select>
-            </div>
-            <div class="layui-input-inline" style="width:80px">
-                <button class="layui-btn"  lay-submit="" lay-filter="*" onclick="check()">搜索</button>
-            </div>
         </div>
     </div>
 </form>
@@ -103,11 +59,13 @@
         </thead>
         <tbody>
 
-
+        <c:forEach items="${adminList}"  var="admin" >
         <tr>
-            <c:forEach items="${adminList}"  var="admin" >
+
             <td name ="adstate">${admin.adminId} </td>
-            <td>${admin.adminName}</td>
+            <td >${admin.adminName}
+                <!--     隐藏域 -->
+                <input type="hidden" id="adminName" name="adminName" value="${admin.adminName}"></td>
             <td>${admin.password}</td>
             <td>${admin.adminSex}</td>
             <td>${admin.adminAge}</td>
@@ -133,16 +91,16 @@
                         <button class="sp2">${admin.adminDetele}</button>
                     </td>
                 </c:if>
-                <!--     隐藏域 -->
-                <input type="hidden" id="uid" name="uid" value="${admin.adminName}">
+
+
                 <td class="td-manage">
                     <c:if test="${admin.adminState=='启用'}">
-                    <a style="text-decoration:none" onclick="member_stop(this)"  href="#" title="禁用">
+                    <a style="text-decoration:none" onclick="member_stop()"  href="stopState.action?name=${admin.adminName}" title="禁用">
                         <i class="layui-icon">&#xe601;</i>
                     </a>
                     </c:if>
                     <c:if test="${admin.adminState=='禁用'}">
-                        <a style="text-decoration:none" onclick="member_start(this)"  href="#" title="启用">
+                        <a style="text-decoration:none" onclick="member_start()"  href="startState.action?name=${admin.adminName}" title="启用">
                             <i class="layui-icon">&#xe62f;</i>
                         </a>
                     </c:if>
@@ -151,10 +109,10 @@
                         <i class="layui-icon">&#xe642;</i>
                     </a>
                     <a style="text-decoration:none"  onclick="newPassword(this)"
-                       href="#" title="重置密码">
+                       href="newPassword.action?name=${admin.adminName}" title="重置密码">
                         <i class="layui-icon">&#xe631;</i>
                     </a>
-                    <a title="删除" href="#" onclick="member_del(this)"
+                    <a title="删除" href="userDetele.action?name=${admin.adminName}" onclick="member_del(this)"
                        style="text-decoration:none">
                         <i class="layui-icon">&#xe640;</i>
                     </a>
@@ -177,19 +135,6 @@
 <script src="${pageContext.request.contextPath}/js/js.js" charset="utf-8"></script>
 <script>
 
-    /*
-           function detele(){
-
-               var t=confirm("确定要删除？");
-               var uid=document.getElementById("uid").value;
-               if(t==true){
-                   location.href="del?action=del&uid="+uid;
-               }else{
-                   location.href="ss?action=ss";
-               }
-           } */
-
-
 
 
     layui.use(['laydate','element','laypage','layer'], function(){
@@ -200,33 +145,32 @@
 
     });
 
-    /*用户-添加*/
-    function user_management_add(title,url,w,h){
-        x_admin_show(title,url,w,h);
-    }
 
-    /*用户-停用*/
-    function member_stop(obj){
-        var t=confirm("确定要禁用？");
-        var name=document.getElementById("uid").value;
-        if(t==true){
-            location.href="stopState.action?name="+name;
-            layer.msg('已禁用!',{icon: 5,time:1000});
-        }else{
-            location.href="adminFind.action";
-        }
+
+    /*用户-禁用*/
+    function member_stop(){
+        // var t=confirm("确定要禁用？");
+        // var name=document.getElementById("adminName").value;
+        // alert(name);
+        // if(t==true){
+        //     location.href="stopState.action?name="+name;
+        //     layer.msg('已禁用!',{icon: 5,time:1000});
+        // }else{
+        //     location.href="adminFind.action";
+        // }
     }
 
     /*用户-启用*/
     function member_start(){
-        var t=confirm("确定要启用？");
-        var name=document.getElementById("uid").value;
-        if(t==true){
-            location.href="startState.action?name="+name;
-            layer.msg('已启用!',{icon: 6,time:1000});
-        }else{
-            location.href="adminFind.action";
-        }
+        // var t=confirm("确定要启用？");
+        // var name=document.getElementById("adminName").value;
+        // alert(name);
+        // if(t==true){
+        //     location.href="startState.action?name="+name;
+        //     layer.msg('已启用!',{icon: 6,time:1000});
+        // }else{
+        //     location.href="adminFind.action";
+        // }
 
     }
 
@@ -237,27 +181,29 @@
 
     //用户重置密码
     function newPassword(){
-        var t=confirm("确定要重置密码？");
-        var name=document.getElementById("uid").value;
-        if(t==true){
-            location.href="newPassword.action?name="+name;
-            layer.msg('重置成功!',{icon: 6,time:1000});
-        }else{
-            location.href="adminFind.action";
-        }
+        // var t=confirm("确定要重置密码？");
+        // var name=document.getElementById("adminName").value;
+        // alert(name);
+        // if(t==true){
+        //     location.href="newPassword.action?name="+name;
+        //     layer.msg('重置成功!',{icon: 6,time:1000});
+        // }else{
+        //     location.href="adminFind.action";
+        // }
 
     }
 
     //用户删除
     function member_del(){
-        var t=confirm("确定要删除该用户？");
-        var name=document.getElementById("uid").value;
-        if(t==true){
-            location.href="userDetele.action?name="+name;
-            layer.msg('删除成功!',{icon: 6,time:1000});
-        }else{
-            location.href="adminFind.action";
-        }
+        // var t=confirm("确定要删除该用户？");
+        // var name=document.getElementById("adminName").value;
+        // alert(name);
+        // if(t==true){
+        //     location.href="userDetele.action?name="+name;
+        //     layer.msg('删除成功!',{icon: 6,time:1000});
+        // }else{
+        //     location.href="adminFind.action";
+        // }
 
     }
 
