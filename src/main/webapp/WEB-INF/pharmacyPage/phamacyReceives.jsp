@@ -75,10 +75,12 @@
               <td>${receiveDrugTemp.phamacyDrugQuantity}</td>
               <td>${receiveDrugTemp.state}</td>
               <td>
-                <input type="button" value="删除" onclick="deltReceive('${receiveDrugTemp.receiverId}')">
+                  <c:if test="${receiveDrugTemp.state=='审核中'}">
+                      <input type="button" value="删除" onclick="deltReceive('${receiveDrugTemp.receiverId}')">
+                  </c:if>
                 <c:if test="${sessionScope.admin.adminRoleId==3}">
                   <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}')">
-                  <input type="button" id="btn" value="审核不通过" onclick="updateReceive('${receiveDrugTemp.receiverId}')">
+                  <input type="button" id="btn1" value="审核不通过" onclick="updateReceives('${receiveDrugTemp.receiverId}')">
                 </c:if>
                 
             </tr>
@@ -161,24 +163,37 @@
         }
     }
     function updateReceive(id) {
-        var isDel = window.confirm("亲！是否审核！")
+        var isDel = window.confirm("亲！是否审核通过！")
         var receiverId = id;
         var state = $('#btn').val();
         if(isDel){
-            $.post("${pageContext.request.contextPath}/phamacy/updatePhamacyReceive.action",
-                {receiverId:receiverId,state:state},
-                function(result) {
-                    if (result.success == 1) {
-                        window.alert("操作成功！")
-                        window.location.href="${pageContext.request.contextPath}/phamacy/selectPhamacyReceive.action";
-                    }else if(result.success == 0){
-                        window.alert("操作失败！")
-                    }
-                })
+           check(receiverId,state)
         }else {
             return;
         }
     }
-</script>
+    function updateReceives(id) {
+        var isDel = window.confirm("亲！是否审核不通过！")
+        var receiverId = id;
+        var state = $('#btn1').val();
+        if(isDel){
+            check(receiverId,state)
+        }else {
+            return;
+        }
+    }
+    function check(receiverId,state){
+        $.post("${pageContext.request.contextPath}/phamacy/updatePhamacyReceive.action",
+            {receiverId:receiverId,state:state},
+            function(result) {
+                if (result.success == 1) {
+                    window.alert("操作成功！")
+                    window.location.href="${pageContext.request.contextPath}/phamacy/selectPhamacyReceive.action";
+                }else if(result.success == 0){
+                    window.alert("操作失败！")
+                }
+            })
+    }
+</script></div>
 </body>
 </html>
