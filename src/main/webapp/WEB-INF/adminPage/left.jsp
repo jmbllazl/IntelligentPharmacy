@@ -29,30 +29,6 @@
         </a>
 
         <!--用户管理-->
-        <dl class="system_log">
-            <c:forEach items="${firstMenuList}"  var="firstMenu" >
-            <dt>
-                <img class="icon1" src="../images/coin07.png" />
-                <img class="icon2" src="../images/coin08.png" />
-                ${firstMenu.phamacyFirstName}
-                <img class="icon3" src="../images/coin19.png" />
-                <img class="icon4" src="../images/coin20.png" />
-            </dt>
-            <dd>
-                <img class="coin11" src="../images/coin111.png" />
-                <img class="coin22" src="../images/coin222.png" />
-                <a href="showuser?action=showuser" target="main" class="cks">用户管理</a>
-                <img class="icon5" src="../images/coin21.png" />
-            </dd>
-            <dd>
-                <img class="coin11" src="../images/coin111.png" />
-                <img class="coin22" src="../images/coin222.png" />
-                <a href="adminFind.action" target="main" class="cks">后台用户管理</a>
-                <img class="icon5" src="../images/coin21.png" />
-            </dd>
-            </c:forEach>
-        </dl>
-
         <c:forEach items="${firstMenuList}"  var="firstMenu" >
         <dl class="system_log">
             <dt>
@@ -77,9 +53,5 @@
     </div>
 
 </div>
-
-
-
-
 </body>
 </html>
