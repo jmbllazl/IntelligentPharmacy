@@ -10,7 +10,7 @@
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <html>
 <head>
-    <title>药品采购页面</title>
+    <title>药品退还厂家页面</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pag.css" media="all">
 </head>
@@ -19,7 +19,7 @@
     function check() {
         var controlAll=document.getElementById("drugQuantity").value;
         if(controlAll==""){
-            alert("请先输入采购的数量")
+            alert("请先输入退库的数量")
         }
     }
 
@@ -29,27 +29,27 @@
 <div class="x-nav">
             <span class="layui-breadcrumb">
               <a><cite>首页</cite></a>
-              <a><cite>药品采购</cite></a>
+              <a><cite>退还厂家</cite></a>
             </span>
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="/phamacy/drugPurchase.action" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="/phamacy/drugStoreOut.action" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="tools">
 
 </div>
 <form  action="#" method="post">
-    请选择药品类别：<select  name="drugClassifications" id="drugClassifications">
+    请选择退还厂家药品类别：<select  name="drugClassifications" id="drugClassifications">
     <option value="">请选择</option>
     <c:forEach items="${drugClassification}" var="drugClassifications">
         <option value="${drugClassifications.drugClassificationId}" id="drugClassification" }>${drugClassifications.drugClassificationName}</option>
     </c:forEach>
 </select >
 </form>
-<form  id="recevieDrug" action="/phamacy/submitdrugPurchase.action" method="post">
+<form  id="recevieDrug" action="/phamacy/submitDrugStoreOut.action" method="post">
     <input type="hidden" name="num">
     <table align="center" class="tablelist" >
         <thead>
         <tr>
-             <th>
+            <th>
                 <input onclick="selectAll()" type="checkbox" name="controlAll" style="" id="controlAll"></th>
             <th> 药品品名 </th>
             <th> 剂型</th>
@@ -58,7 +58,9 @@
             <th> 药品价格 </th>
             <th> 批准文号 </th>
             <th> 生产厂商 </th>
-            <th> 采购数量 </th>
+            <th> 库存量 </th>
+            <th> 退还数量 </th>
+            <th> 选择退还原因 </th>
         </tr>
         </thead>
 
@@ -66,7 +68,7 @@
         </tbody>
     </table>
     <div align="center">
-    <input type="submit"  class="layui-btn"  value="提 交" onclick="return check()" style="width: 150px;height: 28px">
+        <input type="submit"  class="layui-btn"  value="提 交" onclick="return check()" style="width: 150px;height: 28px">
     </div>
 </form>
 </body>
@@ -93,7 +95,14 @@
                     <td>\${res.list[i].drugPrice}</td>
                     <td>\${res.list[i].approvalnumber}</td>
                     <td>\${res.list[i].manufacturer}</td>
+                    <td>\${res.list[i].drugQuantity}</td>
                     <td><input type="text"  name="drugQuantity" id="drugQuantity"></td>
+                    <td><select name="outReason" id="outReason" style="width: 100px;height: 22px" >
+                         <option value='无' style='display:none;' >-请选择-</option>";
+                         <option value="药品过期">药品过期</option>
+                         <option value="药品破损">药品破损</option>
+                         <option value="药品滞销">药品滞销</option>
+                         </select></td>
 
 
 </tr>`));

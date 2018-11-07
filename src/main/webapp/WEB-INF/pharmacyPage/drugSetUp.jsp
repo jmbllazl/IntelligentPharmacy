@@ -76,7 +76,8 @@
                     <option value=""> </option>
                     <option value="片剂">片剂</option>
                     <option value="注射液">注射液</option>
-                    <option value="中药">包/元</option>
+                    <option value="中药">包</option>
+                    <option value="颗粒">颗粒</option>
                 </select>
             </div>
         </div>
@@ -233,7 +234,7 @@
     //自定义日期格式
     laydate({
         elem: '#test1',
-        format: 'YYYY年MM月DD日',
+        format: 'YYYY-MM-DD',
         festival: true, //显示节日
         choose: function(datas){ //选择日期完毕的回调
         }
@@ -242,7 +243,7 @@
     //自定义日期格式
     laydate({
         elem: '#test2',
-        format: 'YYYY年MM月DD日',
+        format: 'YYYY-MM-DD',
         festival: true, //显示节日
         choose: function(datas){ //选择日期完毕的回调
         }
@@ -251,7 +252,7 @@
     //自定义日期格式
     laydate({
         elem: '#test3',
-        format: 'YYYY年MM月DD日',
+        format: 'YYYY-MM-DD',
         festival: true, //显示节日
         choose: function(datas){ //选择日期完毕的回调
         }

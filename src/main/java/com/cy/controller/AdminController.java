@@ -307,19 +307,6 @@ public class AdminController {
         return "adminPage/menuManage";
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     public Admin getAdmin() {
         return admin;
     }

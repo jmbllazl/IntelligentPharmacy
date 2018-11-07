@@ -9,7 +9,7 @@ public class Purchase {
     private int drugId; //药品ID
     private int drugQuantity;//数量
     private String drugName;//药品品名
-    private String adminName;//药品品名
+    private String adminName;//管理员名
 
     public Purchase() {
     }
@@ -23,6 +23,11 @@ public class Purchase {
         this.drugQuantity = drugQuantity;
         this.drugName=drugName;
         this.adminName=adminName;
+    }
+
+    public Purchase(int drugQuantity, String drugName) {
+        this.drugQuantity=drugQuantity;
+        this.drugName=drugName;
     }
 
     public int getPurchaseId() {

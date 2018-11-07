@@ -86,7 +86,6 @@ public class DrugStorageController  {
     //药品采购提交
     @RequestMapping("/submitdrugPurchase.action")
     public String submitdrugPurchase(HttpServletRequest request ,String[] drugQuantity,String[] selected){
-
         List<Purchase> drugChaseList = new ArrayList<Purchase>();
         String [] drugs = new String[10];
         int a=0;
@@ -100,10 +99,10 @@ public class DrugStorageController  {
             for(int i=0;i<selected.length;i++){
                 if(selected[i]!=""){
                     Purchase purchase= new Purchase();
-                    purchase.setDrugId(toInt(selected[i]));
+                    purchase.setDrugName(drugStorageServiceImp.drugName(toInt(selected[i])));
                     purchase.setDrugQuantity(toInt(drugs[i]));
                     Date ss = new Date();
-                    SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+                    SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
                     String time = nowDate.format(ss.getTime());
                     purchase.setReceivedDate(time);
                     purchase.setState("审核中");
@@ -113,53 +112,130 @@ public class DrugStorageController  {
             }
         }
         int result= drugStorageServiceImp.addPurchase(drugChaseList);
-        return "forward:/phamacy/selectPurase.action";
-    }
-    //药品采购单审核查询
-    @RequestMapping("/selectPurase.action")
-    public String selectPurase(HttpServletRequest request, String num , String state,String drugName,String receiveDate){
-
-        if(!StringUtils.isEmpty(state)){
-            map.put("state",state);
-        }if(!StringUtils.isEmpty(drugName)){
-            map.put("drugName",drugName);
-        }if(!StringUtils.isEmpty(receiveDate)){
-            map.put("receiveDate",receiveDate);
-        }
-        PageInfo<PhamacyReceive> phamacyReceive = phamacyService.selectPhamacyReceivePageInfo(map, num, 10);
-
-        if (phamacyReceive!=null) {
-            map.clear();
-            HttpSession session = request.getSession();
-            request.setAttribute("phamacyReceive",phamacyReceive);
-            return "/pharmacyPage/phamacyPurase";
-        } else {
-            return "error";
-        }
+        return "forward:/phamacy/selectPurasePage.action";
     }
 
     //药品采购单显示
     @RequestMapping("/selectPurasePage.action")
-    public String selectPurasePage(HttpServletRequest request, String num , String state,String drugName,String receivedDate){
+    public String selectPurasePage(HttpServletRequest request, String num){
+        PageInfo<Purchase> phamacyPurchase = drugStorageServiceImp.selectPhamacyReceivePageInfo(num, 10);
+        request.setAttribute("phamacyPurchase",phamacyPurchase);
+        return "/pharmacyPage/phamacyPurase";
+    }
 
-        if(!StringUtils.isEmpty(state)){
-            map.put("state",state);
-        }if(!StringUtils.isEmpty(drugName)){
-            map.put("drugName",drugName);
-        }if(!StringUtils.isEmpty(receivedDate)){
-            map.put("receiveDate",receivedDate);
+    //删除采购单
+    @RequestMapping("/purchaseDetele.action")
+    public String purchaseDetele(int drugId){
+        drugStorageServiceImp.purchaseDetele(drugId);
+        return "forward:/phamacy/selectPurasePage.action";
+    }
+
+    //管理员审核
+    @RequestMapping("phamacyPuraseExamine.action")
+    public String phamacyPuraseExamine(HttpServletRequest request, String num){
+        PageInfo<Purchase> phamacyPurchase = drugStorageServiceImp.selectPhamacyReceivePageInfo(num, 10);
+        request.setAttribute("phamacyPurchase",phamacyPurchase);
+        return "/pharmacyPage/phamacyPuraseExamine";
+    }
+
+    //采购单通过审核
+    @RequestMapping("/reviewPass.action")
+    public String reviewPass(int purchaseId,int drugQuantity,String drugName){
+        drugStorageServiceImp.reviewPass(purchaseId);
+        //通过审核将药品的数量增加
+        Purchase purchase=new Purchase(drugQuantity,drugName);
+        drugStorageServiceImp.addDrug(purchase);
+        return "forward:/phamacy/phamacyPuraseExamine.action";
+    }
+
+    //采购单不通过审核
+    @RequestMapping("/noReviewPass.action")
+    public String noReviewPass(int purchaseId){
+        drugStorageServiceImp.noReviewPass(purchaseId);
+        return "forward:/phamacy/phamacyPuraseExamine.action";
+    }
+
+    //退还厂家页面
+    @RequestMapping("/drugStoreOut.action")
+    public String drugStoreOut(HttpServletRequest request){
+        List<DrugClassification> drugClassification = phamacyService.selectDrugClassification();
+        request.setAttribute("drugClassification",drugClassification);
+        return "/pharmacyPage/drugStoreOut";
+    }
+
+    //药品退还厂家提交
+    @RequestMapping("/submitDrugStoreOut.action")
+    public String submitDrugStoreOut(HttpServletRequest request ,String[] drugQuantity,String[] selected ,String[] outReason){
+        List<DrugStoreOut> drugStoreOutList = new ArrayList<DrugStoreOut>();
+        String [] drugs = new String[10];
+        String [] reason = new String[10];
+        if(drugQuantity!=null||selected!=null){
+            int a=0;
+            for(int j=0;j<drugQuantity.length;j++) {
+                if (drugQuantity[j] != "") {
+                    drugs[a] = drugQuantity[j];
+                    reason[a] = outReason[j];
+                    a++;
+                }
+            }
+            for(int i=0;i<selected.length;i++){
+                if(selected[i]!=""){
+                    DrugStoreOut drugStoreOut= new DrugStoreOut();
+                    drugStoreOut.setDrugName(drugStorageServiceImp.drugName(toInt(selected[i])));
+                    drugStoreOut.setDrugQuantity(toInt(drugs[i]));
+                    Date ss = new Date();
+                    SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+                    String time = nowDate.format(ss.getTime());
+                    drugStoreOut.setReceiveDate(time);
+                    drugStoreOut.setState("审核中");
+                    drugStoreOut.setDrugStoreOutName("退货");
+                    drugStoreOut.setOutReason(reason[i]);
+                    drugStoreOut.setAdminName(AdminController.adminName);
+                    drugStoreOutList.add(drugStoreOut);
+                }
+            }
         }
-        PageInfo<Purchase> phamacyPurchase = drugStorageServiceImp.selectPhamacyReceivePageInfo(map, num, 10);
+        int result= drugStorageServiceImp.drugStoreOut(drugStoreOutList);
+        return "forward:/phamacy/selectDrugStoreOut.action";
+    }
+    //药品退还厂家单显示
+    @RequestMapping("/selectDrugStoreOut.action")
+    public String selectDrugStoreOut(HttpServletRequest request, String num){
+        PageInfo<DrugStoreOut> drugStoreOut = drugStorageServiceImp.selectDrugStoreOut(num, 10);
+        request.setAttribute("drugStoreOut",drugStoreOut);
+        return "/pharmacyPage/drugStoreOutResult";
+    }
 
-        if (phamacyPurchase!=null) {
-            map.clear();
-            HttpSession session = request.getSession();
-            request.setAttribute("phamacyPurchase",phamacyPurchase);
-            return "/pharmacyPage/phamacyPurase";
-        } else {
-            return "error";
-        }
+    //删除退还厂家单
+    @RequestMapping("/DrugStoreOutDetele.action")
+    public String DrugStoreOutDetele(int drugStoreOutId){
+        drugStorageServiceImp.drugStoreOutDetele(drugStoreOutId);
+        return "forward:/phamacy/selectDrugStoreOut.action";
+    }
 
+    //退库审核
+    @RequestMapping("drugStoreOutResultExamine.action")
+    public String drugStoreOutResultExamine(HttpServletRequest request, String num){
+        PageInfo<DrugStoreOut> drugStoreOut = drugStorageServiceImp.selectDrugStoreOut(num, 10);
+        request.setAttribute("drugStoreOut",drugStoreOut);
+        return "/pharmacyPage/drugStoreOutResultExamine";
+    }
+
+    //退库审核通过
+    @RequestMapping("/drugStoreOutReviewPass.action")
+    public String drugStoreOutReviewPass(int drugStoreOutId,int drugQuantity,String drugName){
+        drugStorageServiceImp.drugStoreOutReviewPass(drugStoreOutId);
+        //通过审核将药品的数量增加
+        DrugStoreOut drugStoreOut=new DrugStoreOut(drugQuantity,drugName);
+        drugStorageServiceImp.reduceDrug(drugStoreOut);
+        return "forward:/phamacy/drugStoreOutResultExamine.action";
+    }
+
+    //退库审核不通过
+    @RequestMapping("/drugStoreOutNoReviewPass.action")
+    public String drugStoreOutNoReviewPass(int drugStoreOutId){
+        drugStorageServiceImp.drugStoreOutNoReviewPass(drugStoreOutId);
+        return "forward:/phamacy/drugStoreOutResultExamine.action";
     }
 
 }
