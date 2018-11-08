@@ -138,7 +138,16 @@
 			where PHARMACYID = #{item.pharmacyId}
 		</foreach>
 	</update>
-	
+
+	<!--药房药品调价审核-->
+	<update id="phamacyDrugsPrice">
+	  	update PHARMACY_TABLE set DRUGPRICE = #{phamacyDrugQuantity} where PHARMACYID = #{pharmacyId}
+	</update>
+
+	<!--药房药品退库审核-->
+	<update id="phamacyDrugsBack">
+	  	update PHARMACY_TABLE set DRUGQUANTITY = #{phamacyDrugQuantity} where PHARMACYID = #{pharmacyId}
+	</update>
 
 	<!--吴侃-->
 
