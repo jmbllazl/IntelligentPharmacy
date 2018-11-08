@@ -9,6 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../css/public.css">
     <script type="text/javascript" src="../js/jquery.min.js"></script>
     <script type="text/javascript" src="../js/public.js"></script>
+    <head></head>
+
+
+
 </head>
 
 <body id="bg">
@@ -49,7 +53,5 @@
     </div>
 
 </div>
-
-
 </body>
 </html>

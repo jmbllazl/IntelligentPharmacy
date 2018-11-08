@@ -12,6 +12,7 @@
 
 </head>
 
+<body >
 <body>
 
 <!-- 头部 -->
@@ -19,10 +20,15 @@
     <div class="headL" >
         <p align="left" style="font-size:25px;color:red"  >智慧药房后台管理中心</p>
     </div>
+    <div class="headAlarm">
+        <a href="/alarm/alarmAllList.action"   target="main">【查看报警消息】</a>
+    </div>
     <div class="headR">
         <a href="hlogin.jsp" target="_parent">【注销】</a>
     </div>
 </div>
+
+
 <div class="user">
 
     当前时间：<input type="text" id="clock" size="24" />
@@ -35,6 +41,9 @@
         }
     </script>
 </div>
+
+</body>
+</html>
 
 
 </body>

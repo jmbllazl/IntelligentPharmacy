@@ -6,14 +6,14 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <html>
 <head>
 
     <meta charset="UTF-8">
     <title>后台登录中心</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <meta name="keywords" content=""/>
+    <meta name="description" content=""/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet">
@@ -36,16 +36,19 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="control-wrapper">
-                        <label for="adminName" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
-                        <input type="text" class="form-control" id="adminName" name="adminName" placeholder="用户名" onblur="checkName()">
+                        <label for="adminName" class="control-label fa-label"><i
+                                class="fa fa-user fa-medium"></i></label>
+                        <input type="text" class="form-control" id="adminName" name="adminName" placeholder="用户名"
+                               onblur="checkName()">
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <div class="control-wrapper">
-                        <label for="password" class="control-label fa-label"><i class="fa fa-lock fa-medium"></i></label>
-                        <input type="password" class="form-control"id="password" name="password" placeholder="密码">
+                        <label for="password" class="control-label fa-label"><i
+                                class="fa fa-lock fa-medium"></i></label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="密码">
                     </div>
                 </div>
             </div>
@@ -97,9 +100,9 @@
 </div>
 </body>
 <script>
-    function getCode(){
+    function getCode() {
         var imgCode = document.getElementById("imgCode");
-        imgCode.src = "/adminPage/userImage.action?"+Math.random();
+        imgCode.src = "/adminPage/userImage.action?" + Math.random();
     }
     function checkName(){
         var  adminName =$("#adminName").val();
@@ -109,7 +112,7 @@
             $("#checkNameLabel").text("用户名不能为空").addClass("error_msg");
             return
         }
-        $.post("/adminPage/checkAdminName.action",{adminName:adminName},function (data) {
+        $.post("/adminPage/checkAdminName.action", {adminName: adminName}, function (data) {
 
             var info = data;
             if(info.success){
@@ -117,7 +120,7 @@
             }else {
                 $("#checkNameLabel").text(info.message);
             }
-        },"json");
+        }, "json");
     }
 
 

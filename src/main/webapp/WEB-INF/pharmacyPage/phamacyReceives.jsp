@@ -75,10 +75,12 @@
               <td>${receiveDrugTemp.phamacyDrugQuantity}</td>
               <td>${receiveDrugTemp.state}</td>
               <td>
-                <input type="button" value="删除" onclick="deltReceive('${receiveDrugTemp.receiverId}')">
+                  <c:if test="${receiveDrugTemp.state=='审核中'}">
+                      <input type="button" value="删除" onclick="deltReceive('${receiveDrugTemp.receiverId}')">
+                  </c:if>
                 <c:if test="${sessionScope.admin.adminRoleId==3}">
-                  <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}')">
-                  <input type="button" id="btn" value="审核不通过" onclick="updateReceive('${receiveDrugTemp.receiverId}')">
+                  <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}','${receiveDrugTemp.phamacyDrugQuantity}','${receiveDrugTemp.pharmacyId}')">
+                  <input type="button" id="btn1" value="审核不通过" onclick="updateReceives('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}')">
                 </c:if>
                 
             </tr>
@@ -160,26 +162,44 @@
             return;
         }
     }
-    function updateReceive(id) {
-        var isDel = window.confirm("亲！是否审核！")
+    function updateReceive(id,receiverDrug,phamacyDrugQuantity,pharmacyId) {
+        var isDel = window.confirm("亲！是否审核通过！")
         var receiverId = id;
+        var receiverDrug = receiverDrug;
+        var phamacyDrugQuantity = phamacyDrugQuantity;
+        var pharmacyId = pharmacyId;
         var state = $('#btn').val();
         if(isDel){
-            $.post("${pageContext.request.contextPath}/phamacy/updatePhamacyReceive.action",
-                {receiverId:receiverId,state:state},
-                function(result) {
-                    if (result.success == 1) {
-                        window.alert("操作成功！")
-                        window.location.href="${pageContext.request.contextPath}/phamacy/selectPhamacyReceive.action";
-                    }else if(result.success == 0){
-                        window.alert("操作失败！")
-                    }
-                })
+           check(receiverId,state,receiverDrug,phamacyDrugQuantity,pharmacyId)
         }else {
             return;
         }
     }
+    function updateReceives(id,receiverDrug) {
+        var isDel = window.confirm("亲！是否审核不通过！")
+        var receiverId = id;
+        var receiverDrug = receiverDrug;
+        var state = $('#btn1').val();
+        if(isDel){
+            check(receiverId,state,receiverDrug)
+        }else {
+            return;
+        }
+    }
+    function check(receiverId,state,receiverDrug,phamacyDrugQuantity,pharmacyId){
+        $.post("${pageContext.request.contextPath}/phamacy/updatePhamacyReceive.action",
+            {receiverId:receiverId,state:state,receiverDrug:receiverDrug,phamacyDrugQuantity:phamacyDrugQuantity,pharmacyId:pharmacyId},
+            function(result) {
+                if (result.success == 1) {
+                    window.alert("操作成功！")
+                    window.location.href="${pageContext.request.contextPath}/phamacy/selectPhamacyReceive.action";
+                }else if(result.success == 0){
+                    window.alert("操作失败！")
+                }
+            })
+    }
 </script>
 </div>
+</script></div>
 </body>
 </html>

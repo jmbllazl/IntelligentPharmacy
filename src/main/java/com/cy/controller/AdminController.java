@@ -57,6 +57,8 @@ public class AdminController {
             Admin adminResult = adminServiceImpl.login(admin);
             if (adminResult != null) {
                 adminName=admin.getAdminName();
+                HttpSession session = request.getSession();
+                session.setAttribute("adminList",adminResult);
                 session =request.getSession();
                 //通过用户名查找角色ID
                 int adminRoleId=adminServiceImpl.selectRoleId(admin.getAdminName());
@@ -69,8 +71,8 @@ public class AdminController {
                 //一级菜单加载
                 FirstMenu first =new FirstMenu();
                 for (int i=0;i<secondMenuList.size();i++){
-                  //查找找二级菜单的名字
-                  firstId.add( secondMenuList.get(i).getPhamacyFirstId());
+                    //查找找二级菜单的名字
+                    firstId.add( secondMenuList.get(i).getPhamacyFirstId());
                 }
                 //去重
                 HashSet set =new HashSet(firstId);

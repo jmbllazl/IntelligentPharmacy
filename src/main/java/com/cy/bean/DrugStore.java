@@ -69,6 +69,7 @@ public class DrugStore {
         this.norm = norm;
         this.unit = unit;
         this.drugPrice = drugPrice;
+        this.drugQuantity = drugQuantity;
         this.approvalnumber = approvalnumber;
         this.produtionDate = produtionDate;
         this.lotNumber = lotNumber;
