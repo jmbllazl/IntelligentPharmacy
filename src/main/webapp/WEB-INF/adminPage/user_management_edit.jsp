@@ -96,7 +96,9 @@
             ,layer = layui.layer;
     });
     function view(){
-    layer.msg('修改成功!',{icon: 6,time:1000});
+    layer.msg('修改成功!',{icon: 6,time:2000});
+        layer.closeAll(layer.index);
+        window.parent.location.reload();
     }
 
 

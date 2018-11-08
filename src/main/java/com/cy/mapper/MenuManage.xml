@@ -36,4 +36,44 @@
     select phamacySecondUrl from phamacy_secondary_menu_table where phamacyFirstId=#{id}
     </select>
 
+     <!-- 通过一级菜单名字查找一级菜单的ID-->
+    <select id="firstMenuId" resultType="java.lang.Integer">
+    select phamacyFirstId from phamacy_first_menu_table where phamacyFirstName=#{name}
+    </select>
+
+    <!--通过一级菜单ID查找其所有的二级菜单-->
+    <select id="findSecondMenu" resultType="com.cy.bean.SecondMenu">
+		select * from  phamacy_secondary_menu_table where phamacyFirstId=#{id}
+    </select>
+
+    <!--一级菜单添加-->
+    <insert id="addFirstMenu"  parameterType="com.cy.bean.FirstMenu" >
+		insert into phamacy_first_menu_table(phamacyFirstId,phamacyFirstName) values(firstMenu_SEQUENCE.NEXTVAL,#{password})
+	</insert>
+
+    <!--一级菜单删除-->
+    <delete id="firstMenuDelete" parameterType="java.lang.String">
+        DELETE FROM phamacy_first_menu_table WHERE phamacyFirstName=#{name}
+    </delete>
+
+    <!--一级菜单修改-->
+    <update id="updateFirstMenu" parameterType="com.cy.bean.FirstMenu">
+		update phamacy_first_menu_table set phamacyFirstName=#{phamacyFirstName} where phamacyFirstId=#{phamacyFirstId}
+    </update>
+
+    <!--二级菜单添加-->
+    <insert id="addSecondMenu"  parameterType="com.cy.bean.SecondMenu" >
+		insert into phamacy_secondary_menu_table(phamacySecondId,phamacySecondName,phamacyFirstId) values(secondMenu_SEQUENCE.NEXTVAL,#{phamacySecondName},#{phamacyFirstId})
+	</insert>
+
+    <!--二级菜单删除-->
+    <delete id="secondMenuDelete" parameterType="java.lang.String">
+        DELETE FROM phamacy_secondary_menu_table WHERE phamacySecondName=#{name}
+    </delete>
+
+    <!--删除一级菜单的同时删除二级子菜单-->
+    <delete id="secondMenuDelete2" parameterType="java.lang.Integer">
+        DELETE FROM phamacy_secondary_menu_table WHERE phamacyFirstId=#{id}
+    </delete>
+
 </mapper>

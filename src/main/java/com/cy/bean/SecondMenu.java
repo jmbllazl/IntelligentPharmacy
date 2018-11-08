@@ -21,6 +21,12 @@ public class SecondMenu {
         this.phamacySecondId = phamacySecondId;
     }
 
+    public SecondMenu(String phamacySecondName,int phamacyFirstId){
+        this.phamacySecondName = phamacySecondName;
+        this.phamacyFirstId = phamacyFirstId;
+    }
+
+
     public int getPhamacySecondId() {
         return phamacySecondId;
     }

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.cy.mapper.DrugStorageManage">
+
+    <!--药库药品添加-->
+    <insert id="DrugPurchase"  parameterType="com.cy.bean.DrugStore">
+		insert into DRUGSTORE_TABLE(drugId,drugName,drugNumber,drugClassificationId,drugDetails
+		,formulation,norm,unit,drugPrice,approvalnumber,produtionDate,lotNumber,validaityperiod,
+		manufacturer,storageTime,drugPhoto,medicalinsurance,dayConsumption,drugQuantity,reimbursementRatio) values(DRUGID_SEQUENCE.NEXTVAL,#{drugName},#{drugClassificationId},#{drugNumber},
+		#{drugDetails},#{formulation},#{norm},#{unit},#{drugPrice},#{approvalnumber},#{produtionDate},#{lotNumber},#{validaityperiod}
+		,#{manufacturer},#{storageTime},#{drugPhoto},0,#{dayConsumption},0,1)
+	</insert>
+
+    <!--通过药品分类查询药品-->
+    <select id="selectDrugStore"  resultType="com.cy.bean.DrugStore">
+		select * from DRUGSTORE_TABLE where drugClassificationId =#{drugClassificationId}
+	</select>
+
+	<!--添加药房采购-->
+	<insert id="addPurchase" >
+		begin
+		<foreach collection="purchaseList" item="item" index="index" separator=";">
+			insert into purchase_table(purchaseId,receivedDate,state,drugName,drugQuantity,adminName)
+			values
+			(
+			PURCHASEID_SEQUENCE.NEXTVAL,
+			#{item.receivedDate},
+			#{item.state},
+			#{item.drugName},
+			#{item.drugQuantity},
+			#{item.adminName}
+			)
+		</foreach>
+		;end;
+	</insert>
+
+	<!--查询药库药品审核单分页-->
+	<select id="selectPhamacyReceivePageInfo"  resultType="com.cy.bean.Purchase">
+		select * from purchase_table order by purchaseId
+	</select>
+
+	<!--通过药品ID查药品名-->
+	<select id="drugName"  resultType="java.lang.String">
+		select drugName from DRUGSTORE_TABLE where drugId=#{id}
+	</select>
+
+	<!--采购单删除-->
+	<delete id="purchaseDetele" parameterType="java.lang.Integer">
+        DELETE FROM purchase_table WHERE purchaseId=#{drugId}
+    </delete>
+
+	<!--通过审核-->
+	<update id="reviewPass" parameterType="com.cy.bean.Purchase">
+		update purchase_table set state='审核通过' where purchaseId=#{purchaseId}
+    </update>
+
+	<!--不通过审核-->
+	<update id="noReviewPass" parameterType="com.cy.bean.Purchase">
+		update purchase_table set state='审核不通过' where purchaseId=#{purchaseId}
+    </update>
+
+	<!--库存数量增加-->
+	<update id="addDrug" parameterType="com.cy.bean.DrugStore">
+		update DRUGSTORE_TABLE set drugQuantity=drugQuantity||#{drugQuantity} where drugName=#{drugName}
+    </update>
+
+	<!--退还厂家-->
+	<insert id="drugStoreOut" >
+		begin
+		<foreach collection="drugStoreOutList" item="item" index="index" separator=";">
+			insert into drugStoreOut_table(drugStoreOutId,receiveDate,state,drugName,drugQuantity,adminName,drugStoreOutName,outReason
+			)
+			values
+			(
+			DRUGSTOREOUTID_SEQUENCE.NEXTVAL,
+			#{item.receiveDate},
+			#{item.state},
+			#{item.drugName},
+			#{item.drugQuantity},
+			#{item.adminName},
+			#{item.drugStoreOutName},
+			#{item.outReason}
+			)
+		</foreach>
+		;end;
+	</insert>
+
+	<!--查询药库退还厂家单-->
+	<select id="selectDrugStoreOut"  resultType="com.cy.bean.DrugStoreOut">
+		select * from drugStoreOut_table order by drugStoreOutId
+	</select>
+
+	<!--退还厂家单删除-->
+	<delete id="drugStoreOutDetele" parameterType="java.lang.Integer">
+        DELETE FROM drugStoreOut_table WHERE drugStoreOutId=#{drugStoreOutId}
+    </delete>
+
+	<!--退还厂家通过-->
+	<update id="drugStoreOutReviewPass" parameterType="com.cy.bean.DrugStoreOut">
+		update drugStoreOut_table set state='审核通过' where drugStoreOutId=#{drugStoreOutId}
+    </update>
+
+	<!--退还厂家不通过-->
+	<update id="drugStoreOutNoReviewPass" parameterType="com.cy.bean.DrugStoreOut">
+		update drugStoreOut_table set state='审核不通过' where drugStoreOutId=#{drugStoreOutId}
+    </update>
+
+	<!--库存数量减少-->
+	<update id="reduceDrug" parameterType="com.cy.bean.DrugStore">
+		update DRUGSTORE_TABLE set drugQuantity=drugQuantity - #{drugQuantity} where drugName=#{drugName}
+    </update>
+
+
+</mapper>
