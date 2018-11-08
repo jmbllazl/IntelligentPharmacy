@@ -11,7 +11,7 @@
 <html xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
 <meta charset="utf-8">
-<title>过期警报消息显示</title>
+<title>药品滞销警报消息显示</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -60,8 +60,7 @@
       <th>药品类别</th>
       <th> 药品名字 </th>
       <th> 药品批号 </th>
-      <th> 药品数量</th>
-      <th> 药品有效期</th>
+      <th>内容</th>
     </tr>
     </thead>
     <tbody>
@@ -74,8 +73,7 @@
               ${drugList.drugName}
             </td>
             <td>${drugList.approvalnumber}</td>
-            <td>${drugList.drugQuantity}</td>
-            <td style="color: red">${drugList.validaityperiod}</td>
+            <td style="color: red">药品一个月内未售出</td>
           </tr>
         </c:forEach>
       </c:when>
@@ -104,7 +102,6 @@
   <div class="layui-form-item">
     <input id="btnClick" value="已查看" type="button" onClick="btnClick(${requestScope.alarmIdList},${sessionScope.alarmRoleList})"/>
     <input id="aClick" value="返回" type="button" onClick="cClick(${sessionScope.alarmRoleList})"/>
-
   </div>
   <div>
     <span style="color: red;font-size:18px "   >请及时处理该警报信息！！</span>
@@ -132,6 +129,7 @@
         window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+alarmRole;
     }
 </script>
+
 <script>
             layui.use(['laydate','element','laypage','layer'], function(){
                 $ = layui.jquery;

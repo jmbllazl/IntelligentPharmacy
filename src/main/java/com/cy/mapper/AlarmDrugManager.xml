@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<!--<configuration>
+	&lt;!&ndash; 打印查询语句 &ndash;&gt;
+	<settings>
+	<setting name="logImpl" value="STDOUT_LOGGING" />
+	</settings>
+
+</configuration>-->
 
 <mapper namespace="com.cy.mapper.AlarmDrugManager">
 
@@ -18,10 +25,15 @@
 		insert into ALARM_TABLE (alarmId,alarmStyleId,alarmRole,alarmDetails,alarmDate,alarmState)
 		values(#{alarmId},#{alarmStyleId},#{alarmRole},#{alarmDetails},to_char(sysdate,'YYYY-MM-DD HH24:MI:SS'),0)
 	</insert>
-
 	<!--查询报警所有信息-->
 	<select id="selectAlarmList" parameterType="com.cy.bean.Alarm" resultType="com.cy.bean.Alarm" >
-		select a.alarmId,a.alarmStyleId,a.alarmRole,a.alarmDetails,a.alarmDate,a.alarmState from ALARM_TABLE a  where 1=1 and a.alarmState=0 Order by a.alarmDate
+		select alarmId,alarmStyleId,alarmRole,alarmDetails,alarmDate,alarmState from ALARM_TABLE   where 1=1
+		<if test="alarmRole==2||alarmRole==3">
+		and alarmRole in (2,3) and alarmState=0 Order by alarmDate
+		</if>
+		<if test="alarmRole==4||alarmRole==5">
+			and ALARMROLE in (4,5) and alarmState=0 Order by alarmDate
+		</if>
 	</select>
 
 	<!--查询低限药品数量-->
@@ -29,15 +41,38 @@
 		select a.*,b.DRUGCLASSIFICATIONNAME from PHARMACY_TABLE a , DRUG_CLASSIFICATION_TABLE b where <![CDATA[DRUGQUANTITY<=99]]> and a.DRUGCLASSIFICATIONID=b.DRUGCLASSIFICATIONID
 	</select>
 
+	<!--查询药库低限药品数量-->
+	<select id="selectDrugStoreNum"  parameterType="com.cy.bean.DrugStore" resultType="com.cy.bean.DrugStore">
+		select a.*,b.DRUGCLASSIFICATIONNAME from DRUGSTORE_TABLE a , DRUG_CLASSIFICATION_TABLE b where <![CDATA[a.DRUGQUANTITY<=1000]]> and a.DRUGCLASSIFICATIONID=b.DRUGCLASSIFICATIONID
+	</select>
+
 	<!--查询过期药品数量-->
 	<select id="selectAlarmExpired"  parameterType="com.cy.bean.PhamacyDrug" resultType="com.cy.bean.PhamacyDrug" >
 		select a.*,b.DRUGCLASSIFICATIONNAME from PHARMACY_TABLE a , DRUG_CLASSIFICATION_TABLE b where <![CDATA[VALIDAITYPERIOD <= to_char(sysdate, 'yyyy-mm-dd')]]> and a.DRUGCLASSIFICATIONID=b.DRUGCLASSIFICATIONID
+	</select>
+
+	<!--滞销药品查询-->
+	<select id="selectAlarmUnsalable"  parameterType="com.cy.bean.PhamacyDrug" resultType="com.cy.bean.PhamacyDrug" >
+		select a.*,c.DRUGCLASSIFICATIONNAME from PHARMACY_TABLE a ,DRUG_CLASSIFICATION_TABLE c where a.DRUGQUANTITY=(select sum(PHAMACYDRUGQUANTITY) from RECEIVE_TABLE b where
+		<![CDATA[(select to_char(add_months(trunc(to_date(b.RECEIVEDATE,'yyyy-mm-dd')),1), 'yyyy-mm-dd')from dual) >= to_char(sysdate, 'yyyy-mm-dd')]]>
+		and b.RECEIVEDRUG='请领' and b.state='审核通过' and b.PHARMACYID=a.PHARMACYID and a.DRUGCLASSIFICATIONID=c.DRUGCLASSIFICATIONID
+		)
 	</select>
 
 	<!--查看报警消息，更改状态-->
 	<update id="seeDetails" parameterType="java.lang.Integer">
 		update ALARM_TABLE set alarmState=1 where alarmId=#{alarmId}
     </update>
+
+	<!--查询报警类型所有分类-->
+	<select id="selectAllStyle"  parameterType="com.cy.bean.AlarmStyle" resultType="com.cy.bean.AlarmStyle">
+	 select * from ALARMSTYLE_TABLE where 1=1
+	</select>
+
+	<!--查询报警类型所有信息-->
+	<select id="selectAlarmStyleList"  parameterType="java.lang.Integer" resultType="com.cy.bean.Alarm" >
+		select a.alarmId,a.alarmStyleId,a.alarmRole,a.alarmDetails,a.alarmDate,a.alarmState from ALARM_TABLE a  where a.alarmStyleId = #{alarmStyleId} and a.alarmState=0 and alarmRole in (2,3) Order by a.alarmDate
+	</select>
 
 </mapper>
 	

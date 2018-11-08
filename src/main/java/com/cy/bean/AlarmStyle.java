@@ -1,12 +1,15 @@
 package com.cy.bean;
 
 
+import org.springframework.stereotype.Service;
+
 /**
  * 报警类型
  *
  **/
+@Service
 public class AlarmStyle {
-    private int alarmStyle;//报警类型Id
+    private int alarmStyleId;//报警类型Id
     private String alarmStyleName;//报警类型名字
     private int alarmStyleState;//类型状态（0使用中 1禁用）
 
@@ -14,17 +17,17 @@ public class AlarmStyle {
     }
 
     public AlarmStyle(int alarmStyle, String alarmStyleName, int alarmStyleState) {
-        this.alarmStyle = alarmStyle;
+        this.alarmStyleId = alarmStyleId;
         this.alarmStyleName = alarmStyleName;
         this.alarmStyleState = alarmStyleState;
     }
 
-    public int getAlarmStyle() {
-        return alarmStyle;
+    public int getAlarmStyleId() {
+        return alarmStyleId;
     }
 
-    public void setAlarmStyle(int alarmStyle) {
-        this.alarmStyle = alarmStyle;
+    public void setAlarmStyleId(int alarmStyleId) {
+        this.alarmStyleId = alarmStyleId;
     }
 
     public String getAlarmStyleName() {

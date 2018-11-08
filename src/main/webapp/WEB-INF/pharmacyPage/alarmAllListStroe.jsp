@@ -11,7 +11,7 @@
 <html xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
 <meta charset="utf-8">
-<title>过期警报消息显示</title>
+<title>警报消息显示</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -20,22 +20,12 @@
 <meta name="format-detection" content="telephone=no">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pag.css" media="all">
-
+  <script type="text/javascript" src="../js/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/public.js"></script>
+  <script type="text/javascript" src="../js/external.js"></script>
 </head>
 <style>
-  #btnClick{
-    background-color:#1ab7ea;
-    border: none;
-    color: white;
-    padding: 5px 20px;
-    align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-  #aClick{
+  .ctybtn{
     background-color:#1ab7ea;
     border: none;
     color: white;
@@ -51,32 +41,41 @@
 <body>
 <div class="x-nav"> <span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>警报消息显示</cite></a> </span> <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a> </div>
 <div class="x-body">
-  <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
 
+  <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
+    <div class="layui-form-pane">
+    </div>
   </form>
   <table class="tablelist">
     <thead>
-    <tr>
-      <th>药品类别</th>
-      <th> 药品名字 </th>
-      <th> 药品批号 </th>
-      <th> 药品数量</th>
-      <th> 药品有效期</th>
-    </tr>
+      <tr>
+        <th> 报警类型 </th>
+        <th> 报警来源 </th>
+        <th> 报警详情</th>
+        <th> 报警日期</th>
+        <th> 处理状态</th>
+        <th> 操作</th>
+      </tr>
     </thead>
-    <tbody>
+    <tbody id="alarmStyleClick">
     <c:choose>
-      <c:when test="${not empty requestScope.alarmManageList.list}">
-        <c:forEach items="${requestScope.alarmManageList.list}" var="drugList">
-          <tr>
-            <td>${drugList.drugClassificationName}</td>
-            <td>
-              ${drugList.drugName}
-            </td>
-            <td>${drugList.approvalnumber}</td>
-            <td>${drugList.drugQuantity}</td>
-            <td style="color: red">${drugList.validaityperiod}</td>
-          </tr>
+      <c:when test="${not empty sessionScope.alarmPageList.list}">
+        <c:forEach items="${sessionScope.alarmPageList.list}" var="alramList">
+            <tr>
+              <td> 药品低限警报</td>
+              <td> 药库</td>
+              <td>${alramList.alarmDetails}</td>
+              <td>${alramList.alarmDate}</td>
+              <td>
+                <c:if test="${alramList.alarmState==0}">
+                  <span style="color: red">未处理</span>
+                </c:if>
+              </td>
+
+              <td class="ctybtn"  style=" align: center">
+                <a style="color: white"  href="/alarm/alarmManage.action?alarmId=${alramList.alarmId}&&alarmStyleId=${alramList.alarmStyleId}&&alarmRole=${alramList.alarmRole}" target="main" >查看详情</a>
+              </td>
+            </tr>
         </c:forEach>
       </c:when>
       <c:otherwise>
@@ -86,52 +85,25 @@
       </c:otherwise>
     </c:choose>
     <tr>
-      <td colspan="3" align="left">共有${alarmManageList.total}条记录，当前第${alarmManageList.pageNum}页，共${alarmManageList.pages}页</td>
+      <td colspan="3" align="left">共有${alarmPageList.total}条记录，当前第${alarmPageList.pageNum}页，共${alarmPageList.pages}页</td>
       <td colspan="9" align="right">
-        <a href="/alarm/alarmManage.action?pageNum=1&alarmId=${requestScope.alarmIdList}&alarmStyleId=${requestScope.alarmStyleIdList}&alarmRole=${sessionScope.alarmRoleList}"    target="main">首页</a>
-        <a href="/alarm/alarmManage.action?pageNum=${alarmManageList.prePage}&alarmId=${requestScope.alarmIdList}&alarmStyleId=${requestScope.alarmStyleIdList}&alarmRole=${sessionScope.alarmRoleList}"  target="main">上一页</a>
-        <a href="/alarm/alarmManage.action?pageNum=${alarmManageList.nextPage}&alarmId=${requestScope.alarmIdList}&alarmStyleId=${requestScope.alarmStyleIdList}&alarmRole=${sessionScope.alarmRoleList}"  target="main">下一页</a>
-        <a href="/alarm/alarmManage.action?pageNum=${alarmManageList.navigateLastPage}&alarmId=${requestScope.alarmIdList}&alarmStyleId=${requestScope.alarmStyleIdList}&alarmRole=${sessionScope.alarmRoleList}"  target="main">尾页</a>
+        <a href="/alarm/alarmAllList.action?pageNum=1&&alarmRole=${requestScope.alarmRole}"    target="main">首页</a>
+        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.prePage}&&alarmRole=${requestScope.alarmRole}"  target="main">上一页</a>
+        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.nextPage}&&alarmRole=${requestScope.alarmRole}"  target="main">下一页</a>
+        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.navigateLastPage}&&alarmRole=${requestScope.alarmRole}"  target="main">尾页</a>
       </td>
     </tr>
 
     </tbody>
   </table>
 
-
-  <br>
-
-  <div class="layui-form-item">
-    <input id="btnClick" value="已查看" type="button" onClick="btnClick(${requestScope.alarmIdList},${sessionScope.alarmRoleList})"/>
-    <input id="aClick" value="返回" type="button" onClick="cClick(${sessionScope.alarmRoleList})"/>
-
-  </div>
-  <div>
-    <span style="color: red;font-size:18px "   >请及时处理该警报信息！！</span>
-  </div>
-</div>
-
 <br />
 <br />
 <br />
-
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script> 
 <script src="${pageContext.request.contextPath}/js/x-layui.js" charset="utf-8"></script> 
 <script src="${pageContext.request.contextPath}/js/jquery2.js" charset="utf-8"></script> 
 <script src="${pageContext.request.contextPath}/js/js.js" charset="utf-8"></script>
-<script>
-    function btnClick(id,alarmRole){
-        var isDel = confirm("请及时处理该警报信息！！");
-        if(isDel==true){
-            window.location.href="<%=request.getContextPath()%>/alarm/alarmSeeDetails.action?alarmId="+id+"&&alarmRole="+alarmRole;
-        }else{
-            window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+alarmRole;
-        };
-    }
-    function cClick(alarmRole){
-        window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+alarmRole;
-    }
-</script>
 <script>
             layui.use(['laydate','element','laypage','layer'], function(){
                 $ = layui.jquery;
@@ -152,11 +124,25 @@
             function user_management_edit (title,url,w,h) {
                 x_admin_show(title,url,w,h); 
             }
-            </script>
-
-
+            </script> 
 <script type="text/javascript">
 	$('.tablelist tbody tr:odd').addClass('odd');
-	</script>
+</script>
+  <script>
+      function  changeStyle(){
+          var id = document.getElementById('styleShowListId').value;
+          var alarmRole = document.getElementById('alarmRole').value;
+         // var id = $('#styleShowListId').val();
+          alert(id);
+        window.location.href="<%=request.getContextPath()%>/alarm/alarmStyleShowList.action?alarmStyleId="+id+"&&alarmRole="+alarmRole;
+      }
+      function  clickAll(){
+          var id = document.getElementById('alarmRole').value;
+          // var id = $('#styleShowListId').val();
+          alert(id);
+          window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+id;
+      }
+
+  </script>
 </body>
 </html>
