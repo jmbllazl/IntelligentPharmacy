@@ -42,7 +42,9 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.drugStoreOut.list}"  var="drugStoreOut" >
+        <c:choose>
+            <c:when test="${not empty requestScope.drugStoreOut.list}">
+              <c:forEach items="${requestScope.drugStoreOut.list}"  var="drugStoreOut" >
             <tr>
                 <td name ="adstate" align="center">${drugStoreOut.receiveDate} </td>
                 <td align="center">${drugStoreOut.drugName}</td>
@@ -95,23 +97,22 @@
 
 
             </tr>
-            <%--            <div>
-                        共有${purchase.total}条记录，当前第${purchase.pageNum}页，共${purchase.pages}页
-                        <a href="#" onclick="chageNum(1)"   target="main">首页</a>
-                        <a href="#" onclick="chageNum(${purchase.prePage})"  target="main">上一页</a>
-                        <a href="#" onclick="chageNum(${purchase.nextPage})"   target="main">下一页</a>
-                        <a href="#" onclick="chageNum(${purchase.navigateLastPage})"   target="main">尾页</a>
-                        </h>
-                        </div>--%>
         </c:forEach>
+            </c:when>
+        </c:choose>
+        <tr>
+            <td colspan="3" align="left">共有${drugStoreOut.total}条记录，当前第${drugStoreOut.pageNum}页，共${drugStoreOut.pages}页</td>
+            <td colspan="9" align="right">
+                <a href="#" onclick="chageNum(1)"   target="main">首页</a>
+                <a href="#" onclick="chageNum(${drugStoreOut.prePage})"  target="main">上一页</a>
+                <a href="#" onclick="chageNum(${drugStoreOut.nextPage})"   target="main">下一页</a>
+                <a href="#" onclick="chageNum(${drugStoreOut.navigateLastPage})"   target="main">尾页</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>
-<div class="page"  v-show="show">
-    <div class="pagelist"> <span class="jump"><a href="#" onclick="chageNum(${drugStoreOut.prePage})" >上一页</a>
-    </span> <span class="jump"><a href="#" onclick="chageNum(${drugStoreOut.nextPage})">下一页</a></span>
-    </div>
-</div>
+
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/x-layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery2.js" charset="utf-8"></script>
@@ -131,8 +132,6 @@
     $('.tablelist tbody tr:odd').addClass('odd');
 </script>
 <script>
-
-
     function chageNum(num) {
         console.log(num);
         var form = $("form");

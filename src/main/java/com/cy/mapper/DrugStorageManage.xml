@@ -4,13 +4,13 @@
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.cy.mapper.DrugStorageManage">
 
-    <!--一级菜单添加-->
+    <!--药库药品添加-->
     <insert id="DrugPurchase"  parameterType="com.cy.bean.DrugStore">
 		insert into DRUGSTORE_TABLE(drugId,drugName,drugNumber,drugClassificationId,drugDetails
 		,formulation,norm,unit,drugPrice,approvalnumber,produtionDate,lotNumber,validaityperiod,
-		manufacturer,storageTime,drugPhoto,medicalinsurance,dayConsumption,drugQuantity) values(DRUGID_SEQUENCE.NEXTVAL,#{drugName},#{drugClassificationId},#{drugNumber},
+		manufacturer,storageTime,drugPhoto,medicalinsurance,dayConsumption,drugQuantity,reimbursementRatio) values(DRUGID_SEQUENCE.NEXTVAL,#{drugName},#{drugClassificationId},#{drugNumber},
 		#{drugDetails},#{formulation},#{norm},#{unit},#{drugPrice},#{approvalnumber},#{produtionDate},#{lotNumber},#{validaityperiod}
-		,#{manufacturer},#{storageTime},#{drugPhoto},0,#{dayConsumption},0)
+		,#{manufacturer},#{storageTime},#{drugPhoto},0,#{dayConsumption},0,1)
 	</insert>
 
     <!--通过药品分类查询药品-->

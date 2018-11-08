@@ -30,6 +30,7 @@
 </div>
 
 <form method="post">
+    <input type="hidden" id="num" name="num" >
     <table class="tablelist" lay-filter="demo">
         <thead>
         <tr>
@@ -41,7 +42,9 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${requestScope.phamacyPurchase.list}"  var="purchase" >
+        <c:choose>
+            <c:when test="${not empty requestScope.phamacyPurchase.list}">
+                <c:forEach items="${requestScope.phamacyPurchase.list}"  var="purchase" >
             <tr>
                 <td name ="adstate" align="center">${purchase.receivedDate} </td>
                 <td align="center">${purchase.drugName}</td>
@@ -75,34 +78,31 @@
                     </a>
                 </td>
             </tr>
-<%--            <div>
-            共有${purchase.total}条记录，当前第${purchase.pageNum}页，共${purchase.pages}页
-            <a href="#" onclick="chageNum(1)"   target="main">首页</a>
-            <a href="#" onclick="chageNum(${purchase.prePage})"  target="main">上一页</a>
-            <a href="#" onclick="chageNum(${purchase.nextPage})"   target="main">下一页</a>
-            <a href="#" onclick="chageNum(${purchase.navigateLastPage})"   target="main">尾页</a>
-            </h>
-            </div>--%>
         </c:forEach>
+            </c:when>
+        </c:choose>
+        <tr>
+            <td colspan="3" align="left">共有${phamacyPurchase.total}条记录，当前第${phamacyPurchase.pageNum}页，共${phamacyPurchase.pages}页</td>
+            <td colspan="9" align="right">
+                <a href="#" onclick="chageNum(1)"   target="main">首页</a>
+                <a href="#" onclick="chageNum(${phamacyPurchase.prePage})"  target="main">上一页</a>
+                <a href="#" onclick="chageNum(${phamacyPurchase.nextPage})"   target="main">下一页</a>
+                <a href="#" onclick="chageNum(${phamacyPurchase.navigateLastPage})"   target="main">尾页</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 </form>
-<div class="page"  v-show="show">
-    <div class="pagelist"> <span class="jump"><a href="#" onclick="chageNum(${phamacyPurchase.prePage})" >上一页</a>
-    </span> <span class="jump"><a href="#" onclick="chageNum(${phamacyPurchase.nextPage})">下一页</a></span>
-    </div>
-</div>
 <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/x-layui.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/jquery2.js" charset="utf-8"></script>
 <script src="${pageContext.request.contextPath}/js/js.js" charset="utf-8"></script>
 <script>
-        layui.use(['table','element','laypage','layer'], function(){
+        layui.use(['element','laypage','layer'], function(){
             $ = layui.jquery;
             lement = layui.element();//面包导航
             laypage = layui.laypage;//分页
             layer = layui.layer;//弹出层
-            var table=layui.table;
 
         });
 
@@ -111,8 +111,6 @@
         $('.tablelist tbody tr:odd').addClass('odd');
 </script>
 <script>
-
-
         function chageNum(num) {
             console.log(num);
             var form = $("form");

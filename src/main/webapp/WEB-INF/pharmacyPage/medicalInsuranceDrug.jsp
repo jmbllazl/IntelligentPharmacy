@@ -10,18 +10,14 @@
 <script src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
 <html>
 <head>
-    <title>药品采购页面</title>
+    <title>医保药品核对页面</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/x-admin.css" media="all">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/pag.css" media="all">
 </head>
 
 <script type="text/javascript">
-    function check() {
-        var controlAll=document.getElementById("drugQuantity").value;
-        if(controlAll==""){
-            alert("请先输入采购的数量")
-        }
-    }
+
+
 
 </script>
 
@@ -29,9 +25,9 @@
 <div class="x-nav">
             <span class="layui-breadcrumb">
               <a><cite>首页</cite></a>
-              <a><cite>药品采购</cite></a>
+              <a><cite>医保药品核对</cite></a>
             </span>
-    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="/phamacy/drugPurchase.action" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+    <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="/phamacy/drugStoreOut.action" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
 </div>
 <div class="tools">
 
@@ -40,25 +36,24 @@
     请选择药品类别：<select  name="drugClassifications" id="drugClassifications">
     <option value="">请选择</option>
     <c:forEach items="${drugClassification}" var="drugClassifications">
-    <option value="${drugClassifications.drugClassificationId}" id="drugClassification" }>${drugClassifications.drugClassificationName}</option>
-</c:forEach>
+        <option value="${drugClassifications.drugClassificationId}" id="drugClassification" }>${drugClassifications.drugClassificationName}</option>
+    </c:forEach>
 </select >
 </form>
-<form  id="recevieDrug" action="/phamacy/submitdrugPurchase.action" method="post">
+<form  id="recevieDrug" action="/phamacy/submitMedicalInsurance.action" method="post">
     <input type="hidden" name="num">
     <table align="center" class="tablelist" >
         <thead>
         <tr>
-             <th>
+            <th>
                 <input onclick="selectAll()" type="checkbox" name="controlAll" style="" id="controlAll"></th>
             <th> 药品品名 </th>
             <th> 剂型</th>
             <th> 规格</th>
-            <th> 单位</th>
-            <th> 药品价格 </th>
             <th> 批准文号 </th>
             <th> 生产厂商 </th>
-            <th> 采购数量 </th>
+            <th> 设置为医保药品 </th>
+            <th> 选择报销比例 </th>
         </tr>
         </thead>
 
@@ -66,7 +61,7 @@
         </tbody>
     </table>
     <div align="center">
-    <input type="submit"  class="layui-btn"  value="提 交" onclick="return check()" style="width: 150px;height: 28px">
+        <input type="submit"  class="layui-btn"  value="提 交" onclick="return check()" style="width: 150px;height: 28px">
     </div>
 </form>
 </body>
@@ -89,13 +84,29 @@
                     <td>\${res.list[i].drugName}</td>
                     <td>\${res.list[i].formulation}</td>
                     <td>\${res.list[i].norm}</td>
-                    <td>\${res.list[i].unit}</td>
-                    <td>\${res.list[i].drugPrice}</td>
                     <td>\${res.list[i].approvalnumber}</td>
                     <td>\${res.list[i].manufacturer}</td>
-                    <td><input type="text"  name="drugQuantity" id="drugQuantity"></td>
-
-
+                    <td><select name="medicalinsurance" id="medicalinsurance" style="width: 100px;height: 22px" >
+                         <option value='无' style='display:none;' >-请选择-</option>";
+                         <option value="0">是</option>
+                         <option value="1">否</option>
+                         </select></td>
+                     <td><select name="reimbursementRatio" id="reimbursementRatio" style="width: 100px;height: 22px" >
+                         <option value='无' style='display:none;' >-请选择-</option>";
+                         <option value="0.30">0.30</option>
+                         <option value="0.35">0.35</option>
+                         <option value="0.40">0.40</option>
+                         <option value="0.45">0.45</option>
+                         <option value="0.50">0.50</option>
+                         <option value="0.55">0.55</option>
+                         <option value="0.60">0.60</option>
+                         <option value="0.65">0.65</option>
+                         <option value="0.70">0.70</option>
+                         <option value="0.75">0.75</option>
+                         <option value="0.80">0.80</option>
+                         <option value="0.85">0.85</option>
+                         <option value="0.90">0.90</option>
+                         </select></td>
 </tr>`));
                 }
                 pharmacyDrugTable.append($(`<tr>

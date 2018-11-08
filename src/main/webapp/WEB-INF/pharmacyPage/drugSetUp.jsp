@@ -26,7 +26,7 @@
     <script src="${pageContext.request.contextPath}/laydate/laydate.js"></script>
 </head>
 
-<body>
+<body >
 <div class="x-body">
     <form class="layui-form" action="/phamacy/submitDrugSetUp.action" method="post">
         <div class="layui-form-item">
@@ -51,11 +51,13 @@
             <label class="layui-form-label"><span class="x-red">* </span>药品类别</label>
             <div class="layui-input-inline">
                 <select name="drugClass" id="drugClass">
-                    <option value=""> </option>
+                    <option value='' style='display:none;' >请选择</option>";
                     <option value="1">抗生素</option>
                     <option value="2">心脑血管用药</option>
                     <option value="3">消化系统用药</option>
                     <option value="4">呼吸系统用药</option>
+                    <option value="5">麻醉类药品</option>
+                    <option value="6">精神类药品</option>
                 </select>
             </div>
         </div>
@@ -73,7 +75,7 @@
             <label class="layui-form-label"><span class="x-red" >* </span>剂型</label>
             <div class="layui-input-inline">
                 <select name="formUlarion" id="formUlarion">
-                    <option value=""> </option>
+                    <option value="" style='display:none;'>请选择</option>
                     <option value="片剂">片剂</option>
                     <option value="注射液">注射液</option>
                     <option value="中药">包</option>
@@ -96,7 +98,7 @@
             <label class="layui-form-label"><span class="x-red" >* </span>单位</label>
             <div class="layui-input-inline">
                 <select name="unit" id="unit">
-                    <option value=""> </option>
+                    <option value="" style='display:none;'> 请选择</option>
                     <option value="盒/元">盒/元</option>
                     <option value="瓶/元">瓶/元</option>
                     <option value="包/元">包/元</option>
@@ -119,7 +121,7 @@
             <label class="layui-form-label"><span class="x-red" >* </span>日次数</label>
             <div class="layui-input-inline">
                 <select name="dayConsumption" id="dayConsumption">
-                    <option value=""> </option>
+                    <option value="" style='display:none;'> 请选择</option>
                     <option value="一日/一次">一日/一次</option>
                     <option value="一日/二次">一日/二次</option>
                     <option value="一日/三次">一日/三次</option>
@@ -270,11 +272,18 @@
         laypage = layui.laypage;//分页
         layer = layui.layer;//弹出层
 
+
     });
 
 </script>
 <script>
     layui.use('form',function(){});
+</script>
+<script type="text/javascript">
+    layui.use('form',function(){
+        var form = layui.form;
+        form.render();
+    });
 </script>
 </body>
 </html>

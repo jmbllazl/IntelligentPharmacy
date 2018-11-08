@@ -5,6 +5,7 @@ import com.cy.biz.DrugStorageService;
 import com.cy.biz.PhamacyService;
 import com.cy.util.StringUtils;
 import com.github.pagehelper.PageInfo;
+import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,9 @@ public class DrugStorageController  {
 
     //药品信息设置页面
     @RequestMapping("/drugSetUp.action")
-    public  String drugSetUp(){
+    public  String drugSetUp(HttpServletRequest request){
+        List<DrugClassification> drugClassification = phamacyService.selectDrugClassification();
+        request.setAttribute("drugClassification",drugClassification);
         return "/pharmacyPage/drugSetUp";
     }
 
@@ -236,6 +239,40 @@ public class DrugStorageController  {
     public String drugStoreOutNoReviewPass(int drugStoreOutId){
         drugStorageServiceImp.drugStoreOutNoReviewPass(drugStoreOutId);
         return "forward:/phamacy/drugStoreOutResultExamine.action";
+    }
+
+    //医保药品核对界面
+    @RequestMapping("/medicalInsurance.action")
+    public String medicalInsurance(HttpServletRequest request){
+        List<DrugClassification> drugClassification = phamacyService.selectDrugClassification();
+        request.setAttribute("drugClassification",drugClassification);
+        return "/pharmacyPage/medicalInsuranceDrug";
+    }
+
+    //医保设置提交
+    @RequestMapping("submitMedicalInsurance.action")
+    public String submitMedicalInsurance(HttpServletRequest request ,String[] medicalinsurance,String[] selected ,String[] reimbursementRatio){
+        List<DrugStoreOut> drugStoreOutList = new ArrayList<DrugStoreOut>();
+        String [] medicalinsuranceNum = new String[10];
+        String [] reimbursementRatioNum = new String[10];
+        if(medicalinsurance!=null||selected!=null||reimbursementRatio!=null){
+            int a=0;
+            for(int j=0;j<medicalinsurance.length;j++) {
+                if (medicalinsurance[j] != "") {
+                    medicalinsuranceNum[a] = medicalinsurance[j];
+                    reimbursementRatioNum[a] = reimbursementRatio[j];
+                    a++;
+                }
+            }
+            for(int i=0;i<selected.length;i++){
+                if(selected[i]!=""){
+                    System.out.println("医保："+ medicalinsuranceNum[i]);
+                    System.out.println("报销比例："+ reimbursementRatioNum[i]);
+                }
+            }
+        }
+        int result= drugStorageServiceImp.drugStoreOut(drugStoreOutList);
+        return "forward:/phamacy/selectDrugStoreOut.action";
     }
 
 }
