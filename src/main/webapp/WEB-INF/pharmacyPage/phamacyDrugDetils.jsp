@@ -91,11 +91,6 @@
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
-                 <div class="layui-form-item">
-                    <button class="layui-btn" >
-                        确定
-                    </button>
-                </div>
           </form>
     </div>
     <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8">

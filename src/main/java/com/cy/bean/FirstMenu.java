@@ -22,6 +22,11 @@ public class FirstMenu {
         this.phamacyFirstName = phamacyFirstName;
     }
 
+    public FirstMenu( String phamacyFirstName,int phamacyFirstId) {
+        this.phamacyFirstName = phamacyFirstName;
+        this.phamacyFirstId = phamacyFirstId;
+    }
+
     public int getPhamacyFirstId() {
         return phamacyFirstId;
     }

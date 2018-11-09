@@ -79,10 +79,10 @@
                       <input type="button" value="删除" onclick="deltReceive('${receiveDrugTemp.receiverId}')">
                   </c:if>
                 <c:if test="${sessionScope.admin.adminRoleId==3}">
-                  <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}')">
-                  <input type="button" id="btn1" value="审核不通过" onclick="updateReceives('${receiveDrugTemp.receiverId}')">
+                  <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}','${receiveDrugTemp.phamacyDrugQuantity}','${receiveDrugTemp.pharmacyId}')">
+                  <input type="button" id="btn1" value="审核不通过" onclick="updateReceives('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}')">
                 </c:if>
-                
+                <input type="button" value="查看详情" onclick="user_management_show('药品信息','selectPhamacyDrugReceiveDetils.action?receiverId=${receiveDrugTemp.receiverId}','600','500')">
             </tr>
         </c:forEach>
       </c:when>
@@ -162,29 +162,33 @@
             return;
         }
     }
-    function updateReceive(id) {
+    function updateReceive(id,receiverDrug,phamacyDrugQuantity,pharmacyId) {
         var isDel = window.confirm("亲！是否审核通过！")
         var receiverId = id;
+        var receiverDrug = receiverDrug;
+        var phamacyDrugQuantity = phamacyDrugQuantity;
+        var pharmacyId = pharmacyId;
         var state = $('#btn').val();
         if(isDel){
-           check(receiverId,state)
+           check(receiverId,state,receiverDrug,phamacyDrugQuantity,pharmacyId)
         }else {
             return;
         }
     }
-    function updateReceives(id) {
+    function updateReceives(id,receiverDrug) {
         var isDel = window.confirm("亲！是否审核不通过！")
         var receiverId = id;
+        var receiverDrug = receiverDrug;
         var state = $('#btn1').val();
         if(isDel){
-            check(receiverId,state)
+            check(receiverId,state,receiverDrug)
         }else {
             return;
         }
     }
-    function check(receiverId,state){
+    function check(receiverId,state,receiverDrug,phamacyDrugQuantity,pharmacyId){
         $.post("${pageContext.request.contextPath}/phamacy/updatePhamacyReceive.action",
-            {receiverId:receiverId,state:state},
+            {receiverId:receiverId,state:state,receiverDrug:receiverDrug,phamacyDrugQuantity:phamacyDrugQuantity,pharmacyId:pharmacyId},
             function(result) {
                 if (result.success == 1) {
                     window.alert("操作成功！")
@@ -194,6 +198,8 @@
                 }
             })
     }
+</script>
+</div>
 </script></div>
 </body>
 </html>

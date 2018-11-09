@@ -1,6 +1,7 @@
 package com.cy.biz.bizImp;
 
 import com.cy.bean.FirstMenu;
+import com.cy.bean.SecondMenu;
 import com.cy.biz.MenuService;
 import com.cy.mapper.MenuManage;
 import org.springframework.stereotype.Service;
@@ -47,4 +48,48 @@ public class MenuServiceImp implements MenuService {
     public String findSecondMenuUrl(int id) {
         return menuManage.findSecondMenuUrl(id);
     }
+
+    @Override
+    public int firstMenuId(String name) {
+        return menuManage.firstMenuId(name);
+    }
+
+    @Override
+    public ArrayList<?> findSecondMenu(int firstMenuId) {
+        return menuManage.findSecondMenu(firstMenuId);
+    }
+
+    @Override
+    public void addFirstMenu( String firstMenuName) {
+        menuManage.addFirstMenu(firstMenuName);
+    }
+
+    @Override
+    public void firstMenuDelete(String firstMenuName) {
+        menuManage.firstMenuDelete(firstMenuName);
+    }
+
+    @Override
+    public void updateFirstMenu(FirstMenu firstMenu) {
+        menuManage.updateFirstMenu(firstMenu);
+    }
+
+    @Override
+    public void addSecondMenu(SecondMenu secondMenu) {
+        menuManage.addSecondMenu(secondMenu);
+    }
+
+    @Override
+    public void secondMenuDelete(String secondMenuName) {
+        menuManage.secondMenuDelete(secondMenuName);
+    }
+
+    @Override
+    public void secondMenuDelete2(int firstMenuId) {
+        menuManage.secondMenuDelete2(firstMenuId);
+    }
+
+
+
+
 }

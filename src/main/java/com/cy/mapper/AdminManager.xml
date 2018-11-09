@@ -54,7 +54,6 @@
 		select adminRoleId from admin_table where adminName=#{adminName}
     </select>
 
-
 </mapper>
 	
 	

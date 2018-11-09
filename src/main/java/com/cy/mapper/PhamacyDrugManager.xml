@@ -43,6 +43,7 @@
 		<result property="drugName" column="DRUGNAME"/>
 		<result property="adminName" column="ADMINNAME"/>
 		<result property="auditor" column="AUDITOR"/>
+		<result property="url" column="URL" jdbcType="BLOB"/>
 	</resultMap>
 
 	<delete id="delectPhamacyDrug" >
@@ -88,7 +89,7 @@
 	<insert id="addReceiverDrugs" >
 		begin
 		<foreach collection="receiveList" item="item" index="index" separator=";">
-			insert into receive_table(receiveid,adminid,userid,receivedrug,receivedate,state,phamacydrugquantity,pharmacyid)
+			insert into receive_table(receiveid,adminid,userid,receivedrug,receivedate,state,phamacydrugquantity,pharmacyid,url)
 			values
 			(
 			RECEIVE_TABLE_SEQUENCE.nextval,
@@ -98,12 +99,18 @@
 			#{item.receiveDate},
 			#{item.state},
 			#{item.phamacyDrugQuantity},
-			#{item.pharmacyId}
+			#{item.pharmacyId},
+			#{item.url,jdbcType=CLOB}
 			)
 		</foreach>
 		;end;
 	</insert>
 
+	<!--通过报损id查询-->
+	<select id="selectReceivePhamacyDrug"  resultMap="PhamacyReceive">
+		select * from receive_table where receiveid =#{receiveid}
+	</select>
+	
 	<!--查询药房药品审核单分页-->
 	<select id="selectPhamacyReceiveDrug"  resultMap="PhamacyReceive">
 		select a.*,b.adminName,c.drugName from admin_table b,pharmacy_table c,receive_table a where a.adminid=b.adminid and a.pharmacyid=c.pharmacyid
@@ -138,8 +145,50 @@
 			where PHARMACYID = #{item.pharmacyId}
 		</foreach>
 	</update>
-	
 
+	<!--药房药品调价审核-->
+	<update id="phamacyDrugsPrice">
+	  	update PHARMACY_TABLE set DRUGPRICE = #{phamacyDrugQuantity} where PHARMACYID = #{pharmacyId}
+	</update>
+
+	<!--药房药品退库审核-->
+	<update id="phamacyDrugsBack">
+	  	update PHARMACY_TABLE set DRUGQUANTITY = #{phamacyDrugQuantity} where PHARMACYID = #{pharmacyId}
+	</update>
+
+	<!--添加药房药品请领-->
+
+	<insert id="addPharmacyDrugs" >
+			insert into PHARMACY_TABLE(pharmacyId,drugStateId,drugClassificationId,drugNumber,drugName,drugDetails,formulation,norm,unit,drugPrice,drugQuantity,approvalnumber,produtionDate,lotNumber,validaityperiod,manufacturer,medicalinsurance,drugPhoto)
+			values
+			(
+			#{drugId},
+			#{drugIdState},
+			#{drugClassificationId},
+			#{drugNumber},
+			#{drugName},
+			#{drugDetails},
+			#{formulation},
+			#{norm},
+			#{unit},
+			#{drugPrice},
+			#{drugQuantity},
+			#{approvalnumber},
+			#{produtionDate},
+			#{lotNumber},
+			#{validaityperiod},
+			#{manufacturer},
+			#{medicalinsurance},
+			#{drugPhoto}
+			)
+	</insert>
+
+
+	<!--查询药房申领-->
+	<select id="selectDrugStoreOut"  resultType="com.cy.bean.DrugStoreOut">
+		select * from drugStoreOut_table where outreason = '申领' order by drugStoreOutId
+	</select>
+	
 	<!--吴侃-->
 
 </mapper>

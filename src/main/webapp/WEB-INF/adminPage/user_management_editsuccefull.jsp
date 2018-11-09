@@ -23,8 +23,7 @@
 </head>
 <body>
 <div style="line-height:350px;text-align:center">
-    <span><img src="../images/wc.png" style="height:200px; weight:300px;"/></span>
-<i class="layui-icon" >修改成功，快去刷新页面点击查看</i>
+    <span><img src="../images/wc.png" style="height:200px; weight:300px;"/>提交成功</span>
 </div>
 </body>
 <script>
