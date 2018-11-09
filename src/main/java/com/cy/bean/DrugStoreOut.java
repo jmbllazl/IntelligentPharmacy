@@ -28,9 +28,10 @@ public class DrugStoreOut {
         this.outReason=outReason;
     }
 
-    public DrugStoreOut(int drugQuantity, String drugName) {
+    public DrugStoreOut(int drugQuantity, String drugName,String outReason) {
         this.drugQuantity = drugQuantity;
         this.drugName = drugName;
+        this.outReason=outReason;
     }
 
     public int getDrugStoreOutId() {

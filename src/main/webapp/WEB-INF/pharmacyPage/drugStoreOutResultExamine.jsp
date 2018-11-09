@@ -59,7 +59,7 @@
 
                     <td class="td-manage" align="center" >
 
-                        <a title="通过审核" href="drugStoreOutReviewPass.action?drugStoreOutId=${drugStoreOut.drugStoreOutId}&drugQuantity=${drugStoreOut.drugQuantity}&drugName=${drugStoreOut.drugName}" style="text-decoration:none">
+                        <a title="通过审核" href="drugStoreOutReviewPass.action?drugStoreOutId=${drugStoreOut.drugStoreOutId}&drugQuantity=${drugStoreOut.drugQuantity}&drugName=${drugStoreOut.drugName}&outReason=${drugStoreOut.outReason}" style="text-decoration:none">
                             <i class="layui-icon">&#xe62f;</i>
                         </a>
                         <a title="不通过审核" href="drugStoreOutNoReviewPass.action?drugStoreOutId=${purchase.drugStoreOutId}" style="text-decoration:none">
