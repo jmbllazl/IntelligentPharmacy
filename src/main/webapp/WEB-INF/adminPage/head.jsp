@@ -20,12 +20,18 @@
     <div class="headL" >
         <p align="left" style="font-size:25px;color:red"  >智慧药房后台管理中心</p>
     </div>
+    <c:when test="${not empty sessionScope.adminList}">
+        <c:forEach items="${sessionScope.adminList}" var="adminList">
+
+
     <div class="headAlarm">
-        <a href="/alarm/alarmAllList.action"   target="main">【查看报警消息】</a>
+        <a href="/alarm/alarmAllList.action?alarmRole=${adminList.adminRoleId}"   target="main">【查看报警消息】</a>
     </div>
     <div class="headR">
         <a href="hlogin.jsp" target="_parent">【注销】</a>
     </div>
+    </c:forEach>
+    </c:when>
 </div>
 
 

@@ -68,7 +68,7 @@
 
 	<!--库存数量增加-->
 	<update id="addDrug" parameterType="com.cy.bean.DrugStore">
-		update DRUGSTORE_TABLE set drugQuantity=drugQuantity||#{drugQuantity} where drugName=#{drugName}
+		update DRUGSTORE_TABLE set drugQuantity=drugQuantity+#{drugQuantity} where drugName=#{drugName}
     </update>
 
 	<!--退还厂家-->

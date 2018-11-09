@@ -43,7 +43,6 @@
 <div class="x-body">
 
 <table>
-
   警报类型：<select  name="AlarmStyleShowList" id="styleShowListId" onchange="changeStyle()">
     <option value="">请选择</option>
     <c:forEach items="${requestScope.alarmStyleShowList}" var="styleShowList">
@@ -51,8 +50,7 @@
     </c:forEach>
     </select >
   <td class="ctybtn">
-   <%-- <input  class="ctybtn" type="button" id="clickAll" onclick="clickAll()" value="查看全部报警"/>
-    --%><a style="color: white"  href="/alarm/alarmAllList.action?alarmRole=${requestScope.alarmRole}" target="main" >查看全部警报</a>
+    <a style="color: white"  href="/alarm/alarmAllList.action?alarmRole=${sessionScope.alarmRoleList}" target="main" >查看全部警报</a>
   </td>
 </table>
   <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
@@ -72,9 +70,9 @@
     </thead>
     <tbody id="alarmStyleClick">
     <c:choose>
-      <c:when test="${not empty sessionScope.alarmPageList.list}">
-        <c:forEach items="${sessionScope.alarmPageList.list}" var="alramList">
-          <input type="hidden" value="${alramList.alarmRole}" id="alarmRole">
+      <c:when test="${not empty requestScope.alarmPageList.list}">
+        <c:forEach items="${requestScope.alarmPageList.list}" var="alramList">
+          <input type="hidden" value="${sessionScope.alarmRole}" name="alarmRole" id="alarmRole">
             <tr>
 
               <td>
@@ -100,7 +98,7 @@
               </td>
 
               <td class="ctybtn"  style=" align: center">
-                <a style="color: white"  href="/alarm/alarmManage.action?alarmId=${alramList.alarmId}&&alarmStyleId=${alramList.alarmStyleId}&&alarmRole=${alramList.alarmRole}" target="main" >查看详情</a>
+                <a style="color: white"  href="/alarm/alarmManage.action?alarmId=${alramList.alarmId}&&alarmStyleId=${alramList.alarmStyleId}&&alarmRole=${sessionScope.alarmRole}" target="main" >查看详情</a>
               </td>
             </tr>
         </c:forEach>
@@ -114,13 +112,12 @@
     <tr>
       <td colspan="3" align="left">共有${alarmPageList.total}条记录，当前第${alarmPageList.pageNum}页，共${alarmPageList.pages}页</td>
       <td colspan="9" align="right">
-        <a href="/alarm/alarmAllList.action?pageNum=1&&alarmRole=${requestScope.alarmRole}"    target="main">首页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.prePage}&&alarmRole=${requestScope.alarmRole}"  target="main">上一页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.nextPage}&&alarmRole=${requestScope.alarmRole}"  target="main">下一页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.navigateLastPage}&&alarmRole=${requestScope.alarmRole}"  target="main">尾页</a>
+        <a href="/alarm/alarmStyleShowList.action?pageNum=1&&alarmStyleId=${alarmStyleId}&&alarmRole=${requestScope.alarmRole}"    target="main">首页</a>
+        <a href="/alarm/alarmStyleShowList.action?pageNum=${alarmPageList.prePage}&&alarmStyleId=${alarmStyleId}&&alarmRole=${requestScope.alarmRole}"  target="main">上一页</a>
+        <a href="/alarm/alarmStyleShowList.action?pageNum=${alarmPageList.nextPage}&&alarmStyleId=${alarmStyleId}&&alarmRole=${requestScope.alarmRole}"  target="main">下一页</a>
+        <a href="/alarm/alarmStyleShowList.action?pageNum=${alarmPageList.navigateLastPage}&&alarmStyleId=${alarmStyleId}&&alarmRole=${requestScope.alarmRole}"  target="main">尾页</a>
       </td>
-    </tr>
-
+    </tr> 
     </tbody>
   </table>
 
@@ -160,12 +157,6 @@
           var id = document.getElementById('styleShowListId').value;
           var alarmRole = document.getElementById('alarmRole').value;
         window.location.href="<%=request.getContextPath()%>/alarm/alarmStyleShowList.action?alarmStyleId="+id+"&&alarmRole="+alarmRole;
-      }
-      function  clickAll(){
-          var id = document.getElementById('alarmRole').value;
-          // var id = $('#styleShowListId').val();
-          alert(id);
-          window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+id;
       }
 
   </script>

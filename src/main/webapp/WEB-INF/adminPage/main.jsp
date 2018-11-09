@@ -157,7 +157,7 @@
         <div class="modal-but1">
             <input type="button" class="button1"  onclick="button1()" value="确定">
             <span class="button2">
-            <a style="color: white" href="/alarm/alarmAllList.action"   target="main">查看详情</a>
+            <a style="color: white" href="/alarm/alarmAllList.action?alarmRole=${adminList.adminRoleId}"   target="main">查看详情</a>
             </span>
         </div>
         <%--  <div class="modal-but2">
@@ -167,54 +167,104 @@
 </div>
 </body>
 <script>
+    //<!--药库药品低限内容-->
+    function phamacyStore() {
+        var adminRoleId = $('#adminRoleId').val();
+        if(adminRoleId == 2||adminRoleId==3){
+            return;
+        }
+        else{
+            var adminName = $('#adminName').val();
+            $.post("/alarm/alarmDrugStroe.action",
+                {adminName: adminName, alarmRole: adminRoleId
+                },
+                function (data) {
+                    var info = data;
+                    if (info.storeSuss) {
+                        console.log("药库低限警报");
+                        btn();
+                    } else {
+                    }
+                }, "json");
+        }
+    }
     //<!--药品低限内容-->
     function phamacyNum() {
         var adminRoleId = $('#adminRoleId').val();
-        if (adminRoleId == 1) {
+        if(adminRoleId == 1||adminRoleId==4||adminRoleId==5){
             return;
         }
-        else {
+        else{
             var adminName = $('#adminName').val();
             $.post("/alarm/alarmAllDrugs.action",
-                {adminName: adminName},
+                {adminName: adminName,
+                    alarmRole: adminRoleId
+                },
                 function (data) {
                     var info = data;
-                    if (info.success) {
-                        alert("低限警报")
+                    if (info.numTrue) {
+                        console.log("低限警报");
+                        btn();
                         //window.open ("/alarm/alarmTable.action") ;
                     } else {
-
                     }
                 }, "json");
         }
     }
+    //药品过期报警
     function phamacyDate() {
         var adminRoleId = $('#adminRoleId').val();
-        if (adminRoleId == 1) {
+        if(adminRoleId == 1||adminRoleId==4||adminRoleId==5){
             return;
         }
-        else {
+        else{
             var adminName = $('#adminName').val();
             $.post("/alarm/alarmPhamacyDate.action",
-                {adminName: adminName},
+                {adminName: adminName ,alarmRole: adminRoleId
+                },
                 function (data) {
                     var info = data;
-                    if (info.success) {
+                    if (info.dateTrue) {
                         btn();
-                        alert("日期警报")
+                        console.log("过期警报");
                     } else {
 
                     }
                 }, "json");
         }
     }
+    //药品滞销报警
+    function alarmUnsalable() {
+        var adminRoleId = $('#adminRoleId').val();
+        if(adminRoleId == 1||adminRoleId==4||adminRoleId==5){
+            return;
+        }
+        else{
+            var adminName = $('#adminName').val();
+            $.post("/alarm/alarmUnsalable.action",
+                {adminName: adminName,
+                alarmRole: adminRoleId
+                 },
+                function (data) {
+                    var info = data;
+                    if (info.usalable) {
+                        btn();
+                        console.log("滞销警报");
+                    } else {
 
+                    }
+                }, "json");
+        }
+
+    }
 </script>
 
 <script>
     function load() {
         phamacyNum();
         phamacyDate();
+        alarmUnsalable();
+        phamacyStore();
     }
 </script>
 
@@ -236,7 +286,8 @@
     }
     //查看详情
     function button2(){
-        window.onload("/alarm/alarmAllList.action");
+        var alarmRole = $('#adminRoleId').val();
+        window.onload("/alarm/alarmAllList.action?alarmRole="+alarmRole);
     }
     // 点击 <span> (x), 关闭弹窗
     span.onclick = function() {

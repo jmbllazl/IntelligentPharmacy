@@ -1,10 +1,13 @@
 package com.cy.bean;
 
 
+import org.springframework.stereotype.Service;
+
 /**
  * 药库药品表
  *
  **/
+@Service
 public class DrugStore {
 
     private int drugId; //药品ID
@@ -29,12 +32,12 @@ public class DrugStore {
     private String storageTime;//药品入库日期
     private String drugPhoto;//药品图片存放路径
     private String dayConsumption;//每日用量
-    private String reimbursementRatio;//报销比例（0-1）
+    private String drugClassificationName;//药品分类名字
 
     public DrugStore() {
     }
 
-    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime, String drugPhoto,String dayConsumption,String reimbursementRatio) {
+    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime, String drugPhoto,String dayConsumption,String drugClassificationName) {
         this.drugId = drugId;
         this.drugClassificationId = drugClassificationId;
         this.purchaseId = purchaseId;
@@ -57,10 +60,11 @@ public class DrugStore {
         this.storageTime = storageTime;
         this.drugPhoto = drugPhoto;
         this.dayConsumption=dayConsumption;
-        this.reimbursementRatio=reimbursementRatio;
+        this.drugClassificationName=drugClassificationName;
     }
 
     public DrugStore( String drugName,int drugClassificationId, int drugNumber, String drugDetails, String formulation, String norm, String unit, int drugPrice, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String storageTime, String drugPhoto,String dayConsumption) {
+
         this.drugName = drugName;
         this.drugClassificationId = drugClassificationId;
         this.drugNumber = drugNumber;
@@ -69,7 +73,6 @@ public class DrugStore {
         this.norm = norm;
         this.unit = unit;
         this.drugPrice = drugPrice;
-        this.drugQuantity = drugQuantity;
         this.approvalnumber = approvalnumber;
         this.produtionDate = produtionDate;
         this.lotNumber = lotNumber;
@@ -80,7 +83,13 @@ public class DrugStore {
         this.dayConsumption=dayConsumption;
     }
 
+    public String getDrugClassificationName() {
+        return drugClassificationName;
+    }
 
+    public void setDrugClassificationName(String drugClassificationName) {
+        this.drugClassificationName = drugClassificationName;
+    }
 
     public int getDrugId() {
         return drugId;
@@ -252,21 +261,5 @@ public class DrugStore {
 
     public DrugStore(String dayConsumption) {
         this.dayConsumption = dayConsumption;
-    }
-
-    public String getDayConsumption() {
-        return dayConsumption;
-    }
-
-    public void setDayConsumption(String dayConsumption) {
-        this.dayConsumption = dayConsumption;
-    }
-
-    public String getReimbursementRatio() {
-        return reimbursementRatio;
-    }
-
-    public void setReimbursementRatio(String reimbursementRatio) {
-        this.reimbursementRatio = reimbursementRatio;
     }
 }
