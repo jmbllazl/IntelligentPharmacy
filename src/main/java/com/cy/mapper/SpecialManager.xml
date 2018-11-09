@@ -20,6 +20,35 @@
 	 select * from DRUG_CLASSIFICATION_TABLE where drugClassificationId in (5,6)
 	</select>
 
+
+	<!--查询药房特殊药品所有信息-->
+	<select id="selectAllPharmacyNum" parameterType="com.cy.bean.PhamacyDrug" resultType="com.cy.bean.PhamacyDrug" >
+		select * from PHARMACY_TABLE where drugClassificationId in (5,6)
+	</select>
+
+	<!--查询药房单个特殊药品所有信息-->
+	<select id="selectAllPharmacyNumId" parameterType="java.lang.Integer" resultType="com.cy.bean.PhamacyDrug" >
+		select * from PHARMACY_TABLE where drugClassificationId = #{drugClassificationId}
+	</select>
+
+	<!--查询所有销售麻醉净胜药品信息-->
+	<select id="selectReceiveAllDrug" parameterType="com.cy.bean.PhamacyDrug" resultType="com.cy.bean.PhamacyDrug" >
+		select c.userId,c.receiveDrug,c.receiveDate,c.phamacyDrugQuantity,
+		a.DRUGNAME,a.drugdetails,a.formulation,a.norm,a.unit,a.drugprice,a.APPROVALNUMBER,a.MEDICALINSURANCE,a.DRUGPHOTO,
+		b.DRUGCLASSIFICATIONNAME
+  		from PHARMACY_TABLE a , DRUG_CLASSIFICATION_TABLE b ,RECEIVE_TABLE c
+  		where  a.DRUGCLASSIFICATIONID=b.DRUGCLASSIFICATIONID and a.drugClassificationId in (5,6)
+  		and a.PHARMACYID=c.PHARMACYID and c.RECEIVEDRUG='销售' and c.STATE='审核通过'
+	</select>
+	<!--查询药房单个特殊药品所有信息-->
+	<select id="selectReceiveAllDrugId" parameterType="java.lang.Integer" resultType="com.cy.bean.PhamacyDrug" >
+		select c.userId,c.receiveDrug,c.receiveDate,c.phamacyDrugQuantity,
+		a.DRUGNAME,a.drugdetails,a.formulation,a.norm,a.unit,a.drugprice,a.APPROVALNUMBER,a.MEDICALINSURANCE,a.DRUGPHOTO,
+		b.DRUGCLASSIFICATIONNAME
+  		from PHARMACY_TABLE a , DRUG_CLASSIFICATION_TABLE b ,RECEIVE_TABLE c
+  		where  a.DRUGCLASSIFICATIONID=b.DRUGCLASSIFICATIONID and a.drugClassificationId= #{drugClassificationId}
+  		and a.PHARMACYID=c.PHARMACYID and c.RECEIVEDRUG='销售' and c.STATE='审核通过'
+	</select>
 </mapper>
 	
 	

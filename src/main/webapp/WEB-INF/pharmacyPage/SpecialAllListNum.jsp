@@ -11,7 +11,7 @@
 <html xmlns:c="http://www.w3.org/1999/XSL/Transform">
 <head>
 <meta charset="utf-8">
-<title>警报消息显示</title>
+<title>麻醉精神药品显示</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -39,9 +39,20 @@
   }
 </style>
 <body>
-<div class="x-nav"> <span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>警报消息显示</cite></a> </span> <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a> </div>
+<div class="x-nav"> <span class="layui-breadcrumb"> <a><cite>首页</cite></a> <a><cite>麻醉精神药品库存</cite></a> </span> <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a> </div>
 <div class="x-body">
 
+<table>
+  药品类型：<select  name="drugClassificationAllStyleList" id="styleShowListId" onchange="changeStyle()">
+  <option value="" style='display:none;'>-请选择-</option>
+  <c:forEach items="${requestScope.drugClassificationAllStyleList}" var="styleShowList">
+      <option value="${styleShowList.drugClassificationId}" id="styleShowListId" name="styleShowListId">${styleShowList.drugClassificationName}</option>
+    </c:forEach>
+    </select >
+  <td class="ctybtn">
+    <a style="color: white"  href="/anesthesia/anesthesiaAllList.action?state=2" target="main" >查看所有特殊药品库存</a>
+  </td>
+</table>
   <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
     <div class="layui-form-pane">
     </div>
@@ -49,32 +60,27 @@
   <table class="tablelist">
     <thead>
       <tr>
-        <th> 报警类型 </th>
-        <th> 报警来源 </th>
-        <th> 报警详情</th>
-        <th> 报警日期</th>
-        <th> 处理状态</th>
-        <th> 操作</th>
+        <th> 药品名字 </th>
+        <th> 药品详情 </th>
+        <th> 剂型</th>
+        <th> 规格/单位</th>
+        <th> 药品价格</th>
+        <th> 数量</th>
+        <th> 批注文号</th>
       </tr>
     </thead>
     <tbody id="alarmStyleClick">
     <c:choose>
-      <c:when test="${not empty sessionScope.alarmPageList.list}">
-        <c:forEach items="${sessionScope.alarmPageList.list}" var="alramList">
+      <c:when test="${not empty requestScope.specialAllPageList.list}">
+        <c:forEach items="${requestScope.specialAllPageList.list}" var="specialAllPageList">
             <tr>
-              <td> 药品低限警报</td>
-              <td> 药库</td>
-              <td>${alramList.alarmDetails}</td>
-              <td>${alramList.alarmDate}</td>
-              <td>
-                <c:if test="${alramList.alarmState==0}">
-                  <span style="color: red">未处理</span>
-                </c:if>
-              </td>
-
-              <td class="ctybtn"  style=" align: center">
-                <a style="color: white"  href="/alarm/alarmManage.action?alarmId=${alramList.alarmId}&&alarmStyleId=${alramList.alarmStyleId}&&alarmRole=${alramList.alarmRole}" target="main" >查看详情</a>
-              </td>
+              <td>${specialAllPageList.drugName}</td>
+              <td>${specialAllPageList.drugDetails}</td>
+              <td>${specialAllPageList.formulation}</td>
+              <td>${specialAllPageList.norm}/${specialAllPageList.unit}</td>
+              <td>${specialAllPageList.drugPrice}</td>
+              <td style="color: red">${specialAllPageList.drugQuantity}</td>
+              <td>${specialAllPageList.approvalnumber}</td>
             </tr>
         </c:forEach>
       </c:when>
@@ -85,15 +91,14 @@
       </c:otherwise>
     </c:choose>
     <tr>
-      <td colspan="3" align="left">共有${alarmPageList.total}条记录，当前第${alarmPageList.pageNum}页，共${alarmPageList.pages}页</td>
+      <td colspan="3" align="left">共有${specialAllPageList.total}条记录，当前第${specialAllPageList.pageNum}页，共${specialAllPageList.pages}页</td>
       <td colspan="9" align="right">
-        <a href="/alarm/alarmAllList.action?pageNum=1&&alarmRole=${requestScope.alarmRole}"    target="main">首页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.prePage}&&alarmRole=${requestScope.alarmRole}"  target="main">上一页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.nextPage}&&alarmRole=${requestScope.alarmRole}"  target="main">下一页</a>
-        <a href="/alarm/alarmAllList.action?pageNum=${alarmPageList.navigateLastPage}&&alarmRole=${requestScope.alarmRole}"  target="main">尾页</a>
+        <a href="/anesthesia/anesthesiaAllList.action?pageNum=1&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=2"    target="main">首页</a>
+        <a href="/anesthesia/anesthesiaAllList.action?pageNum=${specialAllPageList.prePage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=2  target="main">上一页</a>
+        <a href="/anesthesia/anesthesiaAllList.action?pageNum=${specialAllPageList.nextPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=2"  target="main">下一页</a>
+        <a href="/anesthesia/anesthesiaAllList.action?pageNum=${specialAllPageList.navigateLastPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=2"  target="main">尾页</a>
       </td>
-    </tr>
-
+    </tr> 
     </tbody>
   </table>
 
@@ -131,14 +136,7 @@
   <script>
       function  changeStyle(){
           var id = document.getElementById('styleShowListId').value;
-          var alarmRole = document.getElementById('alarmRole').value;
-        window.location.href="<%=request.getContextPath()%>/alarm/alarmStyleShowList.action?alarmStyleId="+id+"&&alarmRole="+alarmRole;
-      }
-      function  clickAll(){
-          var id = document.getElementById('alarmRole').value;
-          // var id = $('#styleShowListId').val();
-          alert(id);
-          window.location.href="<%=request.getContextPath()%>/alarm/alarmAllList.action?alarmRole="+id;
+          window.location.href="<%=request.getContextPath()%>/anesthesia/anesthesiaAllShowList.action?state=2&&drugClassificationId="+id;
       }
 
   </script>

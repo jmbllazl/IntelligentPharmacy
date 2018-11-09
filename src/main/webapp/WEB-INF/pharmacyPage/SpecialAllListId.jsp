@@ -50,7 +50,7 @@
     </c:forEach>
     </select >
   <td class="ctybtn">
-    <a style="color: white"  href="/anesthesia/anesthesiaAllList.action" target="main" >查看所有特殊药品</a>
+    <a style="color: white"  href="/anesthesia/anesthesiaAllList.action?state=1" target="main" >查看所有特殊药品</a>
   </td>
 </table>
   <form class="layui-form x-center" action="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action" style="width:85%">
@@ -99,10 +99,10 @@
     <tr>
       <td colspan="3" align="left">共有${specialAllPageList.total}条记录，当前第${specialAllPageList.pageNum}页，共${specialAllPageList.pages}页</td>
       <td colspan="9" align="right">
-        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=1&&drugClassificationId=${requestScope.drugClassificationIdNum}"    target="main">首页</a>
-        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.prePage}&&drugClassificationId=${requestScope.drugClassificationIdNum}"  target="main">上一页</a>
-        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.nextPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}"  target="main">下一页</a>
-        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.navigateLastPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}"  target="main">尾页</a>
+        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=1&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=1"    target="main">首页</a>
+        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.prePage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=1"  target="main">上一页</a>
+        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.nextPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=1"  target="main">下一页</a>
+        <a href="/anesthesia/anesthesiaAllShowList.action?pageNum=${specialAllPageList.navigateLastPage}&&drugClassificationId=${requestScope.drugClassificationIdNum}&&state=1"  target="main">尾页</a>
       </td>
     </tr> 
     </tbody>
@@ -142,8 +142,7 @@
   <script>
       function  changeStyle(){
           var id = document.getElementById('styleShowListId').value;
-          alert(id);
-          window.location.href="<%=request.getContextPath()%>/anesthesia/anesthesiaAllShowList.action?drugClassificationId="+id;
+          window.location.href="<%=request.getContextPath()%>/anesthesia/anesthesiaAllShowList.action?state=1&&drugClassificationId="+id;
       }
 
   </script>

@@ -159,8 +159,6 @@
       function  changeStyle(){
           var id = document.getElementById('styleShowListId').value;
           var alarmRole = document.getElementById('alarmRole').value;
-         // var id = $('#styleShowListId').val();
-          alert(id);
         window.location.href="<%=request.getContextPath()%>/alarm/alarmStyleShowList.action?alarmStyleId="+id+"&&alarmRole="+alarmRole;
       }
       function  clickAll(){

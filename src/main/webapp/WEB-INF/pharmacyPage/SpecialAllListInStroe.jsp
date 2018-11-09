@@ -132,7 +132,6 @@
   <script>
       function  changeStyle(){
           var id = document.getElementById('styleShowListId').value;
-          alert(id);
           window.location.href="<%=request.getContextPath()%>/anesthesia/anesthesiaAllShowList.action?drugClassificationId="+id;
       }
 
