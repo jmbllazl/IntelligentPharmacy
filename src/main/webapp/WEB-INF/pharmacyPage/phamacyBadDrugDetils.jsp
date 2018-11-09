@@ -27,7 +27,7 @@
                         药品品名
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.drugName}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.drugName}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -37,7 +37,7 @@
                         药品编号
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.drugNumber}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.phamacyDrugQuantity}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -47,7 +47,7 @@
                         批注文号
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.approvalnumber}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.phamacyDrugQuantity}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -57,7 +57,7 @@
                         批号
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.lotNumber}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiveDate}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -67,7 +67,7 @@
                         药品详情
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.drugDetails}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiverDrug}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -77,7 +77,7 @@
                         药品价格
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="￥${phamacyDrug.drugPrice}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="￥${phamacyReceive.receiverDrug}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
@@ -87,9 +87,12 @@
                         生产产商
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyDrug.manufacturer}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiverDrug}" 
                         autocomplete="off" class="layui-input">
                 </div>
+                </div>
+                 <div class="layui-form-item">
+                   <img src="${pageContext.request.contextPath}/phamacy/images.action?receiverId=${phamacyReceive.receiverId}">
                 </div>
           </form>
     </div>

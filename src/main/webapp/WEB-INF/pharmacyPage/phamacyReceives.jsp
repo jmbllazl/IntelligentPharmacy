@@ -82,7 +82,7 @@
                   <input type="button" id="btn" value="审核通过" onclick="updateReceive('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}','${receiveDrugTemp.phamacyDrugQuantity}','${receiveDrugTemp.pharmacyId}')">
                   <input type="button" id="btn1" value="审核不通过" onclick="updateReceives('${receiveDrugTemp.receiverId}','${receiveDrugTemp.receiverDrug}')">
                 </c:if>
-                
+                <input type="button" value="查看详情" onclick="user_management_show('药品信息','selectPhamacyDrugReceiveDetils.action?receiverId=${receiveDrugTemp.receiverId}','600','500')">
             </tr>
         </c:forEach>
       </c:when>

@@ -82,7 +82,8 @@ public class AdminController {
                     firstMenuList= (ArrayList<FirstMenu>) menuServiceImp.findadminFirst(firstId.get(j));
                     AllfirstMenuList.addAll(firstMenuList);
                 }
-                session.setAttribute("firstMenuList",AllfirstMenuList);
+                session.setAttribute("first" +
+                        "MenuList",AllfirstMenuList);
                 session.setAttribute("secondMenuList",secondMenuList);
                 model.addAttribute("admin", adminResult);
                 session.setAttribute("admin", adminResult);

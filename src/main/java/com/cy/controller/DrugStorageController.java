@@ -169,6 +169,23 @@ public class DrugStorageController  {
     //药品退还厂家提交
     @RequestMapping("/submitDrugStoreOut.action")
     public String submitDrugStoreOut(HttpServletRequest request ,String[] drugQuantity,String[] selected ,String[] outReason){
+        String cmd = null;
+        for(int i = 0; i<outReason.length;i++){
+           if(!StringUtils.isEmpty(outReason[i])){
+              cmd =outReason[i];
+           }
+       }
+       if(cmd.contains("申领")){
+           addRecevieDrug(request,drugQuantity,selected,cmd);
+           submitDrugStore(request , drugQuantity,selected , outReason);
+           return "forward:/phamacy/selectPhamacyReceive.action";
+       }else{
+           submitDrugStore(request , drugQuantity,selected , outReason); 
+           return "forward:/phamacy/selectDrugStoreOut.action";
+       }
+    }
+    //药品退还厂家提交
+    public void submitDrugStore(HttpServletRequest request ,String[] drugQuantity,String[] selected ,String[] outReason){
         List<DrugStoreOut> drugStoreOutList = new ArrayList<DrugStoreOut>();
         String [] drugs = new String[10];
         String [] reason = new String[10];
@@ -199,7 +216,39 @@ public class DrugStorageController  {
             }
         }
         int result= drugStorageServiceImp.drugStoreOut(drugStoreOutList);
-        return "forward:/phamacy/selectDrugStoreOut.action";
+    }
+    //药品申领
+    public void addRecevieDrug(HttpServletRequest request ,String[] drugQuantity,String[] selected,String drugDetails){
+        List<PhamacyReceive> phamacyReceiveList = new ArrayList<PhamacyReceive>();
+        String [] drugs = new String[10];
+        int a=0;
+        if(drugQuantity!=null||selected!=null){
+            for(int j=0;j<drugQuantity.length;j++) {
+                if (drugQuantity[j] != "") {
+                    drugs[a] = drugQuantity[j];
+                    a++;
+                }
+            }
+            for(int i=0;i<selected.length;i++){
+                if(selected[i]!=""){
+                    PhamacyReceive phamacyReceive= new PhamacyReceive();
+                    phamacyReceive.setPharmacyId(Integer.parseInt(selected[i]));
+                    phamacyReceive.setPhamacyDrugQuantity(Integer.parseInt(drugs[i]));
+                    Date ss = new Date();
+                    SimpleDateFormat nowDate = new SimpleDateFormat("yyyy-MM-dd");//设置日期格式
+                    String time = nowDate.format(ss.getTime());
+                    phamacyReceive.setReceiveDate(time);
+                    phamacyReceive.setState("审核中");
+                    phamacyReceive.setReceiverDrug(drugDetails);
+                    HttpSession session = request.getSession();
+                    Admin admin = (Admin)session.getAttribute("admin");
+                    phamacyReceive.setAdminId(admin.getAdminId());
+                    phamacyReceive.setUserId(1);
+                    phamacyReceiveList.add(phamacyReceive);
+                }
+            }
+        }
+        int result= phamacyService.addPhamacyReceiveDrugs(phamacyReceiveList);
     }
     //药品退还厂家单显示
     @RequestMapping("/selectDrugStoreOut.action")
@@ -228,7 +277,7 @@ public class DrugStorageController  {
     @RequestMapping("/drugStoreOutReviewPass.action")
     public String drugStoreOutReviewPass(int drugStoreOutId,int drugQuantity,String drugName){
         drugStorageServiceImp.drugStoreOutReviewPass(drugStoreOutId);
-        //通过审核将药品的数量增加
+        //通过审核将药品的数量减少
         DrugStoreOut drugStoreOut=new DrugStoreOut(drugQuantity,drugName);
         drugStorageServiceImp.reduceDrug(drugStoreOut);
         return "forward:/phamacy/drugStoreOutResultExamine.action";

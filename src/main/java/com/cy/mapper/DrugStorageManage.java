@@ -56,4 +56,7 @@ public interface DrugStorageManage {
 
     //通过审核减少库存
     public void reduceDrug(DrugStoreOut drugStoreOut);
+    
+    //通过药品名查询药品
+    public DrugStore selectDrug (DrugStoreOut drugStoreOut);
 }

@@ -3,9 +3,11 @@ package com.cy.biz.bizImp;
 import com.cy.bean.*;
 import com.cy.biz.DrugStorageService;
 import com.cy.mapper.DrugStorageManage;
+import com.cy.mapper.PhamacyDrugManager;
 import com.cy.util.StringUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,6 +20,8 @@ public class DrugStorageServiceImp implements DrugStorageService{
 
     @Resource
     DrugStorageManage drugStorageManage;
+    @Autowired
+    private PhamacyDrugManager phamacyDrugManager;
     @Override
     public void DrugPurchase(DrugStore phamacyDrug) {
         drugStorageManage.DrugPurchase(phamacyDrug);
@@ -121,6 +125,10 @@ public class DrugStorageServiceImp implements DrugStorageService{
     @Override
     public void reduceDrug(DrugStoreOut drugStoreOut) {
         drugStorageManage.reduceDrug(drugStoreOut);
+        DrugStore drugStore = drugStorageManage.selectDrug(drugStoreOut);
+        drugStore.setDrugQuantity(drugStoreOut.getDrugQuantity());
+        phamacyDrugManager.addPharmacyDrugs(drugStore);
+       
     }
 
 

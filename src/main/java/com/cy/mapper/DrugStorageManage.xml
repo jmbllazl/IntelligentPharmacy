@@ -46,6 +46,11 @@
 		select drugName from DRUGSTORE_TABLE where drugId=#{id}
 	</select>
 
+	<!--通过药品名查询药品-->
+	<select id="selectDrug"  resultType="com.cy.bean.DrugStore">
+		select * from DRUGSTORE_TABLE where drugName=#{drugName}
+	</select>
+
 	<!--采购单删除-->
 	<delete id="purchaseDetele" parameterType="java.lang.Integer">
         DELETE FROM purchase_table WHERE purchaseId=#{drugId}
