@@ -29,7 +29,7 @@
 <body class="templatemo-bg-gray">
 <div class="container">
     <div class="col-md-12">
-        <h1 class="margin-bottom-15">欢迎登录</h1>
+        <h1 class="margin-bottom-15">智慧药房管理系统</h1>
         <form class="form-horizontal templatemo-container templatemo-login-form-1 margin-bottom-30" role="form"
               action="/adminPage/adminLogin.action" method="post">
 
