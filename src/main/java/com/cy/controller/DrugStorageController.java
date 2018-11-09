@@ -248,6 +248,7 @@ public class DrugStorageController  {
                 }
             }
         }
+        
         int result= phamacyService.addPhamacyReceiveDrugs(phamacyReceiveList);
     }
     //药品退还厂家单显示

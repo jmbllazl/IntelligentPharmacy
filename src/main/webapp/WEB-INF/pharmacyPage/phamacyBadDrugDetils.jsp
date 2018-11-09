@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <title>
-            数据统计-查看
+            申请查看-查看
         </title>
         <meta name="renderer" content="webkit">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -24,37 +24,27 @@
                 
               <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">
-                        药品品名
+                        申请人
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.drugName}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.adminName}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
                 
                  <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">
-                        药品编号
+                        申请类型
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.phamacyDrugQuantity}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiverDrug}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
                 
                 <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">
-                        批注文号
-                    </label>
-                <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.phamacyDrugQuantity}" 
-                        autocomplete="off" class="layui-input">
-                </div>
-                </div>
-                
-                <div class="layui-form-item">
-                    <label for="L_title" class="layui-form-label">
-                        批号
+                        申请日期
                     </label>
                 <div class="layui-input-block">
                   <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiveDate}" 
@@ -64,30 +54,20 @@
                 
                 <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">
-                        药品详情
+                        申请数量
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiverDrug}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.phamacyDrugQuantity}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
                 
                 <div class="layui-form-item">
                     <label for="L_title" class="layui-form-label">
-                        药品价格
+                        申请状态
                     </label>
                 <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="￥${phamacyReceive.receiverDrug}" 
-                        autocomplete="off" class="layui-input">
-                </div>
-                </div>
-                
-                <div class="layui-form-item">
-                    <label for="L_title" class="layui-form-label">
-                        生产产商
-                    </label>
-                <div class="layui-input-block">
-                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.receiverDrug}" 
+                  <input type="text" id="L_title" name="title" required lay-verify="title" value="${phamacyReceive.state}" 
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>

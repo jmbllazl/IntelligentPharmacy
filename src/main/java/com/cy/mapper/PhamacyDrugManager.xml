@@ -108,12 +108,12 @@
 
 	<!--通过报损id查询-->
 	<select id="selectReceivePhamacyDrug"  resultMap="PhamacyReceive">
-		select * from receive_table where receiveid =#{receiveid}
+		select a.*,b.adminName from admin_table b,receive_table a where a.adminid=b.adminid and a.receiveid =#{receiveid}
 	</select>
 	
 	<!--查询药房药品审核单分页-->
 	<select id="selectPhamacyReceiveDrug"  resultMap="PhamacyReceive">
-		select a.*,b.adminName,c.drugName from admin_table b,pharmacy_table c,receive_table a where a.adminid=b.adminid and a.pharmacyid=c.pharmacyid
+		select a.*,b.adminName,c.drugName from admin_table b,DRUGSTORE_TABLE c,receive_table a where a.adminid=b.adminid and a.pharmacyid=c.drugId
 		<if test="drugName!=null">
 			and  c.DRUGNAME like '%'||#{drugName}||'%'
 		</if>
