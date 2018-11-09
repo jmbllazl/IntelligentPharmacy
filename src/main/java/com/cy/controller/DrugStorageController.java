@@ -276,10 +276,10 @@ public class DrugStorageController  {
 
     //退库审核通过
     @RequestMapping("/drugStoreOutReviewPass.action")
-    public String drugStoreOutReviewPass(int drugStoreOutId,int drugQuantity,String drugName){
+    public String drugStoreOutReviewPass(int drugStoreOutId,int drugQuantity,String drugName,String outReason){
         drugStorageServiceImp.drugStoreOutReviewPass(drugStoreOutId);
         //通过审核将药品的数量减少
-        DrugStoreOut drugStoreOut=new DrugStoreOut(drugQuantity,drugName);
+        DrugStoreOut drugStoreOut=new DrugStoreOut(drugQuantity,drugName,outReason);
         drugStorageServiceImp.reduceDrug(drugStoreOut);
         return "forward:/phamacy/drugStoreOutResultExamine.action";
     }

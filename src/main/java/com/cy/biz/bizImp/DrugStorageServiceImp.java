@@ -125,19 +125,21 @@ public class DrugStorageServiceImp implements DrugStorageService{
     @Override
     public void reduceDrug(DrugStoreOut drugStoreOut) {
         drugStorageManage.reduceDrug(drugStoreOut);
-        DrugStore drugStore = drugStorageManage.selectDrug(drugStoreOut);
-        drugStore.setDrugQuantity(drugStoreOut.getDrugQuantity());
-        PhamacyDrug phamacyDrug = phamacyDrugManager.selectPhamacyDrug(drugStore.getDrugId());
-            if(phamacyDrug!=null){
-                int a = phamacyDrug.getDrugQuantity()+ drugStore.getDrugQuantity();
+
+        if(drugStoreOut.getOutReason().contains("申领")) {
+            DrugStore drugStore = drugStorageManage.selectDrug(drugStoreOut);
+            drugStore.setDrugQuantity(drugStoreOut.getDrugQuantity());
+            PhamacyDrug phamacyDrug = phamacyDrugManager.selectPhamacyDrug(drugStore.getDrugId());
+            if (phamacyDrug != null) {
+                int a = phamacyDrug.getDrugQuantity() + drugStore.getDrugQuantity();
                 PhamacyReceive phamacyReceive = new PhamacyReceive();
                 phamacyReceive.setPhamacyDrugQuantity(a);
                 phamacyReceive.setPharmacyId(drugStore.getDrugId());
                 phamacyDrugManager.phamacyDrugsBack(phamacyReceive);
-            }else{
-               phamacyDrugManager.addPharmacyDrugs(drugStore);
+            } else {
+                phamacyDrugManager.addPharmacyDrugs(drugStore);
+            }
         }
-       
        
     }
 
