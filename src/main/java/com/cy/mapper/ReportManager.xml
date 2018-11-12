@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+		"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.mapper.ReportManager">
+
+
+	<!--查询药库药品所有信息-->
+	<select id="selectAllNumDrug" parameterType="com.cy.bean.DrugStore" resultType="com.cy.bean.DrugStore" >
+		select * from DRUGSTORE_TABLE where <![CDATA[drugClassificationId<>5]]> and <![CDATA[drugClassificationId<>6]]>
+	</select>
+
+	<!--分类查询药库库存所有信息-->
+	<select id="selectAllNumDrugId" parameterType="java.lang.Integer" resultType="com.cy.bean.DrugStore" >
+		select * from DRUGSTORE_TABLE where drugClassificationId = #{drugClassificationId} and <![CDATA[drugClassificationId<>5]]> and <![CDATA[drugClassificationId<>6]]>
+	</select>
+
+	<!--查询药品类型所有分类-->
+	<select id="drugClassificationAllStyle"  parameterType="com.cy.bean.DrugClassification" resultType="com.cy.bean.DrugClassification">
+	 select * from DRUG_CLASSIFICATION_TABLE where <![CDATA[drugClassificationId<>5]]> and <![CDATA[drugClassificationId<>6]]>
+	</select>
+
+
+	<!--查询药房药品所有信息-->
+	<select id="selectAllNumPharmacyNum" parameterType="com.cy.bean.PhamacyDrug" resultType="com.cy.bean.PhamacyDrug" >
+		select * from PHARMACY_TABLE where <![CDATA[drugClassificationId<>5]]> and <![CDATA[drugClassificationId<>6]]>
+	</select>
+
+	<!--查询药房单个药品所有信息-->
+	<select id="selectAllNumDrugIdPharmacy" parameterType="java.lang.Integer" resultType="com.cy.bean.PhamacyDrug" >
+		select * from PHARMACY_TABLE where drugClassificationId = #{drugClassificationId} and <![CDATA[drugClassificationId<>5]]> and <![CDATA[drugClassificationId<>6]]>
+	</select>
+
+
+</mapper>
+	
+	
