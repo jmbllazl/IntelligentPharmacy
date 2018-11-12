@@ -103,8 +103,11 @@
       <td colspan="5" align="left">共有${drugpage.total}条记录，当前第${drugpage.pageNum}页，共${drugpage.pages}页</td>
       <td colspan="8" align="right">
         <a href="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action?num=1"    target="main">首页</a>
+        <c:if test="${drugpage.prePage != 0}" >
         <a href="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action?num=${drugpage.prePage}"   target="main">上一页</a>
+        </c:if><c:if test="${drugpage.nextPage != 0}" >
         <a href="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action?num=${drugpage.nextPage}"   target="main">下一页</a>
+        </c:if>
         <a href="${pageContext.request.contextPath}/phamacy/phamacyAllDrugs.action?num=${drugpage.navigateLastPage}"    target="main">尾页</a>
       </td>
     </tr> 
