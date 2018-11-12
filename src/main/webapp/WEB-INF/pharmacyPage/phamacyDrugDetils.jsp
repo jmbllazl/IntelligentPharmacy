@@ -91,6 +91,9 @@
                         autocomplete="off" class="layui-input">
                 </div>
                 </div>
+               <div class="layui-form-item">
+                   <img src="${pageContext.request.contextPath}/userPage/images.action?receiverId=${phamacyDrug.pharmacyId}">
+               </div>
           </form>
     </div>
     <script src="${pageContext.request.contextPath}/lib/layui/layui.js" charset="utf-8">

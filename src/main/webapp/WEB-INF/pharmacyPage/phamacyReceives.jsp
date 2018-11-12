@@ -96,8 +96,11 @@
       <td colspan="3" align="left">共有${phamacyReceive.total}条记录，当前第${phamacyReceive.pageNum}页，共${phamacyReceive.pages}页</td>
       <td colspan="9" align="right">
         <a href="#" onclick="chageNum(1)"   target="main">首页</a>
+        <c:if test="${drugpage.prePage != 0}" >
         <a href="#" onclick="chageNum(${phamacyReceive.prePage})"  target="main">上一页</a>
+        </c:if><c:if test="${drugpage.nextPage != 0}" >
         <a href="#" onclick="chageNum(${phamacyReceive.nextPage})"   target="main">下一页</a>
+        </c:if>
         <a href="#" onclick="chageNum(${phamacyReceive.navigateLastPage})"   target="main">尾页</a>
       </td>
     </tr> 
