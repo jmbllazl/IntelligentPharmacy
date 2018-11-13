@@ -116,6 +116,87 @@
 	<update id="reduceDrug" parameterType="com.cy.bean.DrugStore">
 		update DRUGSTORE_TABLE set drugQuantity=drugQuantity - #{drugQuantity} where drugName=#{drugName}
     </update>
+	<!--初始化表格-->
+	<select id="findAllDrugStore" resultType="com.cy.bean.DrugStore">
+            select a.*,b.DRUGCLASSIFICATIONNAME from DRUGSTORE_TABLE a inner join drug_classification_table b on
+    a.drugclassificationid=b.drugclassificationid
+    order by STORAGETIME
+    </select>
 
+
+	<!--查询出库-->
+	<select id="findAllSortDrugStore" resultType="com.cy.bean.DrugStoreOutTable">
+        select  *  from DRUGSTOREOUT_TABLE
+    </select>
+
+	<!--查询入库-->
+	<select id="findAllBatchDrugStore" resultType="com.cy.bean.DrugStore">
+         select a.*,b.DRUGCLASSIFICATIONNAME from DRUGSTORE_TABLE a inner join drug_classification_table b on
+    a.drugclassificationid=b.drugclassificationid
+    order by STORAGETIME
+    </select>
+
+	<!--查询种类显示,-->
+	<select id="findAllKindDrugStore" resultType="com.cy.bean.DrugClassification">
+		select drugClassificationName,drugClassificationId from DRUG_CLASSIFICATION_TABLE
+	</select>
+
+	<!--查询种类生成编号查询-->
+	<select id="findAllBatchDrug" parameterType="int" resultType="com.cy.bean.DrugClassification">
+		select * from     DRUG_CLASSIFICATION_TABLE
+		<where>
+			DRUGCLASSIFICATIONID=#{drugClassificationId}
+		</where>
+	</select>
+
+	<select id="findAllDrugStoreYearDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+select distinct a.*,b.* from(select a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE ,count(1) inCount from (select substr(a.STORAGETIME,6,2) storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE ,count(1)  as drugCount
+from DRUGSTORE_TABLE a WHERE a.drugname=#{drugName} GROUP BY a.STORAGETIME,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE ORDER BY storageTime)a group by a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE)a left join
+(select a.RECEIVEDATE,count(1) outCount from(select substr(b.RECEIVEDATE,6,2)RECEIVEDATE,count(1) as drugCount
+from DRUGSTOREOUT_TABLE b WHERE b.drugname=#{drugName} GROUP BY b.RECEIVEDATE ORDER BY RECEIVEDATE)a group by a.RECEIVEDATE)b on a.inCount=b.outCount
+    </select>
+
+	<select id="findAllDrugStoreWeekDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+--         select a.*,b.* from
+--         (select  a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE ,count(1) outCount from DRUGSTORE_TABLE a where to_date(a.STORAGETIME, 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(a.STORAGETIME, 'YYYY-MM-DD') &lt;= sysdate
+--         and a.drugname=#{drugName} group by a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE) a full join
+--         (select  substr(a.RECEIVEDATE,0,10),a.drugName drugName2,count(1) intCount from DRUGSTOREOUT_TABLE a where to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &lt;=  sysdate
+--         and a.DRUGNAME=#{drugName} group by a.RECEIVEDATE,a.drugName)b on a.drugname=b.drugName2
+      select  a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE ,count(1) outCount from DRUGSTORE_TABLE a where to_date(a.STORAGETIME, 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(a.STORAGETIME, 'YYYY-MM-DD') &lt;= sysdate
+      and a.drugname=#{drugName} group by a.storageTime,a.DRUGNAME,a.LOTNUMBER,a.DRUGPRICE) a
+
+    </select>
+	<select id="findAllDrugStoreMouthOutDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+        select  substr(a.RECEIVEDATE,0,10),a.drugName drugName2,count(1) intCount from DRUGSTOREOUT_TABLE a where to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &lt;=  sysdate
+        and a.DRUGNAME=#{drugName} group by a.RECEIVEDATE,a.drugName
+
+    </select>
+	<select id="findAllDrugStoreYearInDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+        select  substr(a.RECEIVEDATE,0,10),a.drugName drugName2,count(1) intCount from DRUGSTOREOUT_TABLE a where to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &lt;=  sysdate
+        and a.DRUGNAME=#{drugName} group by a.RECEIVEDATE,a.drugName
+
+    </select>
+	<select id="findAllDrugStoreWeekInDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+        select  substr(a.RECEIVEDATE,0,10),a.drugName drugName2,count(1) intCount from DRUGSTOREOUT_TABLE a where to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &lt;=  sysdate
+        and a.DRUGNAME=#{drugName} group by a.RECEIVEDATE,a.drugName
+
+    </select>
+	<select id="findAllDrugStoreMouthInDetails" parameterType="String" resultType="com.cy.bean.DrugStore">
+        select  substr(a.RECEIVEDATE,0,10),a.drugName drugName2,count(1) intCount from DRUGSTOREOUT_TABLE a where to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &gt; sysdate - (to_char(sysdate-1,'D')) and to_date(substr(a.RECEIVEDATE,0,10), 'YYYY-MM-DD') &lt;=  sysdate
+        and a.DRUGNAME=#{drugName} group by a.RECEIVEDATE,a.drugName
+    </select>
+
+
+	<select id="findAllConditonDrugStore" parameterType="String" resultType="com.cy.bean.DrugStore">
+        select * from  DRUGSTORE_TABLE where drugName like  '%'||#{conditionQuery}||'%' or DRUGNUMBER like  '%'||#{conditionQuery}||'%' or LOTNUMBER like  '%'||#{conditionQuery}||'%'
+    </select>
+	<select id="findPurchase" resultType="com.cy.bean.Purchase">
+      select a.DRUGNAME,a.DRUGQUANTITY,a.PURCHASEPRICE,a.RECEIVEDDATE,a.ADMINNAME from purchase_table a
+    </select>
+
+	<select id="findConditionPurchase" resultType="com.cy.bean.Purchase">
+        select * from  purchase_table where drugName like  '%'||#{conditionQuery}||'%' or PURCHASEPRICE like  '%'||#{conditionQuery}||'%' or RECEIVEDDATE like  '%'||#{conditionQuery}||'%'
+        or ADMINNAME like  '%'||#{conditionQuery}||'%'
+    </select>
 
 </mapper>

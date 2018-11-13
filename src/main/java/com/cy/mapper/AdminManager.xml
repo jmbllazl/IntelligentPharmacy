@@ -53,6 +53,63 @@
     <select id="selectRoleId" resultType="java.lang.Integer">
 		select adminRoleId from admin_table where adminName=#{adminName}
     </select>
+    <!--增加用户-->
+    <insert id="addUser" parameterType="com.cy.bean.Admin">
+        <selectKey keyProperty="adminId" order="BEFORE" resultType="int">
+            select adminId.nextval from dual
+        </selectKey>
+        insert into
+        admin_table(adminId,adminRoleId,adminName,adminState,adminAge,password,adminSex,adminPhone,adminDetele)values(#{adminId},#{adminRoleId},#{adminName},
+        #{adminState},#{adminAge},#{password},#{adminSex},#{adminPhone},#{adminDetele})
+    </insert>
+
+
+    <select id="findAllRole" resultType="com.cy.bean.Role">
+        select * from admin_Role_Table
+    </select>
+
+    <select id="finOwnMenu" parameterType="int" resultType="com.cy.bean.SecondMenu">
+        select * from phamacy_secondary_menu_table inner join (select * from PHAMACYSE_ROLE_TABLE where adminRoleId=#{roleId})b
+        on phamacy_secondary_menu_table.PHAMACYSECONDID=b.PHAMACYSECONDID
+    </select>
+
+
+    <!--一级菜单查找-->
+    <select id="findAllFirstMenu" resultType="com.cy.bean.FirstMenu">
+    select * from phamacy_first_menu_table
+    </select>
+    <!--查询所有二级菜单-->
+    <select id="findAllSecondMenu" resultType="com.cy.bean.SecondMenu">
+        select * from phamacy_secondary_menu_table
+    </select>
+
+    <!--增加一个权限-->
+    <insert id="addRoleAuthority" parameterType="int">
+        <selectKey keyProperty="PHAMACYSEROLEID" order="BEFORE" resultType="int">
+            select PHAMACYSE_ROLE_TABLE_SEQUENCE.nextval from dual
+        </selectKey>
+        insert into
+        PHAMACYSE_ROLE_TABLE(PHAMACYSEROLEID,PHAMACYSECONDID,ADMINROLEID)values(#{PHAMACYSEROLEID},#{secondMenuId},#{roleId})
+    </insert>
+
+
+    <!--增加所有权限-->
+    <insert id="addAllRoleAuthority" parameterType="com.cy.bean.AllMenu">
+        insert into PHAMACYSE_ROLE_TABLE(PHAMACYSEROLEID,PHAMACYSECONDID,ADMINROLEID)
+        <foreach collection="idList" item="item" index="index" separator="union all">
+            SELECT
+            #{item},
+            #{item.userId},
+            FROM DUAL
+        </foreach>
+
+    </insert>
+
+    <!--删除用户权限-->
+    <delete id="delRoleAuthority" parameterType="int">
+        delete from PHAMACYSE_ROLE_TABLE where PHAMACYSECONDID=#{secondMenuId} and ADMINROLEID=#{roleId}
+    </delete>
+
 
 </mapper>
 	

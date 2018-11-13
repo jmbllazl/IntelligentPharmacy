@@ -59,4 +59,33 @@ public interface DrugStorageManage {
     
     //通过药品名查询药品
     public DrugStore selectDrug (DrugStoreOut drugStoreOut);
+    //查询所有药库出入库明细
+    public List<DrugStore> findAllDrugStore();
+    //查询出库的明细
+    public List<DrugStoreOutTable> findAllSortDrugStore();
+    //查询入库明细表
+    public List<DrugStore> findAllBatchDrugStore();
+    //查询初始化种类
+    public List<DrugClassification> findAllKindDrugStore();
+    //查询种类生成编号
+    public List<DrugClassification>findAllBatchDrug(int drugClassificationId);
+    //    //查询药品详情
+    public List<DrugStore> findAllDrugStoreYearDetails(String drugName );
+    //查询药品出库本周
+    public  List<DrugStore> findAllDrugStoreWeekOutDetails(String drugName);
+    //查询药品本月出库
+    public  List<DrugStore> findAllDrugStoreMouthOutDetails(String drugName);
+    //    //查询药品详情
+    public List<DrugStore> findAllDrugStoreYearInDetails(String drugName );
+
+    //查询药品出库本周
+    public  List<DrugStore> findAllDrugStoreWeekInDetails(String drugName);
+    //查询药品本月出库
+    public  List<DrugStore> findAllDrugStoreMouthInDetails(String drugName);
+    //条件查询
+    public List<DrugStore> findAllConditonDrugStore(String conditionQuery);
+    //查询采购清单
+    public List<DrugStore> findPurchase();
+    //条件查询
+    public  List<DrugStore> findConditionPurchase(String conditionQuery);
 }

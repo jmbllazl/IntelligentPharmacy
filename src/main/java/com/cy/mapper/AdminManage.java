@@ -1,7 +1,8 @@
 package com.cy.mapper;
 
 
-import com.cy.bean.Admin;
+import com.cy.bean.*;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -43,4 +44,26 @@ public interface AdminManage {
 
     //由用户名查找角色ID
     public int selectRoleId(String name);
+    //查询所有的角色
+    public List<Role> findAllRole();
+
+
+    //查询拥有的菜单
+    public List<SecondMenu> finOwnMenu(int roleId);
+
+    //查询所有二级菜单
+    public List<SecondMenu> findAllSecondMenu();
+
+    //查询所有一级菜单
+    public List<FirstMenu> findAllFirstMenu();
+
+    //增加权限
+    public int addRoleAuthority(@Param("secondMenuId") int secondMenuId, @Param("roleId") int roleId);
+
+
+    //角色增加有所权限
+    public int addAllRoleAuthority(AllMenu allMenu);
+
+    //删除用户权限
+    public int delRoleAuthority(@Param("secondMenuId") int secondMenuId, @Param("roleId") int roleId);
 }

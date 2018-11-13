@@ -32,12 +32,18 @@ public class DrugStore {
     private String storageTime;//药品入库日期
     private String drugPhoto;//药品图片存放路径
     private String dayConsumption;//每日用量
-    private String drugClassificationName;//药品分类名字
+    private String drugClassificationName;//药品种类名称
+    private int state;//查询状态
+    private String receivedate;//出库日期
+    private int outCount;//出库数量
+    private int inCount;//入库数量
+
 
     public DrugStore() {
     }
 
-    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime, String drugPhoto,String dayConsumption,String drugClassificationName) {
+    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime,
+                     String drugPhoto, String dayConsumption, String drugClassificationName, int state) {
         this.drugId = drugId;
         this.drugClassificationId = drugClassificationId;
         this.purchaseId = purchaseId;
@@ -59,13 +65,41 @@ public class DrugStore {
         this.medicalinsurance = medicalinsurance;
         this.storageTime = storageTime;
         this.drugPhoto = drugPhoto;
-        this.dayConsumption=dayConsumption;
-        this.drugClassificationName=drugClassificationName;
+        this.dayConsumption = dayConsumption;
+        this.drugClassificationName = drugClassificationName;
+        this.state = state;
     }
 
-    public DrugStore( String drugName,int drugClassificationId, int drugNumber, String drugDetails, String formulation, String norm, String unit, int drugPrice, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String storageTime, String drugPhoto,String dayConsumption) {
-
+    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime, String drugPhoto, String dayConsumption, String drugClassificationName, int state, String receivedate) {
+        this.drugId = drugId;
+        this.drugClassificationId = drugClassificationId;
+        this.purchaseId = purchaseId;
+        this.drugStoreOutId = drugStoreOutId;
+        this.drugNumber = drugNumber;
         this.drugName = drugName;
+        this.drugDetails = drugDetails;
+        this.formulation = formulation;
+        this.norm = norm;
+        this.unit = unit;
+        this.drugPrice = drugPrice;
+        this.drugQuantity = drugQuantity;
+        this.approvalnumber = approvalnumber;
+        this.produtionDate = produtionDate;
+        this.lotNumber = lotNumber;
+        this.validaityperiod = validaityperiod;
+        this.manufacturer = manufacturer;
+        this.drugIdState = drugIdState;
+        this.medicalinsurance = medicalinsurance;
+        this.storageTime = storageTime;
+        this.drugPhoto = drugPhoto;
+        this.dayConsumption = dayConsumption;
+        this.drugClassificationName = drugClassificationName;
+        this.state = state;
+        this.receivedate = receivedate;
+    }
+
+    public DrugStore(int drugId, int drugClassificationId, int purchaseId, int drugStoreOutId, int drugNumber, String drugName, String drugDetails, String formulation, String norm, String unit, int drugPrice, int drugQuantity, String approvalnumber, String produtionDate, String lotNumber, String validaityperiod, String manufacturer, String drugIdState, int medicalinsurance, String storageTime, String drugPhoto, String dayConsumption, String drugClassificationName, int state, String receivedate, int outCount, int inCount) {
+        this.drugId = drugId;
         this.drugClassificationId = drugClassificationId;
         this.drugNumber = drugNumber;
         this.drugDetails = drugDetails;
@@ -73,22 +107,38 @@ public class DrugStore {
         this.norm = norm;
         this.unit = unit;
         this.drugPrice = drugPrice;
+        this.drugQuantity = drugQuantity;
         this.approvalnumber = approvalnumber;
         this.produtionDate = produtionDate;
         this.lotNumber = lotNumber;
         this.validaityperiod = validaityperiod;
         this.manufacturer = manufacturer;
+        this.drugIdState = drugIdState;
+        this.medicalinsurance = medicalinsurance;
         this.storageTime = storageTime;
         this.drugPhoto = drugPhoto;
-        this.dayConsumption=dayConsumption;
-    }
-
-    public String getDrugClassificationName() {
-        return drugClassificationName;
-    }
-
-    public void setDrugClassificationName(String drugClassificationName) {
+        this.dayConsumption = dayConsumption;
         this.drugClassificationName = drugClassificationName;
+        this.state = state;
+        this.receivedate = receivedate;
+        this.outCount = outCount;
+        this.inCount = inCount;
+    }
+
+    public DrugStore(String drugName, int drugNumber, int drugClass, String drugDetailed, String formUlarion, String norm, String unit, int drugPrice, String approvalNumber, String produtionDate, String lotNumber, String validaiTypeRiod, String manufacTurer, String storageTime, String drugPhoto, String dayConsumption) {
+
+        this.drugNumber = drugNumber;
+        this.drugName = drugName;
+        this.norm = norm;
+        this.unit = unit;
+        this.drugPrice = drugPrice;
+        this.produtionDate = produtionDate;
+        this.lotNumber = lotNumber;
+
+        this.storageTime = storageTime;
+        this.drugPhoto = drugPhoto;
+        this.dayConsumption = dayConsumption;
+
     }
 
     public int getDrugId() {
@@ -261,5 +311,53 @@ public class DrugStore {
 
     public DrugStore(String dayConsumption) {
         this.dayConsumption = dayConsumption;
+    }
+
+    public String getDayConsumption() {
+        return dayConsumption;
+    }
+
+    public void setDayConsumption(String dayConsumption) {
+        this.dayConsumption = dayConsumption;
+    }
+
+    public String getDrugClassificationName() {
+        return drugClassificationName;
+    }
+
+    public void setDrugClassificationName(String drugClassificationName) {
+        this.drugClassificationName = drugClassificationName;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public String getReceivedate() {
+        return receivedate;
+    }
+
+    public void setReceivedate(String receivedate) {
+        this.receivedate = receivedate;
+    }
+
+    public int getOutCount() {
+        return outCount;
+    }
+
+    public void setOutCount(int outCount) {
+        this.outCount = outCount;
+    }
+
+    public int getInCount() {
+        return inCount;
+    }
+
+    public void setInCount(int inCount) {
+        this.inCount = inCount;
     }
 }

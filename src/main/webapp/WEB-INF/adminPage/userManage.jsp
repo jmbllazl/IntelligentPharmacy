@@ -33,7 +33,7 @@
 <form class="layui-form x-center" action="search?action=search" method="post" style="width:85%">
     <div class="layui-form-pane">
         <div class="layui-form-item">               <ul class="toolbar">
-            <li onclick="user_management_add('添加用户','huser_management_add.jsp','600','500')"><span><img src="../images/t01.png" /></span>添加</li>
+            <li onclick="user_management_edit('添加用户','userAddJump.action','800','600')"><span><img src="../images/t01.png" /></span>添加</li>
         </ul>
         </div>
     </div>

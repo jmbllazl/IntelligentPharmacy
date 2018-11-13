@@ -1,6 +1,7 @@
 package com.cy.biz;
 
-import com.cy.bean.Admin;
+import com.cy.bean.*;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,5 +36,25 @@ public interface AdminService {
 
     //由用户名查找角色ID
     public int selectRoleId(String name);
+    //查看所有一级菜单
+    public  List<FirstMenu> findAllFistMenu();
 
+    //查询所有二级菜单
+    public PageInfo findAllSecondMenu(int pageNum, int pagesize);
+
+    //查询所有角色
+    public   List<Role> findaLLRole();
+
+
+    //查询角色所用有的菜单
+    public  List<SecondMenu> findOwnSecondMenu(int roleId);
+
+    //增加角色权限
+    public int addRoleAuthority(int secondMenuId,int roleId);
+
+    //角色增加有所权限
+    public int  addAllRoleAuthority(AllMenu allmenu);
+
+    //删除角色权限
+    public int delRoleAuthority(int phamacySecondId,int roleId);
 }

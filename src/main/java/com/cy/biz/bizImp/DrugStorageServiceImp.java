@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class DrugStorageServiceImp implements DrugStorageService{
+public class DrugStorageServiceImp implements DrugStorageService {
 
     @Resource
     DrugStorageManage drugStorageManage;
@@ -140,8 +140,119 @@ public class DrugStorageServiceImp implements DrugStorageService{
                 phamacyDrugManager.addPharmacyDrugs(drugStore);
             }
         }
-       
+
     }
 
+    //查询所有简单表格
+    @Override
+    public PageInfo findAllDrugStore(int pageNum, int pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStore> drugStoreList = drugStorageManage.findAllDrugStore();
+        PageInfo<DrugStore> pageInfo = new PageInfo<DrugStore>(drugStoreList);
+        return pageInfo;
+    }
+
+    //查询显示种类
+    @Override
+    public List<DrugClassification> findAllKindDrugStore() {
+        List<DrugClassification> drugStoreList = drugStorageManage.findAllKindDrugStore();
+        return drugStoreList;
+    }
+
+    @Override
+    public List<DrugStore> findAllDrugStoreYearDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreYearDetails(drugName);
+        return drugStoreList;
+    }
+
+
+
+    //查询本周出库
+    @Override
+    public List<DrugStore> findAllDrugStoreWeekOutDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreWeekOutDetails(drugName);
+        return drugStoreList;
+
+    }
+
+    @Override
+    public List<DrugStore> findAllDrugStoreMouthOutDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreMouthOutDetails(drugName);
+        return drugStoreList;
+
+    }
+
+    @Override
+    public List<DrugStore> findAllDrugStoreYearInDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreYearInDetails(drugName);
+        return drugStoreList;
+
+    }
+
+    @Override
+    public List<DrugStore> findAllDrugStoreWeekInDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreWeekInDetails(drugName);
+        return drugStoreList;
+    }
+
+    @Override
+    public List<DrugStore> findAllDrugStoreMouthInDetails(String drugName) {
+        List<DrugStore> drugStoreList=drugStorageManage.findAllDrugStoreMouthInDetails(drugName);
+        return drugStoreList;
+    }
+
+    @Override
+    public PageInfo findAllConditonDrugStore(int pageNum, int pagesize, String conditionQuery) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStore> drugStoreList = drugStorageManage.findAllConditonDrugStore(conditionQuery);
+        PageInfo<DrugStore> pageInfo = new PageInfo<DrugStore>(drugStoreList);
+        return pageInfo;
+
+    }
+
+
+    //查询采购清单
+    @Override
+    public PageInfo findPurchase(int pageNum, int pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStore> drugStoreList = drugStorageManage.findPurchase();
+        PageInfo<DrugStore> pageInfo = new PageInfo<DrugStore>(drugStoreList);
+        return pageInfo;
+    }
+
+    @Override
+    public PageInfo findConditionPurchase(int pageNum, int pagesize, String conditionQuery) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStore> drugStoreList = drugStorageManage.findConditionPurchase(conditionQuery);
+        PageInfo<DrugStore> pageInfo = new PageInfo<DrugStore>(drugStoreList);
+        return pageInfo;
+    }
+
+
+//
+//    @Override
+//    public List<DrugClassification> findAllBatchDrugStore(int drugClassificationId) {
+//        List<DrugClassification>drugClassificationList=drugStorageManage.findAllBatchDrug(drugClassificationId);
+//        return drugClassificationList;
+//    }
+
+    //查询出库
+    @Override
+    public PageInfo findAllSortDrugStore(int pageNum, int pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStoreOutTable> drugStoreOutList = drugStorageManage.findAllSortDrugStore();
+        PageInfo<DrugStoreOutTable> pageInfo = new PageInfo<DrugStoreOutTable>(drugStoreOutList);
+        return pageInfo;
+    }
+
+
+    //查询入库
+    @Override
+    public PageInfo findAllBatchDrugStore(int pageNum, int pagesize) {
+        PageHelper.startPage(pageNum, pagesize);
+        List<DrugStore> drugStoreList = drugStorageManage.findAllBatchDrugStore();
+        PageInfo<DrugStore> pageInfo = new PageInfo<DrugStore>(drugStoreList);
+        return pageInfo;
+    }
 
 }
