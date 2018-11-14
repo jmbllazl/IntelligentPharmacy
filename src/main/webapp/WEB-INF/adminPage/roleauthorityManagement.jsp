@@ -26,7 +26,7 @@
     layui.use(['table', 'layer'], function () {
         var table = layui.table;
         var $ = layui.jquery;
-        table.render({
+var table1=   table.render({
             id: "tableId"
             , elem: '#roleAuthorityManage'
             , url: '/adminPage/roleAuthorityManage.action'
@@ -51,9 +51,10 @@
         //监听复选框
         table.on('checkbox(roleAuthorityManage)', function (obj) {
             var data = obj.data;
+            console.log(obj);
             if (obj.checked == true) {
                 if (obj.type == 'one') {
-                    layer.confirm('确认添加吗', {btn: ['确定', '取消'], title: "提示"}, function () {
+                    layer.confirm('确认添加吗', {btn: ['确定', '取消'], title: "提示"},function() {
                         $.ajax({
                             type: "POST",
                             url: "/adminPage/addRoleAuthority.action",
@@ -63,9 +64,9 @@
                                 layer.msg("添加成功", {icon: 6, time: 2000})
                             }
                         });
-                        obj.update({
-                            checkbox: true
-                        });
+                    }, function(){
+                        obj.LAY_CHECKED=false;
+                        table1.reload();
                     });
                 } else if (obj.type = 'all') {
                     var checkStatus = table.checkStatus('tableId');
@@ -73,10 +74,6 @@
                     for (var i; i < checkStatus.data.length; i++) {
                         array.push(checkStatus.data[i].phamacySecondId);
                     }
-
-                    // array.push(checkStatus.data);
-                    // console.log(checkStatus.data);
-                    // console.log(checkStatus.data.length)
                     console.log(array.length);
                     console.log(checkStatus.data[0].phamacySecondId);
                     console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
@@ -91,7 +88,10 @@
                             }
                         });
 
-                    });
+                    },function(){
+                        table1.reload();
+                        }
+                    );
                 }
             } else {
                 layer.confirm('确认取消权限吗', {btn: ['确定', '取消'], title: "提示"}, function () {
@@ -107,7 +107,12 @@
                     obj.update({
                         checkbox: false
                     });
-                });
+                },function(){
+                        obj.update({
+                            checkbox: true
+                        });
+                    }
+                );
             }
 
 

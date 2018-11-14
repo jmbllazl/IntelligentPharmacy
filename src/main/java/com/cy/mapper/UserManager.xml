@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.cy.mapper.UserManager">
+
+    <!--登录-->
+    <select id="userLogin" parameterType="com.cy.bean.User" resultType="com.cy.bean.User">
+        select * from USER_TABLE where USERNAME=#{userName} and PASSWORFD=#{password}
+    </select>
+
+    <!--增加用户-->
+<insert id="userRegister" parameterType="com.cy.bean.User">
+
+    insert into USER_TABLE(USERID,USERNAME,USERSTATE,USERAGE,PASSWORFD,USERSEX,USERPHONE,USERROLE)values(user_sequence.nextval,
+    #{userName},0,#{userAge},#{password},#{userSex},#{userPhone},0)
+</insert>
+
+    <!--账号检测-->
+    <select id="checkName" parameterType="java.lang.String"  resultType="com.cy.bean.User">
+        select * from  USER_TABLE where USERNAME=#{userName}
+    </select>
+
+    <update id="setPassword" parameterType="com.cy.bean.User" >
+        update USER_TABLE set  PASSWORFD =#{password} where userName=#{userName}
+    </update>
+
+</mapper>

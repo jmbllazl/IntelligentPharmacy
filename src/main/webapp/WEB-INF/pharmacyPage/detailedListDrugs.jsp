@@ -82,7 +82,7 @@
             , method: 'post'
             , cols: [[
                 , {field: 'drugstoreoutid', title: '出库ID', unresize: true, sort: true}
-                , {field: 'drugname', title: '药品名'}
+                , {field: 'drugName', title: '药品名'}
                 , {field: 'receivedate', title: '出库日期'}
                 , {field: 'drugquantity', title: '出库数量'}
             ]]
@@ -133,6 +133,9 @@
             table.on('row(batchTable)', function (obj) {
             var data = obj.data;
             var drugName=data.drugName;
+            console.log(data.drugName);
+                console.log(obj);
+                console.log(data);
             sortEdit('药品出入库详细表','/phamacy/batchList.action?drugName='+drugName+'&&state='+4,'600','800');
 
             //标注选中样式
@@ -141,8 +144,10 @@
 
         table.on('row(sortTable)', function (obj) {
             var data = obj.data;
-            console.log(data.drugName);
+            console.log(obj);
+            console.log(data);
             var drugName=data.drugName;
+            console.log(data.drugName);
             sortEdit('药品出入库详细表','/phamacy/batchList.action?drugName='+drugName+'&&state='+11,'600','800');
 
             //标注选中样式
